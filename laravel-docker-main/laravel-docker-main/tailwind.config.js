@@ -19,3 +19,13 @@ export default {
 
     plugins: [forms],
 };
+
+module.exports = {
+    theme: {
+        extend: {
+            colors: {
+                customBlue: '#11468F',
+            },
+        },
+    },
+};

@@ -1,3 +1,19 @@
+@if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+
+@if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+@error('email')
+    <div class="alert alert-danger">{{ $message }}</div>
+@enderror
+
 <title>802-GO: Register</title>
 <link rel="icon" href="{{ asset('logo/802-GO-LOGO.png') }}" type="image/x-icon">
 
@@ -65,11 +81,40 @@
                 <x-text-input id="birthdate" class="block mt-1 w-full" type="date" name="birthdate" :value="old('birthdate')" required />
                 <x-input-error :messages="$errors->get('birthdate')" class="mt-2" />
             </div>
-
-            <!-- Permanent Address -->
+            
+            <!-- address line 1 -->
             <div class="mt-4">
-                <x-input-label for="address" :value="__('Permanent Address')" />
-                <x-text-input id="address" class="block mt-1 w-full" type="text" name="address" :value="old('address')" required />
+                <x-input-label for="address_line_1" :value="__('Address Line 1')" />
+                <x-text-input id="address_line_1" class="block mt-1 w-full" type="text" name="address_line_1" :value="old('address_line_1')" required />
+                <x-input-error :messages="$errors->get('address_line_1')" class="mt-2" />
+
+            </div>
+
+            <!-- address line 2 -->
+            <div class="mt-4">
+                <x-input-label for="address_line_2" :value="__('Address Line 2')" />
+                <x-text-input id="address_line_2" class="block mt-1 w-full" type="text" name="address_line_2" :value="old('address_line_2')" required />
+                <x-input-error :messages="$errors->get('address_line_2')" class="mt-2" />
+            </div>
+
+            <!-- City -->
+            <div class="mt-4">
+                <x-input-label for="city" :value="__('Permanent Address')" />
+                <x-text-input id="city" class="block mt-1 w-full" type="text" name="city" :value="old('city')" required />
+                <x-input-error :messages="$errors->get('address')" class="mt-2" />
+            </div>
+
+            <!-- City -->
+            <div class="mt-4">
+                <x-input-label for="barangay" :value="__('Permanent Address')" />
+                <x-text-input id="barangay" class="block mt-1 w-full" type="text" name="barangay" :value="old('barangay')" required />
+                <x-input-error :messages="$errors->get('address')" class="mt-2" />
+            </div>
+
+            <!-- City -->
+            <div class="mt-4">
+                <x-input-label for="zip_code" :value="__('Permanent Address')" />
+                <x-text-input id="zip_code" class="block mt-1 w-full" type="text" name="zip_code" :value="old('zip_code')" required />
                 <x-input-error :messages="$errors->get('address')" class="mt-2" />
             </div>
 

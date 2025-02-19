@@ -31,13 +31,16 @@
                 padding: 10px 20px; /* Added padding for left and right */
                 background-color: #11468F; /* Background color for the header */
                 width: 100%; /* Ensure the header spans the full width */
+
                 margin: 0; /* Remove any margin */
                 box-sizing: border-box; /* Ensure padding is included in the total width */
+
             }
             .header-grid a {
                 color: white; /* Text color for the links */
             }
             .header-grid a:hover {
+
                 background-color:rgb(255, 255, 255); /* Bold color for active button */
                 font-weight: bold;         /* Optional: Makes text bolder */
                 color:  #11468F;              /* Ensures good contrast */
@@ -246,6 +249,7 @@
                         <nav class="right-section flex space-x-4">
                         @auth
                             <a href="{{ url('/dashboard') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
+
                                 {{ Auth::user()->name }}
                             </a>
                         @else
@@ -262,7 +266,6 @@
                     </nav>
                 @endif
             </header>
-       
 
 <div class="text-section">
         <h1 align="center">Community Effort Enhances Road<br>Safety with New Repairs</h1>

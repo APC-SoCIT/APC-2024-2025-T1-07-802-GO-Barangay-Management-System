@@ -1,0 +1,23 @@
+{
+    "name": "Laravel",
+    "dockerFile": "Dockerfile",
+    "customizations": {
+        "vscode": {
+            "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+    },
+    "extensions": [
+        "ms-azuretools.vscode-docker",
+        "ms-vscode.vscode-node-azure-pack",
+        "ms-vscode-remote.remote-containers",
+        "ms-vscode-remote.remote-ssh",
+        "ms-vscode-remote.remote-ssh-edit",
+        "ms-vscode-remote.remote-wsl",
+        "ms-vscode-remote.vscode-remote-extensionpack"
+    ],
+    "forwardPorts": [8000],
+    "postCreateCommand": "composer install && php artisan key:generate && php artisan migrate && php artisan storage:link",
+    "remoteUser": "vscode"
+        }
+    }
+}

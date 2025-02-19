@@ -10,6 +10,7 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
         <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
         <!-- Styles -->
@@ -31,13 +32,19 @@
                 padding: 10px 20px; /* Added padding for left and right */
                 background-color: #11468F; /* Background color for the header */
                 width: 100%; /* Ensure the header spans the full width */
+
                 margin: 0; /* Remove any margin */
                 box-sizing: border-box; /* Ensure padding is included in the total width */
+
             }
             .header-grid a {
                 color: white; /* Text color for the links */
             }
             .header-grid a:hover {
+
+                color: rgba(255, 255, 255, 0.7); /* Hover color for the links */
+            }
+
                 background-color:rgb(255, 255, 255); /* Bold color for active button */
                 font-weight: bold;         /* Optional: Makes text bolder */
                 color:  #11468F;              /* Ensures good contrast */
@@ -48,6 +55,7 @@
                 color:  #11468F;              /* Ensures good contrast */
             }
             
+
             .left-section {
                 justify-self: start; /* Aligns to the left */
             }
@@ -84,6 +92,7 @@
                 font-size: 0.875rem;
                 color: #e0e0e0; /* Slightly lighter color for contrast */
             }
+
             #map {
                 height: 380px;
                 width: 100%;
@@ -215,10 +224,12 @@
             .service a:hover {
                 background-color: #0d3570;
             }
+            
         </style>
     </head>
     <body class="font-sans antialiased dark:bg-black dark:text-white/50">
         <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50 relative">
+
             <img id="background" class="absolute inset-0 w-full h-full object-cover" src="{{ asset('') }}" alt="Background" />
             <div class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
                 <div class="relative w-full ">
@@ -232,6 +243,7 @@
                             News
                         </a>
                         <a href="#" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
+
                             Document Request
                         </a>
                     </nav>
@@ -246,6 +258,7 @@
                         <nav class="right-section flex space-x-4">
                         @auth
                             <a href="{{ url('/dashboard') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
+
                                 {{ Auth::user()->name }}
                             </a>
                         @else
@@ -333,6 +346,7 @@
             </div>
         </div>
     </body>
+    
 </html>
 
 
@@ -374,4 +388,5 @@
 <footer style="text-align: center; padding: 30px; background-color: #f8f9fa; border-top: 1px solid #e9ecef; height: 100px; opacity: 0.5;">
     <p style="margin: 0; font-size: 12px;">Copyright &copy; {{ date('Y') }} Barangay 802, Manila City</p>
     <p style="margin: 0; font-size: 12px;">Designed by SISTEM</p>
+
 </footer>
