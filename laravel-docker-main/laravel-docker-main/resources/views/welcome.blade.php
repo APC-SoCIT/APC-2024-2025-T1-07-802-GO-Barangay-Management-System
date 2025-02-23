@@ -33,29 +33,115 @@
                 width: 100%; /* Ensure the header spans the full width */
                 margin: 0; /* Remove any margin */
                 box-sizing: border-box; /* Ensure padding is included in the total width */
+                position: relative;
             }
+
             .header-grid a {
                 color: white; /* Text color for the links */
             }
+
             .header-grid a:hover {
-                background-color:rgb(255, 255, 255); /* Bold color for active button */
-                font-weight: bold;         /* Optional: Makes text bolder */
-                color:  #11468F;              /* Ensures good contrast */
+                background-color: rgb(255, 255, 255); /* Bold color for active button */
+                font-weight: bold; /* Optional: Makes text bolder */
+                color: #11468F; /* Ensures good contrast */
             }
+
             a.active {
-                background-color:rgb(255, 255, 255); /* Bold color for active button */
-                font-weight: bold;         /* Optional: Makes text bolder */
-                color:  #11468F;              /* Ensures good contrast */
+                background-color: rgb(255, 255, 255); /* Bold color for active button */
+                font-weight: bold; /* Optional: Makes text bolder */
+                color: #11468F; /* Ensures good contrast */
             }
-            
+
             .left-section {
                 justify-self: start; /* Aligns to the left */
             }
+
             .center-section {
                 justify-self: center; /* Centers in the middle */
             }
+
             .right-section {
                 justify-self: end; /* Aligns to the right */
+            }
+
+            @media (max-width: 768px) {
+                .header-grid {
+                    grid-template-columns: 1fr; /* Single column layout for mobile */
+                    text-align: center;
+                }
+
+                .left-section, .right-section {
+                    display: none;
+                }
+
+                .center-section {
+                    justify-self: center;
+                }
+
+                .header-grid.active-left .left-section {
+                    display: flex;
+                    flex-direction: column;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 250px;
+                    height: 100%;
+                    background-color: #11468F;
+                    padding-top: 20px;
+                    align-items: center;
+                    justify-content: start;
+                    transition: transform 0.3s ease-in-out;
+                    transform: translateX(0);
+                    z-index: 1000;
+                }
+
+                .header-grid.active-right .right-section {
+                    display: flex;
+                    flex-direction: column;
+                    position: fixed;
+                    top: 0;
+                    right: 0;
+                    width: 250px;
+                    height: 100%;
+                    background-color: #11468F;
+                    padding-top: 20px;
+                    align-items: center;
+                    justify-content: start;
+                    transition: transform 0.3s ease-in-out;
+                    transform: translateX(0);
+                    z-index: 1000;
+                }
+            }
+
+            .menu-toggle {
+                display: none;
+                cursor: pointer;
+                position: absolute;
+                top: 20px;
+                z-index: 1001;
+            }
+
+            .menu-toggle.left {
+                left: 20px;
+            }
+
+            .menu-toggle.right {
+                right: 20px;
+            }
+
+            .menu-toggle .bar {
+                display: block;
+                width: 25px;
+                height: 3px;
+                margin: 5px auto;
+                transition: all 0.3s ease-in-out;
+                background-color: white;
+            }
+
+            @media (max-width: 768px) {
+                .menu-toggle {
+                    display: block;
+                }
             }
             .banner-overlay {
                 background: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
@@ -139,30 +225,83 @@
             }
             .container {
                 display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                max-width: 1200px;
-                margin: 50px auto;
-                gap: 20px;
+                flex-wrap: wrap; /* Allows items to wrap onto multiple lines */
+                justify-content: center; /* Distributes items with space around them */
+                margin: 20px 0;
             }
             .text-section {
-                background-image: url("{{ asset('background/header_brgy.png') }}"); /* Replace with the path to your background image */
-                background-size: cover; /* Ensures the image covers the entire section */
-        background-position: center; /* Centers the image */
-        background-repeat: no-repeat; /* Prevents the image from repeating */
-        width: 100%; /* Makes the section span the full width of the viewport */
-        max-width: 1920px; /* Ensures it doesn't exceed the image's width */
-        height: auto; /* Automatically adjusts height based on the image's aspect ratio */
-        aspect-ratio: 1920 / 500; /* Ensures the aspect ratio is maintained */
-        display: flex; /* Enables flexbox for centering */
-        flex-direction: column; /* Stacks text vertically */
-        justify-content: center; /* Vertically centers content */
-        align-items: center; /* Horizontally centers content */
-        color: white; /* Makes the text visible on the image */
-        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* Improves text readability */
-        font-weight: bold; /* Makes the font bolder */
-        
-        margin: 0 auto; /* Centers the section horizontally */
+                background-image: url("{{ asset('background/header_brgy.png') }}");
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                width: 100%;
+                max-width: 1920px;
+                height: auto;
+                aspect-ratio: 1920 / 500;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                color: white;
+                text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+                font-weight: bold;
+                margin: 0 auto;
+                padding: 20px;
+                box-sizing: border-box;
+                text-align: center; /* Center text by default */
+            }
+            
+            .service {
+                background: #11468F; /* Changed from white to blue */
+                color: white; /* Changed from black to white */
+                padding: 15px;
+                margin: 10px;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                flex: 1 1 calc(50% - 40px); /* Adjusts the width to 50% minus margin */
+                max-width: 400px; /* Prevents the service box from getting too wide */
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                height: 250px;
+                box-sizing: border-box; /* Ensures padding is included in the element's total width and height */
+            }
+
+            .service:hover {
+                border-color: white; /* Changed from blue to white */
+                box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+            }
+
+            .service h3 {
+                color: white; /* Changed from blue to white */
+                font-size: 1.4em;
+                margin-bottom: 10px;
+                font-weight: bold; /* Added to make the header bold */
+            }
+
+            .service p {
+                margin-bottom: 15px;
+                font-size: 1em;
+                flex-grow: 1;
+            }
+
+            .service a {
+                display: inline-block;
+                text-decoration: none;
+                background-color: white; /* Changed from blue to white */
+                color: #11468F; /* Changed from white to blue */
+                padding: 10px 20px;
+                font-size: 1em;
+                font-weight: bold;
+                border-radius: 5px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                transition: background-color 0.3s;
+                margin-top: 15px;
+                text-align: center;
+            }
+
+            .service a:hover {
+                background-color: #f0f0f0; /* Changed from dark blue to light gray */
             }
             h1 {
                 color: #9dc0f1;
@@ -172,117 +311,116 @@
                 margin: 10px 0 30px;
                 font-size: 1.2em;
             }
-            .service {
-                background: #fff;
-                padding: 20px;
-                border: 1px solid transparent;
-                border-radius: 10px;
-                width: 30%;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                text-align: center;
-                display: flex;
-                flex-direction: column;
-                justify-content: flex-start;
-                height: 250px;
-                transition: border-color 0.3s, box-shadow 0.3s;
-            }
-            .service:hover {
-                border-color: #11468F;
-                box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-            }
-            .service h3 {
-                color: #11468F;
-                font-size: 1.4em;
-                margin-bottom: 10px;
-            }
-            .service p {
-                margin-bottom: 15px;
-                font-size: 1em;
-                flex-grow: 1;
-            }
-            .service a {
-                display: inline-block;
-                text-decoration: none;
-                background-color: #11468F;
-                color: #fff;
-                padding: 10px 20px;
-                font-size: 1em;
-                border-radius: 5px;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                transition: background-color 0.3s;
-                margin-top: 15px;
-            }
-            .service a:hover {
-                background-color: #0d3570;
-            }
+
+            /* Media query for screens smaller than 768px */
+            @media (max-width: 768px) {
+                .text-section {
+                    aspect-ratio: auto; /* Allow height to adjust based on content */
+                    height: auto; /* Adjust height for smaller screens */
+                    padding: 50px; /* Reduce padding for smaller screens */
+                }
+                .text-section h1 {
+                    font-size: 2.9rem; /* Larger heading size for mobile */
+                }
+                .service {
+                    flex: 1 1 100%; /* Adjusts the width to 100% on smaller screens */
+                    max-width: none;
+                }
+            }            
         </style>
     </head>
+
     <body class="font-sans antialiased dark:bg-black dark:text-white/50">
-        <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50 relative">
-            <img id="background" class="absolute inset-0 w-full h-full object-cover" src="{{ asset('') }}" alt="Background" />
-            <div class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
-                <div class="relative w-full ">
-                <header class="header-grid">
-                    <!-- Left-aligned Navigation Links -->
-                    <nav class="left-section flex space-x-4">
-                        <a href="{{ route('welcome') }}" class="rounded-md px-3 py-2 text-white bg-[#FF2D20] ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20] active">
-                            Home
-                        </a>
-                        <a href="{{ route('news-page') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
-                            News
-                        </a>
-                        <a href="{{ route('document-request') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
-                            Document Request
-                        </a>
-                    </nav>
+        <div class="relative w-full">
+            <div class="menu-toggle left">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <div class="menu-toggle right">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <header class="header-grid">
+                <!-- Left-aligned Navigation Links -->
+                <nav class="left-section flex space-x-4">
+                    <a href="{{ route('welcome') }}" class="rounded-md px-3 py-2 text-white bg-[#FF2D20] ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20] active">
+                        Home
+                    </a>
+                    <a href="{{ route('news-page') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
+                        News
+                    </a>
+                    <a href="{{ route('document-request') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
+                        Document Request
+                    </a>
+                </nav>
 
-                    <!-- Centered Logo -->
-                    <div class="center-section">
-                        <img src="{{ asset('logo/802-GO-LOGO.png') }}" alt="Logo" class="h-16 w-auto">
-                    </div>
+                <!-- Centered Logo -->
+                <div class="center-section">
+                    <img src="{{ asset('logo/802-GO-LOGO.png') }}" alt="Logo" class="h-16 w-auto">
+                </div>
 
-                    @if (Route::has('login'))
-                        <!-- Right-aligned Authentication Links -->
-                        <nav class="right-section flex space-x-4">
-                        @auth
-                            <a href="{{ url('/dashboard') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
-                                {{ Auth::user()->name }}
+                @if (Route::has('login'))
+                    <!-- Right-aligned Authentication Links -->
+                    <nav class="right-section flex space-x-4">
+                    @auth
+                        <a href="{{ url('/dashboard') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
+                            {{ Auth::user()->name }}
+                        </a>
+                    @else
+                        <a href="{{ route('login') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
+                            Log in
+                        </a>
+
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
+                                Register
                             </a>
-                        @else
-                            <a href="{{ route('login') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
-                                Log in
-                            </a>
-
-                            @if (Route::has('register'))
-                                <a href="{{ route('register') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
-                                    Register
-                                </a>
-                            @endif
-                        @endauth
-                    </nav>
-                @endif
+                        @endif
+                    @endauth
+                </nav>
+            @endif
             </header>
+        </div>
 
+<script>
+// Toggle the sliding menu for mobile view
+document.addEventListener("DOMContentLoaded", function() {
+    const headerGrid = document.querySelector(".header-grid");
+    const leftMenuToggle = document.querySelector(".menu-toggle.left");
+    const rightMenuToggle = document.querySelector(".menu-toggle.right");
 
-<div class="text-section">
+    leftMenuToggle.addEventListener("click", function() {
+        leftMenuToggle.classList.toggle("active");
+        headerGrid.classList.toggle("active-left");
+    });
+
+    rightMenuToggle.addEventListener("click", function() {
+        rightMenuToggle.classList.toggle("active");
+        headerGrid.classList.toggle("active-right");
+    });
+});
+</script>
+
+    <div class="text-section">
         <h1>802-GO: Barangay Management System</h1>
         <p>District 5, Sta. Ana Manila City, Metro Manila, Philippines</p>
     </div>
-
+ 
     <div class="container">
-    
-    <div class="service">
-        <h3>News Page</h3>
-        <p>A page where users can find the latest updates, announcements, and news related to the barangay.</p>
-        <a href="{{ route('news-page') }}">Click to View News</a>
-    </div>
+        <div class="service">
+            <h3>News Page</h3>
+            <p>A page where users can find the latest updates, announcements, and news related to the barangay.</p>
+            <a href="{{ route('news-page') }}">Click to View News</a>
+        </div>
 
-    <div class="service">
-        <h3>Document Request Page</h3>
-        <p>This page allows users to request various official documents such as clearances and certificates.</p>
-        <a href="{{ route('document-request') }}">Click to Apply for Documents</a>
+        <div class="service">
+            <h3>Document Request Page</h3>
+            <p>This page allows users to request various official documents such as clearances and certificates.</p>
+            <a href="{{ route('document-request') }}">Click to Apply for Documents</a>
+        </div>
     </div>
-</div>
 
 <!-- News Title Section -->
 <section class="flex justify-center p-6">
@@ -353,10 +491,10 @@
         class="w-full max-w-screen-xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 overflow-hidden rounded-lg bg-white pt-16 pb-16 px-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] lg:p-10 lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]"
     >
         <!-- About Us Content -->
-        <div class="flex flex-col gap-6 justify-center text-center lg:text-left">
-            <h2 style="font-size: 35px; font-weight: bold;" class="text-2xl font-semibold text-black dark:text-white">About Us</h2>
-            <p style="font-size: 16px;" class="text-sm/relaxed text-gray-700 dark:text-gray-300">
-            Barangay 802, District 5, Sta. Ana, Manila City, Metro Manila, Philippines, is a peaceful, progressive, and highly-urbanized community. It consists of cooperative and morally upright residents, ambitious and responsive business owners and corporate managers, and committed and visionary leaders. Barangay 802 works hand in hand with its constituents to sustain a clean, green, safe, and healthy environment, fostering both physical and economic growth.
+        <div class="flex flex-col gap-6 justify-center text-center lg:text-left pt-10"> <!-- Added pt-10 for padding-top -->
+            <h2 style="font-size: 35px; font-weight: bold;" class="text-2xl font-semibold text-black dark:text-white mt-4">About Us</h2> <!-- Added mt-4 for margin-top -->
+            <p style="font-size: 16px;" class="text-sm/relaxed text-gray-700 dark:text-gray-300 mt-4"> <!-- Added mt-4 for margin-top -->
+                Barangay 802, District 5, Sta. Ana, Manila City, Metro Manila, Philippines, is a peaceful, progressive, and highly-urbanized community. It consists of cooperative and morally upright residents, ambitious and responsive business owners and corporate managers, and committed and visionary leaders. Barangay 802 works hand in hand with its constituents to sustain a clean, green, safe, and healthy environment, fostering both physical and economic growth.
             </p>
             <a href="#"
                class="mt-4 inline-block px-6 py-3 bg-green-500 text-white font-semibold rounded-md transition hover:bg-green-600">
@@ -375,6 +513,7 @@
         </div>
     </div>
 </section>
+
 
 <!-- Map Section -->
 <section class="flex justify-center py-5 ">
@@ -413,35 +552,35 @@
 </section>
 
 <!-- Barangay Section -->
-<section class="barangay-section bg-[#11468F] text-white py-12 px-6">
-    <div class="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+<section class="barangay-section bg-[#11468F] text-white py-8 lg:py-12 px-4 lg:px-6">
+    <div class="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
         <!-- Left Column: Logo and Name with Centered Alignment -->
-        <div class="flex items-center justify-center lg:justify-start gap-4">
-            <img src="{{ asset('logo/802-GO-LOGO.png') }}" alt="Barangay Logo" class="h-20 w-20 object-contain">
+        <div class="flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-4 text-center lg:text-left">
+            <img src="{{ asset('logo/802-GO-LOGO.png') }}" alt="Barangay Logo" class="h-16 w-16 lg:h-20 lg:w-20 object-contain">
             <div>
-                <div class="text-xl font-semibold">Barangay 802</div>
-                <div class="text-sm mt-1">District 5, Sta. Ana Manila City, Metro Manila, Philippines</div>
+            <div class="text-3xl lg:text-4xl font-semibold" style="font-size: 1.5rem;">Barangay 802</div> 
+                <div class="text-xs lg:text-sm mt-1">District 5, Sta. Ana Manila City, Metro Manila, Philippines</div>
             </div>
         </div>
 
         <!-- Right Column: Contact Information -->
         <div class="contact-info text-center lg:text-right">
-            <h2 class="text-lg font-semibold">CONTACT US:</h2>
+            <h2 class="text-base lg:text-lg font-semibold" style="font-size: 1.5rem;">CONTACT US:</h2>
             <div class="contact-item mt-2">
                 <span class="contact-title font-semibold">24-Hour Command Center:</span>
-                <span class="contact-detail block">8-000-0000 / 0999 123 4567</span>
+                <span class="contact-detail block text-sm lg:text-base">8-000-0000 / 0999 123 4567</span>
             </div>
             <div class="contact-item mt-2">
                 <span class="contact-title font-semibold">Office of the Barangay Captain:</span>
-                <span class="contact-detail block">8-000-0000</span>
+                <span class="contact-detail block text-sm lg:text-base">8-000-0000</span>
             </div>
             <div class="contact-item mt-2">
                 <span class="contact-title font-semibold">Email:</span>
-                <span class="contact-detail block">email@gmail.com</span>
+                <span class="contact-detail block text-sm lg:text-base">email@gmail.com</span>
             </div>
             <div class="contact-item mt-2">
                 <span class="contact-title font-semibold">Address:</span>
-                <span class="contact-detail block">District 5, Sta. Ana Manila City, Metro Manila, Philippines</span>
+                <span class="contact-detail block text-sm lg:text-base">District 5, Sta. Ana Manila City, Metro Manila, Philippines</span>
             </div>
         </div>
     </div>
