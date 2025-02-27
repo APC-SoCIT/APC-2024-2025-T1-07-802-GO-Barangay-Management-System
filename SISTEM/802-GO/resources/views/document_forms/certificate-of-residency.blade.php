@@ -407,7 +407,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     <h1>Barangay Certificate of Residency</h1>
 
-    <form action="{{ route('submit-document-request') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('submit-certificate-of-residency') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <input type="hidden" name="document_type" value="certificate_of_residency">
 
@@ -451,7 +451,7 @@ document.addEventListener("DOMContentLoaded", function() {
         <input id="contact_number" type="text" name="contact_number" class="input-field required" required>
 
         <label class="form-label">Purpose of Request <span class="text-red-500">*</span></label>
-        <select id="purpose" name="purpose" class="input-field required" required onchange="toggleOtherPurpose()">
+        <select id="purpose_of_request" name="purpose_of_request" class="input-field required" required onchange="toggleOtherPurpose()">
             <option value="">Select Purpose</option>
             <option value="Proof of Residency">Proof of Residency</option>
             <option value="School Requirement">School Requirement</option>

@@ -411,7 +411,7 @@ document.addEventListener("DOMContentLoaded", function() {
         <h1>Barangay ID</h1>
 
         <!-- Form -->
-        <form action="{{ route('submit-document-request') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('submit-barangay-id') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="document_type" value="barangay_id">
 
@@ -460,7 +460,7 @@ document.addEventListener("DOMContentLoaded", function() {
             <input id="contact_number" name="contact_number" type="text" class="input-field required" required>
 
             <label class="form-label">Purpose of Request <span class="text-red-500">*</span></label>
-            <select id="purpose" name="purpose" class="input-field required" required onchange="toggleOtherPurpose()">
+            <select id="purpose_of_request" name="purpose_of_request" class="input-field required" required onchange="toggleOtherPurpose()">
                 <option value="">Select Purpose</option>
                 <option value="Personal Identification">Personal Identification</option>
                 <option value="Employment Requirement">Employment Requirement</option>

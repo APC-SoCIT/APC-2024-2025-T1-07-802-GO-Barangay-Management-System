@@ -28,6 +28,60 @@ class DocumentRequestController extends Controller
     public function cedula() { return view('document_forms.cedula'); }
 
     /**
+     * Handle form submission for Barangay Clearance.
+     */
+    public function submitBarangayClearance(Request $request)
+    {
+        $request->merge(['document_type' => 'barangay-clearance']);
+        return $this->store($request);
+    }
+
+    /**
+     * Handle form submission for Certificate of Residency.
+     */
+    public function submitCertificateOfResidency(Request $request)
+    {
+        $request->merge(['document_type' => 'certificate-of-residency']);
+        return $this->store($request);
+    }
+
+    /**
+     * Handle form submission for Indigency Certificate.
+     */
+    public function submitIndigencyCertificate(Request $request)
+    {
+        $request->merge(['document_type' => 'indigency-certificate']);
+        return $this->store($request);
+    }
+
+    /**
+     * Handle form submission for Barangay ID.
+     */
+    public function submitBarangayID(Request $request)
+    {
+        $request->merge(['document_type' => 'barangay-id']);
+        return $this->store($request);
+    }
+
+    /**
+     * Handle form submission for Business Permit.
+     */
+    public function submitBusinessPermit(Request $request)
+    {
+        $request->merge(['document_type' => 'business-permit']);
+        return $this->store($request);
+    }
+
+    /**
+     * Handle form submission for Cedula.
+     */
+    public function submitCedula(Request $request)
+    {
+        $request->merge(['document_type' => 'cedula']);
+        return $this->store($request);
+    }
+
+    /**
      * Handle form submission and store the request in the database.
      */
     public function store(Request $request)
@@ -68,7 +122,7 @@ class DocumentRequestController extends Controller
             'barangay' => '802',
             'district' => 'Sta. Ana',
             'city' => 'Manila',
-            'purpose_of_request' => $request->purpose,
+            'purpose_of_request' => $request->purpose_of_request,
             'purpose_of_cedula' => $request->purpose_of_cedula,
             'business_name' => $request->business_name,
             'business_address' => $request->block_street,

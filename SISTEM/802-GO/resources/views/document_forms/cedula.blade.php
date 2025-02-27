@@ -406,7 +406,7 @@ document.addEventListener("DOMContentLoaded", function() {
     
     <h1>Community Tax Certificate (Cedula)</h1>
 
-    <form action="{{ route('submit-document-request') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('submit-cedula') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <input type="hidden" name="document_type" value="cedula">
 
