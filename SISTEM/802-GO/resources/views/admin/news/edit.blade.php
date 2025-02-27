@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.dashboard')
 <style>
     .news-container {
     width: 100%;

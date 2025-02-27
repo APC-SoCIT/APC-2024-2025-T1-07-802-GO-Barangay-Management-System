@@ -1,12 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => 'dev-News_MOLDEZ',
-        'version' => 'dev-News_MOLDEZ',
-        'reference' => 'b9df2fbccb7ef0850ea1278d3cbae0c8579154c1',
-        'pretty_version' => 'dev-valid-id',
-        'version' => 'dev-valid-id',
-        'reference' => '50d31e1e01dedb5c2fbc7b14a3f8ecb26443d730',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '65e8a0cd8284c8d603acc84f3cc46e6259758d32',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -14,12 +11,9 @@
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => 'dev-News_MOLDEZ',
-            'version' => 'dev-News_MOLDEZ',
-            'reference' => 'b9df2fbccb7ef0850ea1278d3cbae0c8579154c1',
-            'pretty_version' => 'dev-valid-id',
-            'version' => 'dev-valid-id',
-            'reference' => '50d31e1e01dedb5c2fbc7b14a3f8ecb26443d730',
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '65e8a0cd8284c8d603acc84f3cc46e6259758d32',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

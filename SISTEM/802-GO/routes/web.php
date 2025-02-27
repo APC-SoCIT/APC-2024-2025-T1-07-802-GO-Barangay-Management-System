@@ -32,7 +32,8 @@ Route::prefix('admin')->group(function () {
 
     // Delete a news article (DELETE)
     Route::delete('/news/{news}', [\App\Http\Controllers\Admin\NewsController::class, 'destroy'])->name('admin.news.destroy');
-});
+
+   });
 
 // User Routes
 Route::get('/index', [\App\Http\Controllers\NewsController::class, 'index'])->name('news.index');

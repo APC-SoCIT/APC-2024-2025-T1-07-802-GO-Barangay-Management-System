@@ -413,10 +413,10 @@
             <header class="header-grid">
                 <!-- Left-aligned Navigation Links -->
                 <nav class="left-section flex space-x-4">
-                    <a href="{{ route('welcome') }}" class="rounded-md px-3 py-2 text-white bg-[#FF2D20] ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20] active">
+                    <a href="{{ route('welcome') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
                         Home
                     </a>
-                    <a href="{{ route('news.index') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
+                    <a href="{{ route('news.index') }}" class="rounded-md px-3 py-2 text-white bg-[#FF2D20] ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20] active">
                         News
                     </a>
                     <a href="{{ route('document-request') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
@@ -426,7 +426,7 @@
 
                 <!-- Centered Logo -->
                 <div class="center-section">
-                    <img src="{{ asset('logo/802-GO-LOGO.png') }}" alt="Logo" class="h-16 w-auto">
+                    <a href="{{ route('admin.news.index') }}"> <img src="{{ asset('logo/802-GO-LOGO.png') }}" alt="Logo" class="h-16 w-auto"></a>
                 </div>
 
                 @if (Route::has('login'))
