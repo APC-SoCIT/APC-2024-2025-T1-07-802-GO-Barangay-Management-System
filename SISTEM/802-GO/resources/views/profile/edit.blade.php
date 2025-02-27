@@ -1,4 +1,18 @@
-<x-app-layout :title="'802-GO: Profile'">
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>802-GO: Profile</title>
+    <link rel="icon" href="{{ asset('logo/802-GO-LOGO.png') }}" type="image/x-icon">
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <!-- Include Tailwind CSS if needed -->
+</head>
+<body class="bg-gray-100 dark:bg-gray-900">
+
     <!-- Custom Full-Width Header -->
     <header class="bg-[#11468F] text-white py-4 px-6">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
@@ -46,4 +60,6 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+
+</body>
+</html>
