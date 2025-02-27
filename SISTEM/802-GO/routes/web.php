@@ -2,102 +2,86 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NewsController;
-use App\Http\Controllers\DocumentRequestController;
-use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\DocumentRequestController as UserDocumentRequestController;
+use App\Http\Controllers\Admin\DocumentRequestController as AdminDocumentRequestController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/document-requests', [AdminDocumentRequestController::class, 'index'])->name('document-requests.index');
+    Route::get('/document-requests/{id}', [AdminDocumentRequestController::class, 'show'])->name('document-requests.show');
+    Route::get('/document-requests/{id}/edit', [AdminDocumentRequestController::class, 'edit'])->name('document-requests.edit');
+    Route::patch('/document-requests/{id}', [AdminDocumentRequestController::class, 'update'])->name('document-requests.update');
+    Route::delete('/document-requests/{id}', [AdminDocumentRequestController::class, 'destroy'])->name('document-requests.destroy');
+});
 
-// Admin Routes
-// routes/web.php
-Route::prefix('admin')->group(function () {
-    // List all news (GET)
-    Route::get('/news', [\App\Http\Controllers\Admin\NewsController::class, 'index'])->name('admin.news.index');
-
-    // Show the create form (GET)
-    Route::get('/news/create', [\App\Http\Controllers\Admin\NewsController::class, 'create'])->name('admin.news.create');
-
-    // Store a new news article (POST)
-    Route::post('/news', [\App\Http\Controllers\Admin\NewsController::class, 'store'])->name('admin.news.store');
-
-    // Show a single news article (GET) - Optional (exclude if not needed)
-    Route::get('/news/{news}', [\App\Http\Controllers\Admin\NewsController::class, 'show'])->name('admin.news.show');
-
-    // Show the edit form (GET)
-    Route::get('/news/{news}/edit', [\App\Http\Controllers\Admin\NewsController::class, 'edit'])->name('admin.news.edit');
-
-    // Update a news article (PUT/PATCH)
-    Route::put('/news/{news}', [\App\Http\Controllers\Admin\NewsController::class, 'update'])->name('admin.news.update');
-    Route::patch('/news/{news}', [\App\Http\Controllers\Admin\NewsController::class, 'update']);
-
-    // Delete a news article (DELETE)
-    Route::delete('/news/{news}', [\App\Http\Controllers\Admin\NewsController::class, 'destroy'])->name('admin.news.destroy');
-
-   });
-
-// User Routes
-Route::get('/index', [\App\Http\Controllers\NewsController::class, 'index'])->name('news.index');
-Route::get('/news/{news}', [\App\Http\Controllers\NewsController::class, 'show'])->name('news.show');
-
-Route::get('/document-request', [DocumentRequestController::class, 'index'])->name('document-request');
-
-Route::get('/barangay-clearance', [DocumentRequestController::class, 'barangayClearance'])->name('barangay-clearance');
-Route::get('/certificate-of-residency', [DocumentRequestController::class, 'certificateOfResidency'])->name('certificate-of-residency');
-Route::get('/indigency-certificate', [DocumentRequestController::class, 'indigencyCertificate'])->name('indigency-certificate');
-Route::get('/barangay-id', [DocumentRequestController::class, 'barangayID'])->name('barangay-id');
-Route::get('/business-permit', [DocumentRequestController::class, 'businessPermit'])->name('business-permit');
-Route::get('/cedula', [DocumentRequestController::class, 'cedula'])->name('cedula'); // ✅ Added Cedula Route
-
+// Force URL Configuration
 $url = config('app.url');
 URL::forceRootUrl($url);
 
+// Home Page
 Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/sample-news-1', function () {
-    return view('news.sample-news-1');
-})->name('sample-news-1');
-
-Route::get('/sample-news-2', function () {
-    return view('news.sample-news-2');
-})->name('sample-news-2');
-
-Route::get('/sample-news-3', function () {
-    return view('news.sample-news-3');
-})->name('sample-news-3');
-
-Route::get('/welcome', function () {
     return view('welcome');
 })->name('welcome');
 
-Route::get('/news-page', function () {
-    return view('news.news-page');
-})->name('news-page');
-
-Route::get('/document-request', function () {
-    return view('document-request');
-})->name('document-request');
-
+// Dashboard (Authenticated Users Only)
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::post('/submit-barangay-clearance', [DocumentController::class, 'submitBarangayClearance'])->name('submit-barangay-clearance');
-Route::post('/submit-certificate-of-residency', [DocumentController::class, 'submitCertificateOfResidency'])->name('submit-certificate-of-residency');
-Route::post('/submit-indigency-certificate', [DocumentController::class, 'submitIndigencyCertificate'])->name('submit-indigency-certificate');
-Route::post('/submit-barangay-id', [DocumentController::class, 'submitBarangayId'])->name('submit-barangay-id');
-Route::post('/submit-business-permits', [DocumentController::class, 'submitBusinessPermits'])->name('submit-business-permits');
-Route::post('/submit-cedula', [DocumentController::class, 'submitCedula'])->name('submit-cedula'); // ✅ Added Cedula Submission Route
+// News Pages
+Route::get('/news-page', function () {
+    return view('news.news-page');
+})->name('news-page');
+Route::get('/sample-news-1', function () {
+    return view('news.sample-news-1');
+})->name('sample-news-1');
+Route::get('/sample-news-2', function () {
+    return view('news.sample-news-2');
+})->name('sample-news-2');
+Route::get('/sample-news-3', function () {
+    return view('news.sample-news-3');
+})->name('sample-news-3');
 
+// User News Routes
+Route::get('/index', [NewsController::class, 'index'])->name('news.index');
+Route::get('/news/{news}', [NewsController::class, 'show'])->name('news.show');
+
+// Document Request Pages
+Route::get('/document-request', [UserDocumentRequestController::class, 'index'])->name('document-request');
+Route::get('/barangay-clearance', [UserDocumentRequestController::class, 'barangayClearance'])->name('barangay-clearance');
+Route::get('/certificate-of-residency', [UserDocumentRequestController::class, 'certificateOfResidency'])->name('certificate-of-residency');
+Route::get('/indigency-certificate', [UserDocumentRequestController::class, 'indigencyCertificate'])->name('indigency-certificate');
+Route::get('/barangay-id', [UserDocumentRequestController::class, 'barangayID'])->name('barangay-id');
+Route::get('/business-permit', [UserDocumentRequestController::class, 'businessPermit'])->name('business-permit');
+Route::get('/cedula', [UserDocumentRequestController::class, 'cedula'])->name('cedula');
+
+// Form Submission Routes
+Route::post('/submit-barangay-clearance', [UserDocumentRequestController::class, 'submitBarangayClearance'])->name('submit-barangay-clearance');
+Route::post('/submit-certificate-of-residency', [UserDocumentRequestController::class, 'submitCertificateOfResidency'])->name('submit-certificate-of-residency');
+Route::post('/submit-indigency-certificate', [UserDocumentRequestController::class, 'submitIndigencyCertificate'])->name('submit-indigency-certificate');
+Route::post('/submit-barangay-id', [UserDocumentRequestController::class, 'submitBarangayID'])->name('submit-barangay-id');
+Route::post('/submit-business-permit', [UserDocumentRequestController::class, 'submitBusinessPermit'])->name('submit-business-permit');
+Route::post('/submit-cedula', [UserDocumentRequestController::class, 'submitCedula'])->name('submit-cedula');
+
+// News Management
+Route::prefix('admin/news')->name('admin.news.')->group(function () {
+    Route::get('/', [\App\Http\Controllers\Admin\NewsController::class, 'index'])->name('index');
+    Route::get('/create', [\App\Http\Controllers\Admin\NewsController::class, 'create'])->name('create');
+    Route::post('/', [\App\Http\Controllers\Admin\NewsController::class, 'store'])->name('store');
+    Route::get('/{news}', [\App\Http\Controllers\Admin\NewsController::class, 'show'])->name('show');
+    Route::get('/{news}/edit', [\App\Http\Controllers\Admin\NewsController::class, 'edit'])->name('edit');
+    Route::put('/{news}', [\App\Http\Controllers\Admin\NewsController::class, 'update'])->name('update');
+    Route::patch('/{news}', [\App\Http\Controllers\Admin\NewsController::class, 'update']);
+    Route::delete('/{news}', [\App\Http\Controllers\Admin\NewsController::class, 'destroy'])->name('destroy');
+});
+
+// Profile Management (Authenticated Users Only)
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth'])->group(function () {
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-});
-
+// Authentication Routes
 require __DIR__.'/auth.php';
