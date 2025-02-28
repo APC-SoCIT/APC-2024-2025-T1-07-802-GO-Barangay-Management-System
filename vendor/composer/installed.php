@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => 'dev-email-verification',
-        'version' => 'dev-email-verification',
-        'reference' => 'a87e811bb86abd2bc174f95d3c5b5ab2e385b9ad',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => 'd40d2794ade817cbdb3453ca846192b015f2d6eb',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => 'dev-email-verification',
-            'version' => 'dev-email-verification',
-            'reference' => 'a87e811bb86abd2bc174f95d3c5b5ab2e385b9ad',
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => 'd40d2794ade817cbdb3453ca846192b015f2d6eb',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
