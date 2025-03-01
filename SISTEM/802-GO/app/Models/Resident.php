@@ -27,8 +27,11 @@ class Resident extends Model
         'voter_status',
     ];
 
-    protected $casts = [
-        'birth_date' => 'date',
+    public static $civilStatusOptions = [
+        'Single',
+        'Married',
+        'Widowed',
+        'Divorced',
     ];
 }
 
