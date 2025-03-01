@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\DocumentRequestController as UserDocumentRequestController;
 use App\Http\Controllers\Admin\DocumentRequestController as AdminDocumentRequestController;
+use App\Http\Controllers\Auth\AdminLoginController;
+use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
@@ -76,6 +78,19 @@ Route::prefix('admin/news')->name('admin.news.')->group(function () {
     Route::delete('/{news}', [\App\Http\Controllers\Admin\NewsController::class, 'destroy'])->name('destroy');
 });
 
+// Admin Authentication Routes (place these before other admin routes)
+Route::middleware('guest')->group(function () {
+    Route::get('admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
+    Route::post('admin/login', [AdminLoginController::class, 'login'])->name('admin.login.submit.submit');
+});
+
+// Admin Protected Routes
+Route::prefix('admin/news')->name('admin.news')->middleware(['auth', 'admin'])->group(function () {
+    Route::get('/news', [AdminController::class, 'index'])->name('news');
+    Route::get('/news', [AdminNewsController::class, 'index'])->name('admin.news.index');
+});
+
+
 // Profile Management (Authenticated Users Only)
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -85,3 +100,5 @@ Route::middleware('auth')->group(function () {
 
 // Authentication Routes
 require __DIR__.'/auth.php';
+
+
