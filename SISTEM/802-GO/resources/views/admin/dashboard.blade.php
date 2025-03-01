@@ -25,13 +25,14 @@
 
         /* Sidebar */
         .sidebar {
+            position: relative;
             width: 250px;
             background-color: #f8f9fa;
             border-right: 1px solid #ddd;
             padding: 20px;
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            min-height: 100vh;  /* Changed from height to min-height */
         }
 
         .sidebar .brand {
@@ -73,6 +74,34 @@
             flex: 1;
             padding: 20px;
         }
+
+        /* Add these new styles */
+        .logout-container {
+            margin-top: auto;  /* This pushes the container to the bottom */
+            width: 100%;
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            margin-top: 20px;  /* Add some space above the logout button */
+        }
+
+        .logout-btn:hover {
+            background-color: #ff4444 !important;
+            color: white;
+        }
+
+        .logout-btn i {
+            margin-right: 10px;
+        }
     </style>
 
     <!-- FontAwesome for icons -->
@@ -83,11 +112,22 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="brand">
-            <a href="{{ route('welcome') }}"><img src="{{ asset('logo/802-GO-LOGO.png') }}" alt="Logo"> 802-GO Admin</a>
+            <a><img src="{{ asset('logo/802-GO-LOGO.png') }}" alt="Logo"> 802-GO Admin</a>
         </div>
         <a href="#"><i class="fas fa-users"></i> Barangay Residents</a>
         <a href="{{ route('admin.news.index') }}"><i class="fas fa-newspaper"></i> Manage News</a>
         <a href="#"><i class="fas fa-file-alt"></i> Document Approval</a>
+        
+        <div class="logout-container">
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <a href="{{ route('logout') }}" 
+                   class="logout-btn"
+                   onclick="event.preventDefault(); this.closest('form').submit();">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </form>
+        </div>
     </div>
 
     <!-- Main Content -->

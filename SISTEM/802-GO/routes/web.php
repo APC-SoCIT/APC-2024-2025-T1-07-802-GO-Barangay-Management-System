@@ -81,7 +81,7 @@ Route::prefix('admin/news')->name('admin.news.')->group(function () {
 // Admin Authentication Routes (place these before other admin routes)
 Route::middleware('guest')->group(function () {
     Route::get('admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
-    Route::post('admin/login', [AdminLoginController::class, 'login'])->name('admin.login.submit.submit');
+    Route::post('admin/login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
 });
 
 // Admin Protected Routes
