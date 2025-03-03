@@ -118,7 +118,7 @@
         <a href="{{ route('admin.news.index') }}"><i class="fas fa-newspaper"></i> Manage News</a>
         <a href="#"><i class="fas fa-file-alt"></i> Document Approval</a>
         
-        <div class="logout-container">
+        <div class="logout-container" style="justify-content: center; align-items: center;">
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <a href="{{ route('logout') }}" 

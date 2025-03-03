@@ -1,4 +1,8 @@
 @extends('admin.dashboard')
+
+<title>Admin: News Management</title>
+<link rel="icon" href="{{ asset('logo/802-GO-LOGO.png') }}" type="image/x-icon">
+
 <style>
     /* Container Styling */
     .container {
