@@ -32,6 +32,7 @@ class User extends Authenticatable
         'valid_id',
         'email',
         'password',
+        'is_admin',
     ];
 
     /**
