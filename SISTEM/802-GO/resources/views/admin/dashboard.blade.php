@@ -114,7 +114,7 @@
         <div class="brand">
             <a><img src="{{ asset('logo/802-GO-LOGO.png') }}" alt="Logo"> 802-GO Admin</a>
         </div>
-        <a href="#"><i class="fas fa-users"></i> Barangay Residents</a>
+        <a href="{{ route('admin.residents.index') }}"><i class="fas fa-users"></i> Barangay Residents</a>
         <a href="{{ route('admin.news.index') }}"><i class="fas fa-newspaper"></i> Manage News</a>
         <a href="#"><i class="fas fa-file-alt"></i> Document Approval</a>
         
