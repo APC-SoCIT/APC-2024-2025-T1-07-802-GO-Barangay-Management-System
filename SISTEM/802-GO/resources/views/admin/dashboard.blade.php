@@ -102,6 +102,62 @@
         .logout-btn i {
             margin-right: 10px;
         }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-buttons {
+            margin-top: 20px;
+        }
+
+        .modal-button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .cancel-btn {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .cancel-btn:hover {
+            background-color: #0d6efd;
+            color: white;
+        }
+
+        .confirm-btn {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .confirm-btn:hover {
+            background-color: #dc3545;
+            color: white;
+        }
     </style>
 
     <!-- FontAwesome for icons -->
@@ -135,14 +191,47 @@
         @yield('content')
     </main>
 
+    <!-- Logout Confirmation Modal -->
+    <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <h3>Confirm Logout</h3>
+            <p>Are you sure you want to logout?</p>
+            <div class="modal-buttons">
+                <button class="modal-button cancel-btn" onclick="closeLogoutModal()">Cancel</button>
+                <button class="modal-button confirm-btn" onclick="confirmLogout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Add logout confirmation logic
+        const modal = document.getElementById('logoutModal');
+        let logoutForm = null;
+
+        // Show modal instead of default confirmation
         document.querySelector('.logout-btn').addEventListener('click', function(e) {
             e.preventDefault();
-            if (confirm('Are you sure you want to logout?')) {
-                this.closest('form').submit();
-            }
+            logoutForm = this.closest('form');
+            modal.style.display = 'flex';
         });
+
+        // Close modal
+        function closeLogoutModal() {
+            modal.style.display = 'none';
+        }
+
+        // Confirm logout
+        function confirmLogout() {
+            if (logoutForm) {
+                logoutForm.submit();
+            }
+        }
+
+        // Close modal if clicking outside
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeLogoutModal();
+            }
+        }
     </script>
 
 </body>
