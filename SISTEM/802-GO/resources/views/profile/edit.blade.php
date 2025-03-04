@@ -29,9 +29,9 @@
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit" 
-                    style="color: white; padding: 8px 16px; border-radius: 6px; background-color: transparent; transition: background-color 0.3s, color 0.3s, font-weight 0.3s;"
-                    onmouseover="this.style.backgroundColor='white'; this.style.color='#11468F'; this.style.fontWeight='bold'" 
-                    onmouseout="this.style.backgroundColor='transparent'; this.style.color='white'; this.style.fontWeight='normal'">
+                    style="color: #11468F; padding: 8px 16px; border-radius: 6px; background-color: white; transition: all 0.3s ease;"
+                    onmouseover="this.style.backgroundColor='#ff4444'; this.style.color='white'; this.style.fontWeight='bold'" 
+                    onmouseout="this.style.backgroundColor='white'; this.style.color='#11468F'; this.style.fontWeight='normal'">
                     Logout
                 </button>
             </form>
