@@ -122,8 +122,8 @@
                 <button type="button" 
                     onclick="showLogoutModal()"
                     style="color: white; padding: 8px 16px; border-radius: 6px; background-color: #ff4444; transition: all 0.3s ease;"
-                    onmouseover="this.style.backgroundColor='#cc0000'; this.style.transform='scale(1.1)'" 
-                    onmouseout="this.style.backgroundColor='#ff4444'; this.style.transform='scale(1)'">
+                    onmouseover="this.style.backgroundColor='#ff4444'; this.style.transform='scale(1.1)'" 
+                    onmouseout="this.style.backgroundColor='#cc0000'; this.style.transform='scale(1)'">
                     Logout
                 </button>
             </form>
