@@ -102,6 +102,85 @@
         .logout-btn i {
             margin-right: 10px;
         }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-buttons {
+            margin-top: 20px;
+        }
+
+        .modal-button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .cancel-btn {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .cancel-btn:hover {
+            background-color: #0d6efd;
+            color: white;
+        }
+
+        .confirm-btn {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .confirm-btn:hover {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .modal-header {
+            background-color: #0d6efd;
+            color: white;
+            padding: 15px;
+            margin: -20px -20px 15px -20px;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-header img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
     </style>
 
     <!-- FontAwesome for icons -->
@@ -119,11 +198,11 @@
         <a href="#"><i class="fas fa-file-alt"></i> Document Approval</a>
         
         <div class="logout-container" style="justify-content: center; align-items: center;">
-            <form method="POST" action="{{ route('logout') }}">
+            <form method="POST" action="{{ route('logout') }}" id="logout-form">
                 @csrf
-                <a href="{{ route('logout') }}" 
+                <a href="#" 
                    class="logout-btn"
-                   onclick="event.preventDefault(); this.closest('form').submit();">
+                   onclick="event.preventDefault(); showLogoutModal();">
                     <i class="fas fa-sign-out-alt"></i> Logout
                 </a>
             </form>
@@ -134,6 +213,48 @@
     <main class="main-content">
         @yield('content')
     </main>
+
+    <!-- Logout Confirmation Modal -->
+    <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img src="{{ asset('logo/802-GO-LOGO.png') }}" alt="Logo">
+                <h3>802-GO Admin</h3>
+            </div>
+            <p>Are you sure you want to logout?</p>
+            <div class="modal-buttons">
+                <button class="modal-button confirm-btn" onclick="confirmLogout()">Logout</button>
+                <button class="modal-button cancel-btn" onclick="closeLogoutModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('logoutModal');
+        const logoutForm = document.getElementById('logout-form');
+
+        // Show modal
+        function showLogoutModal() {
+            modal.style.display = 'flex';
+        }
+
+        // Close modal
+        function closeLogoutModal() {
+            modal.style.display = 'none';
+        }
+
+        // Confirm logout
+        function confirmLogout() {
+            logoutForm.submit();
+        }
+
+        // Close modal if clicking outside
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeLogoutModal();
+            }
+        }
+    </script>
 
 </body>
 </html>
