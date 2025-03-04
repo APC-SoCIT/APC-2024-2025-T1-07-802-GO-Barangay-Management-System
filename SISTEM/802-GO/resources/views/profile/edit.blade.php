@@ -76,26 +76,29 @@
             cursor: pointer;
             font-size: 14px;
             transition: all 0.3s ease;
+            transform: scale(1);
         }
 
         .cancel-btn {
-            background-color: #f8f9fa;
-            color: #333;
-        }
-
-        .cancel-btn:hover {
             background-color: #11468F;
             color: white;
         }
 
+        .cancel-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+        }
+
         .confirm-btn {
-            background-color: #f8f9fa;
-            color: #333;
+            background-color: #ff4444;
+            color: white;
         }
 
         .confirm-btn:hover {
-            background-color: #ff4444;
-            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
         }
     </style>
 </head>
