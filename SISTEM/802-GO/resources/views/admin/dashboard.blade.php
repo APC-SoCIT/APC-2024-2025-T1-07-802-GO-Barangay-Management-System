@@ -223,8 +223,8 @@
             </div>
             <p>Are you sure you want to logout?</p>
             <div class="modal-buttons">
-                <button class="modal-button cancel-btn" onclick="closeLogoutModal()">Cancel</button>
                 <button class="modal-button confirm-btn" onclick="confirmLogout()">Logout</button>
+                <button class="modal-button cancel-btn" onclick="closeLogoutModal()">Cancel</button>
             </div>
         </div>
     </div>
