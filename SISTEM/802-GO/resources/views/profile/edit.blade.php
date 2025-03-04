@@ -85,7 +85,7 @@
         }
 
         .cancel-btn:hover {
-            transform: scale(1.05);
+            transform: scale(1.10);
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             font-weight: bold;
         }
