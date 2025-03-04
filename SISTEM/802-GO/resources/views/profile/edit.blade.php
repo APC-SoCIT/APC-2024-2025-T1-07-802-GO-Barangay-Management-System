@@ -226,7 +226,7 @@
         }
     </style>
 </head>
-
+<body class="bg-gray-100 dark:bg-gray-900">
 
     <!-- Custom Full-Width Header -->
     <header class="bg-[#11468F] text-white py-4 px-6">
