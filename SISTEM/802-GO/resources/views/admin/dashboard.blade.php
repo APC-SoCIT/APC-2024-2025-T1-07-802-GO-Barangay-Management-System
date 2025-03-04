@@ -175,11 +175,11 @@
         <a href="#"><i class="fas fa-file-alt"></i> Document Approval</a>
         
         <div class="logout-container" style="justify-content: center; align-items: center;">
-            <form method="POST" action="{{ route('logout') }}">
+            <form method="POST" action="{{ route('logout') }}" id="logout-form">
                 @csrf
-                <a href="{{ route('logout') }}" 
+                <a href="#" 
                    class="logout-btn"
-                   onclick="event.preventDefault(); this.closest('form').submit();">
+                   onclick="event.preventDefault(); showLogoutModal();">
                     <i class="fas fa-sign-out-alt"></i> Logout
                 </a>
             </form>
@@ -205,14 +205,12 @@
 
     <script>
         const modal = document.getElementById('logoutModal');
-        let logoutForm = null;
+        const logoutForm = document.getElementById('logout-form');
 
-        // Show modal instead of default confirmation
-        document.querySelector('.logout-btn').addEventListener('click', function(e) {
-            e.preventDefault();
-            logoutForm = this.closest('form');
+        // Show modal
+        function showLogoutModal() {
             modal.style.display = 'flex';
-        });
+        }
 
         // Close modal
         function closeLogoutModal() {
@@ -221,9 +219,7 @@
 
         // Confirm logout
         function confirmLogout() {
-            if (logoutForm) {
-                logoutForm.submit();
-            }
+            logoutForm.submit();
         }
 
         // Close modal if clicking outside
