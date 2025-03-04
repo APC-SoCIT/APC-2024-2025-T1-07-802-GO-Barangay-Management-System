@@ -135,5 +135,15 @@
         @yield('content')
     </main>
 
+    <script>
+        // Add logout confirmation logic
+        document.querySelector('.logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            if (confirm('Are you sure you want to logout?')) {
+                this.closest('form').submit();
+            }
+        });
+    </script>
+
 </body>
 </html>
