@@ -165,6 +165,16 @@
             padding: 15px;
             margin: -20px -20px 15px -20px;
             border-radius: 8px 8px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-header img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
         }
 
         .modal-header h3 {
@@ -208,6 +218,7 @@
     <div id="logoutModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
+                <img src="{{ asset('logo/802-GO-LOGO.png') }}" alt="Logo">
                 <h3>802-GO Admin</h3>
             </div>
             <p>Are you sure you want to logout?</p>
