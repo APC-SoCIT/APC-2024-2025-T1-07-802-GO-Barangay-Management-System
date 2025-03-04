@@ -392,7 +392,20 @@
         </div>
     </div>
 
-    
+    <!-- Logout Confirmation Modal -->
+    <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <img src="{{ asset('logo/802-GO-LOGO.png') }}" alt="Background Logo" class="modal-background-logo">
+            <div class="modal-header">
+                <h3>802-GO</h3>
+            </div>
+            <p>Are you sure you want to logout?</p>
+            <div class="modal-buttons">
+                <button class="modal-button confirm-btn" onclick="confirmLogout()">Logout</button>
+                <button class="modal-button cancel-btn" onclick="closeLogoutModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         const modal = document.getElementById('logoutModal');
