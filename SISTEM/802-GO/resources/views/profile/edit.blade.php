@@ -9,7 +9,222 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    
+    <style>
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal-background-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150px;
+            height: 150px;
+            opacity: 0.1;
+            z-index: 1;
+        }
+
+        .modal-header {
+            background-color: #11468F;
+            color: white;
+            padding: 15px;
+            margin: -20px -20px 15px -20px;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .modal-content p,
+        .modal-buttons {
+            position: relative;
+            z-index: 2;
+        }
+
+        .modal-buttons {
+            margin-top: 20px;
+        }
+
+        .modal-button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            transform: scale(1);
+        }
+
+        .cancel-btn {
+            background-color: #11468F;
+            color: white;
+        }
+
+        .cancel-btn:hover {
+            transform: scale(1.10);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+        }
+
+        .confirm-btn {
+            background-color: #ff4444;
+            color: white;
+        }
+
+        .confirm-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+        }
+
+        /* Collapsible Section Styles */
+        .collapse-button {
+            @apply w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-gray-700 
+                   hover:bg-gray-100 dark:hover:bg-gray-600 
+                   transition-all duration-300 ease-in-out;
+        }
+
+        .section-icon {
+            @apply w-5 h-5 transition-all duration-300;
+        }
+
+        /* Profile icon hover effect */
+        .section-icon.text-blue-500:hover {
+            @apply text-blue-400;
+            filter: drop-shadow(0 0 4px rgba(59, 130, 246, 0.5));
+        }
+
+        /* Password icon hover effect */
+        .section-icon.text-yellow-500:hover {
+            @apply text-yellow-400;
+            filter: drop-shadow(0 0 4px rgba(234, 179, 8, 0.5));
+        }
+
+        /* Delete icon hover effect */
+        .section-icon.text-red-500:hover {
+            @apply text-red-400;
+            filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.5));
+        }
+
+        .chevron-icon {
+            width: 12px !important;
+            height: 12px !important;
+            min-width: 12px !important;
+            min-height: 12px !important;
+            @apply text-gray-500 dark:text-gray-400;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center;
+            position: relative;
+            top: 0;
+        }
+
+        [x-cloak] { display: none !important; }
+
+        /* Chevron states */
+        .chevron-icon.expanded {
+            transform: rotate(180deg);
+            top: 2px;
+        }
+        
+        .chevron-icon.collapsed {
+            transform: rotate(0deg);
+            top: -2px;
+        }
+
+        /* Updated Section Container Base Styles */
+        .section-container {
+            @apply bg-white dark:bg-gray-800 shadow-md 
+                   transition-all duration-300;
+            border: 2px solid rgba(0, 0, 0, 0.2);
+            border-radius: 24px; /* Increased border radius */
+            position: relative;
+            isolation: isolate;
+            padding: 4px; /* Added padding around entire container */
+        }
+
+        /* Profile Section Hover Styles */
+        .section-container.profile-section:hover {
+            border-color: rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.15),
+                       0 0 0 2px rgba(0, 0, 0, 0.2),
+                       0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+
+        /* Password Section Hover Styles */
+        .section-container.password-section:hover {
+            border-color: rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 20px rgba(234, 179, 8, 0.15),
+                       0 0 0 2px rgba(0, 0, 0, 0.2),
+                       0 0 0 4px rgba(234, 179, 8, 0.1);
+        }
+
+        /* Delete Section Hover Styles */
+        .section-container.delete-section:hover {
+            border-color: rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.15),
+                       0 0 0 2px rgba(0, 0, 0, 0.2),
+                       0 0 0 4px rgba(239, 68, 68, 0.1);
+        }
+
+        /* Update collapse button styles to match new rounded corners */
+        .collapse-button {
+            @apply w-full bg-gray-50 dark:bg-gray-700 
+                   transition-all duration-300 ease-in-out;
+            border-radius: 20px; /* Slightly reduced to nest inside container */
+            padding: 16px 24px; /* Increased padding */
+        }
+
+        /* Adjust spacing for button content */
+        .collapse-button .flex.items-center.space-x-2 {
+            @apply space-x-4; /* Increased space between icon and text */
+        }
+
+        /* Update chevron positioning */
+        .chevron-icon {
+            margin-right: 8px; /* Add some space from the right edge */
+            width: 12px !important;
+            height: 12px !important;
+            min-width: 12px !important;
+            min-height: 12px !important;
+            @apply text-gray-500 dark:text-gray-400;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center;
+            position: relative;
+            top: 0;
+        }
+
+        /* Update content border radius for smoother appearance */
+        .collapse-content {
+            @apply p-8 border-t dark:border-gray-600; /* Increased padding */
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            margin: 4px; /* Added margin to match container padding */
+        }
+    </style>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900">
 
