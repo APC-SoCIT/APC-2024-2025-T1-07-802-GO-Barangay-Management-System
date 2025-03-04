@@ -158,6 +158,19 @@
             background-color: #dc3545;
             color: white;
         }
+
+        .modal-header {
+            background-color: #0d6efd;
+            color: white;
+            padding: 15px;
+            margin: -20px -20px 15px -20px;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
     </style>
 
     <!-- FontAwesome for icons -->
@@ -194,7 +207,9 @@
     <!-- Logout Confirmation Modal -->
     <div id="logoutModal" class="modal">
         <div class="modal-content">
-            <h3>Confirm Logout</h3>
+            <div class="modal-header">
+                <h3>802-GO Admin</h3>
+            </div>
             <p>Are you sure you want to logout?</p>
             <div class="modal-buttons">
                 <button class="modal-button cancel-btn" onclick="closeLogoutModal()">Cancel</button>
