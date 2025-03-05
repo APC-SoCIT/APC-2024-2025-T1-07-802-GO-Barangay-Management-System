@@ -1,134 +1,235 @@
 @extends('admin.dashboard')
 
-<title>Admin: CreateResident </title>
-<link rel="icon" href="{{ asset('logo/802-GO-LOGO.png') }}" type="image/x-icon">
-
 @section('content')
-<div class="flex justify-center mt-10">
-    <div class="w-full max-w-4xl bg-white shadow-lg rounded-lg p-8">
-        <h2 class="text-3xl font-bold text-center text-gray-800">Add New Resident</h2>
-        <p class="text-gray-600 text-center mb-6">Fill out the details below to register a new resident.</p>
+<div class="container">
+  @if(session('success'))
+      <div class="alert alert-success alert-dismissible" role="alert">
+          <strong>Success!</strong>
+          <span>{{ session('success') }}</span>
+          <button class="close" onclick="this.parentElement.style.display='none'">
+              <i class="fas fa-times"></i>
+          </button>
+      </div>
+  @endif
+  <div class="mb-3">
+      <a href="{{ route('admin.residents.index') }}" class="back-link">
+          <i class="fas fa-arrow-left mr-2"></i> Back to Residents
+      </a>
+  </div>
 
-        <form method="POST" action="{{ route('admin.residents.store') }}" enctype="multipart/form-data">
-            @csrf
+  <div class="card">
+      <div class="card-header">
+          <h1 class="card-title">Add New Resident</h1>
+          <p class="card-subtitle">Fill out the details below to register a new resident</p>
+      </div>
 
-            <!-- Full Name -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                <div>
-                    <label for="first_name" class="block text-gray-700 font-semibold">First Name <span class="text-red-500">*</span></label>
-                    <input id="first_name" type="text" name="first_name" class="w-full border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500" required>
-                    @error('first_name') <p class="text-red-500 text-sm">{{ $message }}</p> @enderror
-                </div>
+      <div class="card-body">
+          <form method="POST" action="{{ route('admin.residents.store') }}" enctype="multipart/form-data">
+              @csrf
 
-                <div>
-                    <label for="middle_name" class="block text-gray-700 font-semibold">Middle Name</label>
-                    <input id="middle_name" type="text" name="middle_name" class="w-full border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500">
-                    @error('middle_name') <p class="text-red-500 text-sm">{{ $message }}</p> @enderror
-                </div>
+              <div class="row">
+                  <!-- Personal Information -->
+                  <div class="col-md-6">
+                      <div class="section">
+                          <div class="section-header">
+                              <i class="fas fa-user section-icon"></i>
+                              <h2 class="section-title">Personal Information</h2>
+                          </div>
+                          
+                          <div class="form-group">
+                              <label for="first_name" class="form-label">First Name <span class="text-danger">*</span></label>
+                              <input type="text" name="first_name" id="first_name" class="form-control" value="{{ old('first_name') }}" required>
+                              @error('first_name') <p class="text-danger small mt-1">{{ $message }}</p> @enderror
+                          </div>
+                          
+                          <div class="form-group">
+                              <label for="middle_name" class="form-label">Middle Name</label>
+                              <input type="text" name="middle_name" id="middle_name" class="form-control" value="{{ old('middle_name') }}">
+                              @error('middle_name') <p class="text-danger small mt-1">{{ $message }}</p> @enderror
+                          </div>
+                          
+                          <div class="form-group">
+                              <label for="last_name" class="form-label">Last Name <span class="text-danger">*</span></label>
+                              <input type="text" name="last_name" id="last_name" class="form-control" value="{{ old('last_name') }}" required>
+                              @error('last_name') <p class="text-danger small mt-1">{{ $message }}</p> @enderror
+                          </div>
+                          
+                          <div class="form-group">
+                              <label for="gender" class="form-label">Gender <span class="text-danger">*</span></label>
+                              <select name="gender" id="gender" class="form-control" required>
+                                  <option value="">Select Gender</option>
+                                  <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
+                                  <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
+                                  <option value="other" {{ old('gender') == 'other' ? 'selected' : '' }}>Other</option>
+                              </select>
+                              @error('gender') <p class="text-danger small mt-1">{{ $message }}</p> @enderror
+                          </div>
+                          
+                          <div class="form-group">
+                              <label for="birthdate" class="form-label">Birthdate <span class="text-danger">*</span></label>
+                              <input type="date" name="birthdate" id="birthdate" class="form-control" value="{{ old('birthdate') }}" required>
+                              @error('birthdate') <p class="text-danger small mt-1">{{ $message }}</p> @enderror
+                          </div>
+                          
+                          <div class="form-group">
+                              <label for="age" class="form-label">Age <span class="text-danger">*</span></label>
+                              <input type="number" name="age" id="age" class="form-control" value="{{ old('age') }}" required>
+                              @error('age') <p class="text-danger small mt-1">{{ $message }}</p> @enderror
+                          </div>
+                          
+                          <div class="form-group">
+                              <label for="civil_status" class="form-label">Civil Status <span class="text-danger">*</span></label>
+                              <select name="civil_status" id="civil_status" class="form-control" required>
+                                  <option value="">Select Status</option>
+                                  <option value="single" {{ old('civil_status') == 'single' ? 'selected' : '' }}>Single</option>
+                                  <option value="married" {{ old('civil_status') == 'married' ? 'selected' : '' }}>Married</option>
+                                  <option value="widowed" {{ old('civil_status') == 'widowed' ? 'selected' : '' }}>Widowed</option>
+                                  <option value="divorced" {{ old('civil_status') == 'divorced' ? 'selected' : '' }}>Divorced</option>
+                              </select>
+                              @error('civil_status') <p class="text-danger small mt-1">{{ $message }}</p> @enderror
+                          </div>
+                          
+                          <div class="form-group">
+                              <label for="religion" class="form-label">Religion</label>
+                              <input type="text" name="religion" id="religion" class="form-control" value="{{ old('religion') }}">
+                              @error('religion') <p class="text-danger small mt-1">{{ $message }}</p> @enderror
+                          </div>
+                      </div>
+                  </div>
+                  
+                  <!-- Address & ID -->
+                  <div class="col-md-6">
+                      <div class="section">
+                          <div class="section-header">
+                              <i class="fas fa-map-marker-alt section-icon"></i>
+                              <h2 class="section-title">Address & Identification</h2>
+                          </div>
+                          
+                          <div class="form-group">
+                              <label for="block_street" class="form-label">Block/Street <span class="text-danger">*</span></label>
+                              <input type="text" name="block_street" id="block_street" class="form-control" value="{{ old('block_street') }}" required>
+                              @error('block_street') <p class="text-danger small mt-1">{{ $message }}</p> @enderror
+                          </div>
+                          
+                          <div class="form-group">
+                              <label for="barangay" class="form-label">Barangay</label>
+                              <input type="text" name="barangay" id="barangay" class="form-control bg-light" value="Barangay 802" readonly>
+                          </div>
+                          
+                          <div class="form-group">
+                              <label for="district" class="form-label">District</label>
+                              <input type="text" name="district" id="district" class="form-control bg-light" value="Sta Ana" readonly>
+                          </div>
+                          
+                          <div class="form-group">
+                              <label for="city" class="form-label">City</label>
+                              <input type="text" name="city" id="city" class="form-control bg-light" value="Manila" readonly>
+                          </div>
+                          
+                          <div class="form-group">
+                              <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
+                              <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}" required>
+                              @error('email') <p class="text-danger small mt-1">{{ $message }}</p> @enderror
+                          </div>
+                          
+                          <div class="form-group">
+                              <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                              <input type="password" name="password" id="password" class="form-control" required>
+                              @error('password') <p class="text-danger small mt-1">{{ $message }}</p> @enderror
+                          </div>
+                          
+                          <div class="form-group">
+                              <label for="valid_id" class="form-label">Valid ID (jpg, jpeg, png, pdf) <span class="text-danger">*</span></label>
+                              <input type="file" name="valid_id" id="valid_id" class="form-control-file" accept=".jpg, .jpeg, .png, .pdf" required>
+                              @error('valid_id') <p class="text-danger small mt-1">{{ $message }}</p> @enderror
+                              
+                              <div class="id-preview-container">
+                                  <img id="id_preview" class="id-preview hidden" src="#" alt="ID preview">
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
 
-                <div>
-                    <label for="last_name" class="block text-gray-700 font-semibold">Last Name <span class="text-red-500">*</span></label>
-                    <input id="last_name" type="text" name="last_name" class="w-full border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500" required>
-                    @error('last_name') <p class="text-red-500 text-sm">{{ $message }}</p> @enderror
-                </div>
-            </div>
-
-            <!-- Personal Details -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6">
-                <div>
-                    <label for="gender" class="block text-gray-700 font-semibold">Gender <span class="text-red-500">*</span></label>
-                    <select id="gender" name="gender" class="w-full border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500" required>
-                        <option value="">Select Gender</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="other">Other</option>
-                    </select>
-                    @error('gender') <p class="text-red-500 text-sm">{{ $message }}</p> @enderror
-                </div>
-
-                <div>
-                    <label for="birthdate" class="block text-gray-700 font-semibold">Birthdate <span class="text-red-500">*</span></label>
-                    <input id="birthdate" type="date" name="birthdate" class="w-full border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500" required>
-                    @error('birthdate') <p class="text-red-500 text-sm">{{ $message }}</p> @enderror
-                </div>
-
-                <div>
-                    <label for="civil_status" class="block text-gray-700 font-semibold">Civil Status <span class="text-red-500">*</span></label>
-                    <select id="civil_status" name="civil_status" class="w-full border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500" required>
-                        <option value="">Select Status</option>
-                        <option value="single">Single</option>
-                        <option value="married">Married</option>
-                        <option value="widowed">Widowed</option>
-                        <option value="divorced">Divorced</option>
-                    </select>
-                    @error('civil_status') <p class="text-red-500 text-sm">{{ $message }}</p> @enderror
-                </div>
-            </div>
-
-            <!-- Address Details -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6">
-                <div>
-                    <label for="block_street" class="block text-gray-700 font-semibold">Block/Street <span class="text-red-500">*</span></label>
-                    <input id="block_street" type="text" name="block_street" class="w-full border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500" required>
-                    @error('block_street') <p class="text-red-500 text-sm">{{ $message }}</p> @enderror
-                </div>
-
-                <div>
-                    <label for="barangay" class="block text-gray-700 font-semibold">Barangay <span class="text-red-500">*</span></label>
-                    <input id="barangay" type="text" name="barangay" value="Barangay 802" readonly class="w-full border-gray-300 bg-gray-100 rounded-lg p-2">
-                </div>
-
-                <div>
-                    <label for="city" class="block text-gray-700 font-semibold">City <span class="text-red-500">*</span></label>
-                    <input id="city" type="text" name="city" value="Manila" readonly class="w-full border-gray-300 bg-gray-100 rounded-lg p-2">
-                </div>
-            </div>
-
-            <!-- Contact & ID -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6">
-                <div>
-                    <label for="email" class="block text-gray-700 font-semibold">Email Address <span class="text-red-500">*</span></label>
-                    <input id="email" type="email" name="email" class="w-full border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500" required>
-                    @error('email') <p class="text-red-500 text-sm">{{ $message }}</p> @enderror
-                </div>
-
-                <div>
-                    <label for="valid_id" class="block text-gray-700 font-semibold">Valid ID (jpg or png) <span class="text-red-500">*</span></label>
-                    <input id="valid_id" type="file" name="valid_id" accept=".jpg, .jpeg, .png" class="w-full border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500" required>
-                    @error('valid_id') <p class="text-red-500 text-sm">{{ $message }}</p> @enderror
-                </div>
-            </div>
-
-            <!-- Image Preview -->
-            <div class="mt-4">
-                <img id="id_preview" class="mt-2 max-w-xs rounded-lg hidden" src="#" alt="ID preview">
-            </div>
-
-            <!-- Submit Button -->
-            <div class="flex justify-center mt-6">
-                <button type="submit" class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition">Add Resident</button>
-            </div>
-        </form>
-    </div>
+              <div class="mt-4 d-flex justify-content-end">
+                  <a href="{{ route('admin.residents.index') }}" class="btn btn-secondary mr-2">
+                      Cancel
+                  </a>
+                  <button type="submit" class="btn btn-primary">
+                      Add Resident
+                  </button>
+              </div>
+          </form>
+      </div>
+  </div>
 </div>
 
 <script>
-    // ID Image Preview
-    document.getElementById('valid_id').addEventListener('change', function (event) {
-        const file = event.target.files[0];
-        const preview = document.getElementById('id_preview');
+  // ID Image Preview
+  document.getElementById('valid_id').addEventListener('change', function (event) {
+      const file = event.target.files[0];
+      const preview = document.getElementById('id_preview');
 
-        if (file && file.type.startsWith('image/')) {
-            const reader = new FileReader();
-            reader.onload = function () {
-                preview.src = reader.result;
-                preview.classList.remove('hidden');
-            };
-            reader.readAsDataURL(file);
-        } else {
-            preview.classList.add('hidden');
-            preview.src = "#";
-        }
-    });
+      if (file && file.type.startsWith('image/')) {
+          const reader = new FileReader();
+          reader.onload = function () {
+              preview.src = reader.result;
+              preview.classList.remove('hidden');
+          };
+          reader.readAsDataURL(file);
+      } else {
+          preview.classList.add('hidden');
+          preview.src = "#";
+      }
+  });
+
+  // Calculate age from birthdate
+  document.getElementById('birthdate').addEventListener('change', function() {
+      const birthdate = new Date(this.value);
+      const today = new Date();
+      let age = today.getFullYear() - birthdate.getFullYear();
+      const monthDiff = today.getMonth() - birthdate.getMonth();
+      
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthdate.getDate())) {
+          age--;
+      }
+      
+      if (age >= 0) {
+          document.getElementById('age').value = age;
+      }
+  });
+
+  // Form validation
+  document.querySelector('form').addEventListener('submit', function(event) {
+      const requiredFields = this.querySelectorAll('[required]');
+      let isValid = true;
+      
+      requiredFields.forEach(field => {
+          if (!field.value.trim()) {
+              isValid = false;
+              field.classList.add('border-danger');
+              
+              // Add error message if it doesn't exist
+              const errorId = `${field.id}-error`;
+              if (!document.getElementById(errorId)) {
+                  const errorMsg = document.createElement('p');
+                  errorMsg.id = errorId;
+                  errorMsg.className = 'text-danger small mt-1';
+                  errorMsg.textContent = 'This field is required';
+                  field.parentNode.appendChild(errorMsg);
+              }
+          } else {
+              field.classList.remove('border-danger');
+              const errorMsg = document.getElementById(`${field.id}-error`);
+              if (errorMsg) errorMsg.remove();
+          }
+      });
+      
+      if (!isValid) {
+          event.preventDefault();
+          window.scrollTo(0, 0);
+      }
+  });
 </script>
 @endsection
+

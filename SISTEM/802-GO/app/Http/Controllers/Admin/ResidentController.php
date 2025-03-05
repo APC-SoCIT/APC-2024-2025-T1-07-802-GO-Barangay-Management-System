@@ -7,13 +7,28 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Storage;
 
 class ResidentController extends Controller
 {
     // Display all residents
-    public function index()
+    public function index(Request $request)
     {
-        $residents = User::all();
+        $query = User::query();
+        
+        // Search functionality
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('first_name', 'like', "%{$search}%")
+                  ->orWhere('middle_name', 'like', "%{$search}%")
+                  ->orWhere('last_name', 'like', "%{$search}%")
+                  ->orWhere('block_street', 'like', "%{$search}%")
+                  ->orWhere('barangay', 'like', "%{$search}%");
+            });
+        }
+        
+        $residents = $query->paginate(10);
         return view('admin.residents.index', compact('residents'));
     }
 
@@ -54,6 +69,9 @@ class ResidentController extends Controller
             'age' => $request->age,
             'birthdate' => $request->birthdate,
             'block_street' => $request->block_street,
+            'barangay' => $request->barangay ?? 'Barangay 802',
+            'district' => $request->district ?? 'Sta Ana',
+            'city' => $request->city ?? 'Manila',
             'civil_status' => $request->civil_status,
             'religion' => $request->religion,
             'valid_id' => $validIdPath ?? null,
@@ -96,12 +114,17 @@ class ResidentController extends Controller
 
         // Handle file upload
         if ($request->hasFile('valid_id')) {
+            // Delete old file if it exists
+            if ($user->valid_id && Storage::exists('public/' . $user->valid_id)) {
+                Storage::delete('public/' . $user->valid_id);
+            }
+            
             $validIdPath = $request->file('valid_id')->store('valid_ids', 'public');
             $user->valid_id = $validIdPath;
         }
 
-        // Update user
-        $user->update([
+        // Update user data
+        $userData = [
             'first_name' => $request->first_name,
             'middle_name' => $request->middle_name,
             'last_name' => $request->last_name,
@@ -109,11 +132,21 @@ class ResidentController extends Controller
             'age' => $request->age,
             'birthdate' => $request->birthdate,
             'block_street' => $request->block_street,
+            'barangay' => $request->barangay ?? $user->barangay,
+            'district' => $request->district ?? $user->district,
+            'city' => $request->city ?? $user->city,
             'civil_status' => $request->civil_status,
             'religion' => $request->religion,
             'email' => $request->email,
-            'password' => $request->password ? Hash::make($request->password) : $user->password,
-        ]);
+        ];
+
+        // Only update password if provided
+        if ($request->filled('password')) {
+            $userData['password'] = Hash::make($request->password);
+        }
+
+        // Update user
+        $user->update($userData);
 
         return redirect()->route('admin.residents.index')->with('success', 'Resident updated successfully.');
     }
@@ -121,7 +154,13 @@ class ResidentController extends Controller
     // Delete a resident
     public function destroy(User $user)
     {
+        // Delete the ID file if it exists
+        if ($user->valid_id && Storage::exists('public/' . $user->valid_id)) {
+            Storage::delete('public/' . $user->valid_id);
+        }
+        
         $user->delete();
         return redirect()->route('admin.residents.index')->with('success', 'Resident deleted successfully.');
     }
 }
+
