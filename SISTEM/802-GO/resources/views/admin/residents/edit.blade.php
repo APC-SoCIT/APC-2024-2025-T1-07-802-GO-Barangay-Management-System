@@ -1,6 +1,7 @@
 @extends('admin.dashboard')
 
 <title>Admin: Edit Resident</title>
+<link rel="icon" href="{{ asset('logo/802-GO-LOGO.png') }}" type="image/x-icon">
 
 @section('content')
 <div class="container">

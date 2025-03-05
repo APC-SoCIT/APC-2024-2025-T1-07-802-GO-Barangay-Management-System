@@ -1,5 +1,8 @@
 @extends('admin.dashboard')
 
+<title>Admin: CreateResident </title>
+<link rel="icon" href="{{ asset('logo/802-GO-LOGO.png') }}" type="image/x-icon">
+
 @section('content')
 <div class="flex justify-center mt-10">
     <div class="w-full max-w-4xl bg-white shadow-lg rounded-lg p-8">
