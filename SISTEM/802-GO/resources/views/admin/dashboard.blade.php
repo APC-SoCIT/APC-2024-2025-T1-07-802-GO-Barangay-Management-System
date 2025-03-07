@@ -625,15 +625,62 @@
             width: 100%;
             pointer-events: auto;
             background-color: #ffffff;
-            background-image: url("{{ asset('logo/802-GO-LOGO.png') }}");
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: 180px; /* Increased from 150px */
-            background-attachment: fixed; /* Makes the background stay in place */
-            background-clip: border-box; /* Changed from padding-box */
             border-radius: 0.5rem;
             outline: 0;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            min-height: 250px; /* Reduced height */
+        }
+
+        .modal-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("{{ asset('logo/802-GO-LOGO.png') }}");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 100px; /* Smaller logo */
+            opacity: 0.1; /* Very subtle */
+            z-index: 0;
+        }
+
+        .modal-header {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            border-bottom: none; /* Removed border */
+            border-top-left-radius: 0.5rem;
+            border-top-right-radius: 0.5rem;
+            background-color: #1e40af;
+            z-index: 1; /* Ensure header stays above the background */
+        }
+
+        .modal-body {
+            position: relative;
+            flex: 1 1 auto;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            z-index: 1;
+            background-color: transparent;
+        }
+
+        .modal-footer {
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem;
+            border-top: none;
+            border-bottom-right-radius: 0.5rem;
+            border-bottom-left-radius: 0.5rem;
+            gap: 1rem;
+            z-index: 1;
+            background-color: transparent;
         }
 
         /* Make modal content readable over the background image */
@@ -643,17 +690,6 @@
             font-size: 1.1rem; /* Added larger font size */
             font-weight: 500;
             text-shadow: 0 0 10px #ffffff, 0 0 10px #ffffff, 0 0 10px #ffffff;  /* Enhanced glow effect */
-        }
-
-        .modal-header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-            border-bottom: none; /* Removed border */
-            border-top-left-radius: 0.5rem;
-            border-top-right-radius: 0.5rem;
-            background-color: rgba(30, 64, 175, 0.95); /* Made slightly transparent */
         }
 
         /* Remove the header logo styles */
