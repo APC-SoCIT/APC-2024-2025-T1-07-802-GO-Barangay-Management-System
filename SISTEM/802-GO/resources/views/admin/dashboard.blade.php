@@ -992,16 +992,10 @@
         </div>
         
         <div class="logout-container">
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <a href="#" 
-                   class="logout-btn"
-                   onclick="event.preventDefault(); this.closest('form').submit();">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span>Logout</span>
-
-                </a>
-            </form>
+            <a href="#" class="logout-btn" onclick="showLogoutModal()">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
         </div>
     </div>
 
@@ -1009,6 +1003,27 @@
     <main class="main-content">
         @yield('content')
     </main>
+
+    <!-- Logout Confirmation Modal -->
+    <div class="modal" id="logoutModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">802-GO Admin</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to logout?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeLogoutModal()">Cancel</button>
+                    <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                        @csrf
+                        <button type="submit" class="btn btn-danger">Logout</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         // Mobile menu toggle
@@ -1026,6 +1041,23 @@
             }
         });
 
+        // Logout modal functions
+        function showLogoutModal() {
+            document.getElementById('logoutModal').style.display = 'block';
+        }
+
+        function closeLogoutModal() {
+            document.getElementById('logoutModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('logoutModal');
+            if (event.target === modal) {
+                closeLogoutModal();
+            }
+        }
+
         // Auto-hide alert messages after 5 seconds
         document.addEventListener('DOMContentLoaded', function() {
             const alerts = document.querySelectorAll('[role="alert"]');
@@ -1040,7 +1072,6 @@
             });
         });
     </script>
-
 </body>
 </html>
 
