@@ -53,5 +53,37 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'birthdate' => 'date',
     ];
+
+    /**
+     * Get the full name of the user.
+     *
+     * @return string
+     */
+    public function getFullNameAttribute()
+    {
+        return "{$this->first_name} {$this->middle_name} {$this->last_name}";
+    }
+
+    /**
+     * Check if the user is an admin.
+     *
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return (bool) $this->is_admin;
+    }
+
+    /**
+     * Get the complete address of the user.
+     *
+     * @return string
+     */
+    public function getCompleteAddressAttribute()
+    {
+        return "{$this->block_street}, {$this->barangay}, {$this->district}, {$this->city}";
+    }
 }
+
