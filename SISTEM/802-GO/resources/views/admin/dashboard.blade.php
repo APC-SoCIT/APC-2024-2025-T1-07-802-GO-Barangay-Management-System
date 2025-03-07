@@ -151,7 +151,6 @@
             width: 24px;
             text-align: center;
         }
-
         /* Page Header */
         .page-header {
             display: flex;
@@ -995,11 +994,12 @@
         <div class="logout-container">
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <a href="{{ route('logout') }}" 
+                <a href="#" 
                    class="logout-btn"
                    onclick="event.preventDefault(); this.closest('form').submit();">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Logout</span>
+
                 </a>
             </form>
         </div>
@@ -1040,6 +1040,7 @@
             });
         });
     </script>
+
 </body>
 </html>
 
