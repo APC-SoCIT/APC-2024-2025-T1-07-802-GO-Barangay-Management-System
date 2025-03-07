@@ -614,7 +614,8 @@
             position: relative;
             width: auto;
             margin: 1.75rem auto;
-            max-width: 500px;
+            max-width: 400px; /* Changed from 500px to 400px */
+            padding: 0 1rem; /* Added padding for smaller screens */
         }
 
         .modal-content {
@@ -624,10 +625,24 @@
             width: 100%;
             pointer-events: auto;
             background-color: #ffffff;
-            background-clip: padding-box;
+            background-image: url("{{ asset('logo/802-GO-LOGO.png') }}");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 180px; /* Increased from 150px */
+            background-attachment: fixed; /* Makes the background stay in place */
+            background-clip: border-box; /* Changed from padding-box */
             border-radius: 0.5rem;
             outline: 0;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Make modal content readable over the background image */
+        .modal-body p {
+            position: relative;
+            z-index: 1;
+            font-size: 1.1rem; /* Added larger font size */
+            font-weight: 500;
+            text-shadow: 0 0 10px #ffffff, 0 0 10px #ffffff, 0 0 10px #ffffff;  /* Enhanced glow effect */
         }
 
         .modal-header {
@@ -638,15 +653,21 @@
             border-bottom: none; /* Removed border */
             border-top-left-radius: 0.5rem;
             border-top-right-radius: 0.5rem;
-            background-color: #1e40af;
+            background-color: rgba(30, 64, 175, 0.95); /* Made slightly transparent */
+        }
+
+        /* Remove the header logo styles */
+        .modal-header::before {
+            display: none;
         }
 
         .modal-title {
             margin-bottom: 0;
             line-height: 1.5;
-            font-size: 1.25rem;
+            font-size: 1.5rem; /* Increased from 1.25rem */
             font-weight: 600;
             color: #ffffff; /* Added white text color */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Added text shadow */
         }
 
         .modal-body {
