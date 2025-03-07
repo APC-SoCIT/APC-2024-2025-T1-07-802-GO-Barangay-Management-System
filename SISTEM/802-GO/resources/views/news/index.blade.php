@@ -432,23 +432,25 @@
                 @if (Route::has('login'))
                     <!-- Right-aligned Authentication Links -->
                     <nav class="right-section flex space-x-4">
-                    @auth
-                        <a href="{{ route('profile.edit') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
-                            My Account
-                        </a>
-                    @else
-                        <a href="{{ route('login') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
-                            Log in
-                        </a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
-                                Register
+                        @auth
+                            <a href="{{ route('profile.edit') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
+                                My Account
                             </a>
-                        @endif
-                    @endauth
-                </nav>
-            @endif
+                        @else
+                            <a href="{{ route('admin.login') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
+                                Admin Log in
+                            </a>
+                            <a href="{{ route('login') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
+                                Resident Log in
+                            </a>
+                            @if (Route::has('register'))
+                                <a href="{{ route('register') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
+                                    Register
+                                </a>
+                            @endif
+                        @endauth
+                    </nav>
+                @endif
             </header>
         </div>
 
