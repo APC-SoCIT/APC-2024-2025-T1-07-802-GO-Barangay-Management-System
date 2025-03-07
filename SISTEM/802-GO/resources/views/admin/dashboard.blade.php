@@ -632,12 +632,13 @@
 
         .modal-header {
             display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
+            align-items: center; /* Changed from flex-start to center */
+            justify-content: center; /* Changed from space-between to center */
             padding: 1rem;
             border-bottom: 1px solid #e5e7eb;
             border-top-left-radius: 0.5rem;
             border-top-right-radius: 0.5rem;
+            background-color: #1e40af; /* Added background color */
         }
 
         .modal-title {
@@ -645,6 +646,7 @@
             line-height: 1.5;
             font-size: 1.25rem;
             font-weight: 600;
+            color: #ffffff; /* Added white text color */
         }
 
         .modal-body {
