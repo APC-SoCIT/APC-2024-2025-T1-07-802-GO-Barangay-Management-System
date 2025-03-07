@@ -37,18 +37,26 @@
 
             .header-grid a {
                 color: white; /* Text color for the links */
+                margin: 0 5px; /* Add horizontal spacing between links */
+                padding: 8px 16px; /* Increase padding for better clickable area */
+                border-radius: 6px; /* Rounded corners */
+                transition: all 0.3s ease; /* Smooth transition for all changes */
             }
 
             .header-grid a:hover {
                 background-color: rgb(255, 255, 255); /* Bold color for active button */
                 font-weight: bold; /* Optional: Makes text bolder */
                 color: #11468F; /* Ensures good contrast */
+                transform: translateY(-2px); /* Slight lift effect */
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow on hover */
             }
 
             a.active {
                 background-color: rgb(255, 255, 255); /* Bold color for active button */
                 font-weight: bold; /* Optional: Makes text bolder */
                 color: #11468F; /* Ensures good contrast */
+                padding: 8px 16px; /* Match the padding of other links */
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for active state */
             }
 
             .left-section {
