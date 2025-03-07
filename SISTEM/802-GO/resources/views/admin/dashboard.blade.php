@@ -615,8 +615,8 @@
             position: relative;
             width: auto;
             margin: 1.75rem auto;
-            max-width: 400px; /* Changed from 500px to 400px */
-            padding: 0 1rem; /* Added padding for smaller screens */
+            max-width: 400px;
+            padding: 0; /* Remove padding */
         }
 
         .modal-content {
@@ -626,10 +626,13 @@
             width: 100%;
             pointer-events: auto;
             background-color: #ffffff;
-            border-radius: 0.5rem;
+            border-radius: 8px; /* Explicit border radius */
             outline: 0;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            min-height: 210px; /* Reduced height */
+            min-height: 210px;
+            border: 0;
+            margin: 0; /* Remove margin */
+            overflow: hidden;
         }
 
         .modal-content::before {
@@ -654,10 +657,11 @@
             justify-content: center;
             padding: 1rem;
             border-bottom: none; /* Removed border */
-            border-top-left-radius: 0.5rem;
-            border-top-right-radius: 0.5rem;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
             background-color: #1e40af;
             z-index: 1; /* Ensure header stays above the background */
+            margin: 0;
         }
 
         .modal-body {
