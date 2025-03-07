@@ -628,13 +628,13 @@
             border-radius: 0.5rem;
             outline: 0;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            min-height: 250px; /* Reduced height */
+            min-height: 210px; /* Reduced height */
         }
 
         .modal-content::before {
             content: '';
             position: absolute;
-            top: 0;
+            top: 50px;
             left: 0;
             right: 0;
             bottom: 0;
@@ -642,7 +642,7 @@
             background-repeat: no-repeat;
             background-position: center;
             background-size: 100px; /* Smaller logo */
-            opacity: 0.1; /* Very subtle */
+            opacity: 0.4; /* Very subtle */
             z-index: 0;
         }
 
