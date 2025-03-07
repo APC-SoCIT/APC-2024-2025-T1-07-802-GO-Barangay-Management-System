@@ -625,20 +625,20 @@
             pointer-events: auto;
             background-color: #ffffff;
             background-clip: padding-box;
-            border: 1px solid rgba(0, 0, 0, 0.2);
             border-radius: 0.5rem;
             outline: 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
         .modal-header {
             display: flex;
-            align-items: center; /* Changed from flex-start to center */
-            justify-content: center; /* Changed from space-between to center */
+            align-items: center;
+            justify-content: center;
             padding: 1rem;
-            border-bottom: 1px solid #e5e7eb;
+            border-bottom: none; /* Removed border */
             border-top-left-radius: 0.5rem;
             border-top-right-radius: 0.5rem;
-            background-color: #1e40af; /* Added background color */
+            background-color: #1e40af;
         }
 
         .modal-title {
@@ -653,21 +653,23 @@
             position: relative;
             flex: 1 1 auto;
             padding: 1rem;
+            text-align: center; /* Add this line */
         }
 
         .modal-footer {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            justify-content: flex-end;
+            justify-content: center;
             padding: 0.75rem;
-            border-top: 1px solid #e5e7eb;
+            border-top: none; /* Removed border */
             border-bottom-right-radius: 0.5rem;
             border-bottom-left-radius: 0.5rem;
+            gap: 1rem; /* Add space between buttons */
         }
 
         .modal-footer > * {
-            margin: 0.25rem;
+            margin: 0; /* Remove default margins */
         }
 
         /* Action buttons */
