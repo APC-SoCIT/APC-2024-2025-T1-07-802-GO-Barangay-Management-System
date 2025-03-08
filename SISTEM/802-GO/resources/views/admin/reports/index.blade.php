@@ -199,6 +199,42 @@
         </div>
     </div>
 
+    <!-- Document Type Breakdown -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-white">
+                <h3 class="card-title mb-0">Document Type Distribution</h3>
+            </div>
+            <div class="card-body">
+                <canvas id="documentChart" height="300"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Service Response Time Trend -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-white">
+                <h3 class="card-title mb-0">Response Time Trend</h3>
+            </div>
+            <div class="card-body">
+                <canvas id="responseTimeChart" height="300"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resident Registration Trend -->
+    <div class="col-md-12 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-white">
+                <h3 class="card-title mb-0">Monthly Resident Registrations</h3>
+            </div>
+            <div class="card-body">
+                <canvas id="registrationTrendChart" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+
     <!-- News Updates Card -->
     <div class="col-md-12">
         <div class="card shadow-sm">
@@ -377,5 +413,129 @@
     line-height: 25px;
     font-size: 0.875rem;
 }
+
+/* Enhanced UI Styles */
+.card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07) !important;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px) translateZ(0);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12) !important;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.stat-card {
+    overflow: hidden;
+    position: relative;
+}
+
+.stat-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+    pointer-events: none;
+}
+
+.progress-bar {
+    animation: progressAnimation 1.5s ease-in-out;
+}
+
+@keyframes progressAnimation {
+    from { width: 0; }
+}
+
+.age-group-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+}
+
+.news-item {
+    border-left: 4px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.news-item:hover {
+    border-left-color: #4e73df;
+    transform: translateX(5px);
+}
 </style>
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Document Type Distribution Chart
+    new Chart(document.getElementById('documentChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Barangay Clearance', 'Business Permit', 'Residency Certificate', 'Others'],
+            datasets: [{
+                data: [40, 25, 20, 15],
+                backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+
+    // Response Time Trend Chart
+    new Chart(document.getElementById('responseTimeChart'), {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [{
+                label: 'Average Response Time (hours)',
+                data: [4.2, 3.8, 3.5, 3.2, 2.9, 2.5],
+                borderColor: '#4e73df',
+                tension: 0.3
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+
+    // Registration Trend Chart
+    new Chart(document.getElementById('registrationTrendChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [{
+                label: 'New Registrations',
+                data: [65, 78, 90, 85, 92, 88],
+                backgroundColor: '#1cc88a'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+});
+</script>
+@endpush
+
 @endsection
