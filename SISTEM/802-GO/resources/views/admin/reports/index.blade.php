@@ -367,31 +367,33 @@
     <!-- News Updates Card - Enhanced UI -->
     <div class="col-md-12">
         <div class="card shadow-sm">
-            <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                <h3 class="card-title mb-0">Recent News & Updates</h3>
-                <span class="badge badge-primary">{{ number_format($stats['news']['total']) }} Total Posts</span>
+            <div class="card-header bg-white d-flex justify-content-between align-items-center px-4">
+                <div class="d-flex align-items-center">
+                    <h3 class="card-title mb-0">Recent News & Updates</h3>
+                    <span class="badge badge-primary ml-3">{{ number_format($stats['news']['total']) }} Total Posts</span>
+                </div>
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-8">
                         <div class="news-list">
                             @foreach($stats['news']['recent'] as $news)
-                                <a href="{{ route('admin.news.show', $news->id) }}" class="text-decoration-none">
+                                <a href="{{ route('admin.news.show', $news->id) }}" class="news-link">
                                     <div class="news-item p-3 mb-3 bg-light rounded-lg">
-                                        <div class="d-flex align-items-center">
-                                            <div class="news-icon mr-3">
-                                                <i class="fas fa-newspaper fa-lg text-primary"></i>
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="d-flex align-items-center">
+                                                <div class="news-icon mr-3">
+                                                    <i class="fas fa-newspaper fa-lg text-primary"></i>
+                                                </div>
+                                                <div class="news-content">
+                                                    <h6 class="mb-1 font-weight-bold text-dark">{{ $news->title }}</h6>
+                                                    <small class="text-muted">
+                                                        <i class="fas fa-clock mr-1"></i>
+                                                        {{ $news->created_at->diffForHumans() }}
+                                                    </small>
+                                                </div>
                                             </div>
-                                            <div class="news-content">
-                                                <h6 class="mb-1 font-weight-bold text-dark">{{ $news->title }}</h6>
-                                                <small class="text-muted">
-                                                    <i class="fas fa-clock mr-1"></i>
-                                                    {{ $news->created_at->diffForHumans() }}
-                                                </small>
-                                            </div>
-                                            <div class="ml-auto">
-                                                <i class="fas fa-chevron-right text-muted"></i>
-                                            </div>
+                                            <i class="fas fa-chevron-right text-primary"></i>
                                         </div>
                                     </div>
                                 </a>
@@ -786,6 +788,50 @@
 
 .bg-gradient-secondary {
     background: linear-gradient(45deg, #858796, #60616f);
+}
+
+/* Enhanced News Items Styling */
+.news-link {
+    text-decoration: none;
+    display: block;
+}
+
+.news-item {
+    border-left: 4px solid #4e73df;
+    transition: all 0.2s ease;
+    background-color: #f8f9fa;
+    position: relative;
+    padding-right: 2rem;
+}
+
+.news-item:hover {
+    transform: translateX(5px);
+    background-color: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.news-item .fa-chevron-right {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.2s ease;
+}
+
+.news-item:hover .fa-chevron-right {
+    transform: translate(5px, -50%);
+}
+
+.news-content h6 {
+    color: #1e40af;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+}
+
+.news-icon {
+    background: rgba(78, 115, 223, 0.1);
+    padding: 0.75rem;
+    border-radius: 0.5rem;
 }
 </style>
 
