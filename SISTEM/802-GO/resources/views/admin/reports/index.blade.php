@@ -282,9 +282,9 @@
     </div>
 
     <!-- Document Statistics Card -->
-    <div class="col-md-6 mb-4">
-        <div class="card shadow-sm h-100">
-            <div class="card-header bg-white">
+    <div class="col-md-12 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-white py-3">
                 <h3 class="card-title mb-0">Document Processing Overview</h3>
             </div>
             <div class="card-body">
