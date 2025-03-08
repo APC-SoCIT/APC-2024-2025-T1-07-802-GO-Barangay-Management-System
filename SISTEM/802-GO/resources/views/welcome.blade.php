@@ -38,18 +38,26 @@
 
             .header-grid a {
                 color: white; /* Text color for the links */
+                margin: 0 5px; /* Add horizontal spacing between links */
+                padding: 8px 16px; /* Increase padding for better clickable area */
+                border-radius: 6px; /* Rounded corners */
+                transition: all 0.3s ease; /* Smooth transition for all changes */
             }
 
             .header-grid a:hover {
                 background-color: rgb(255, 255, 255); /* Bold color for active button */
                 font-weight: bold; /* Optional: Makes text bolder */
                 color: #11468F; /* Ensures good contrast */
+                transform: translateY(-2px); /* Slight lift effect */
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow on hover */
             }
 
             a.active {
                 background-color: rgb(255, 255, 255); /* Bold color for active button */
                 font-weight: bold; /* Optional: Makes text bolder */
                 color: #11468F; /* Ensures good contrast */
+                padding: 8px 16px; /* Match the padding of other links */
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for active state */
             }
 
             .left-section {
@@ -346,7 +354,7 @@
             </div>
             <header class="header-grid">
                 <!-- Left-aligned Navigation Links -->
-                <nav class="left-section flex space-x-4">
+                <nav class="left-section flex space-x-8"> <!-- Changed from space-x-4 to space-x-8 -->
                     <a href="{{ route('welcome') }}" class="rounded-md px-3 py-2 text-white bg-[#FF2D20] ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20] active">
                         Home
                     </a>
@@ -371,19 +379,17 @@
                             My Account
                         </a>
                     @else
-                         <a href="{{ route('admin.login') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
+                         <a href="{{ route('admin.login') }}" class="rounded-md px-3 py-2 text-white bg-[#1a365d] ring-1 ring-transparent transition hover:bg-[#2d4a7c] focus:outline-none focus-visible:ring-[#FF2D20]">
                             Admin Log in
                         </a>
-                        <a href="{{ route('login') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
+                        <a href="{{ route('login') }}" class="rounded-md px-3 py-2 text-white bg-[#2563eb] ring-1 ring-transparent transition hover:bg-[#3b82f6] focus:outline-none focus-visible:ring-[#FF2D20]">
                             Resident Log in
                         </a>
                         
                         @if (Route::has('register'))
-                            </a>
-
-                            <a href="{{ route('register') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
+                            <a href="{{ route('register') }}" class="rounded-md px-3 py-2 text-white bg-[#059669] ring-1 ring-transparent transition hover:bg-[#10b981] focus:outline-none focus-visible:ring-[#FF2D20]">
                                 Register
-                        </a>
+                            </a>
                         @endif
                     @endauth
                 </nav>
