@@ -124,33 +124,31 @@
                     </div>
                 </div>
 
-                <!-- Age Groups -->
+                <!-- Age Groups - Enhanced UI -->
                 <div>
                     <h5 class="text-muted mb-4">Age Groups</h5>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="d-flex justify-content-around">
-                                <div class="age-group-card bg-light p-4 rounded-lg text-center flex-grow-1 mx-2">
-                                    <div class="age-icon mb-3">
-                                        <i class="fas fa-child fa-2x text-primary"></i>
-                                    </div>
-                                    <h3 class="text-primary mb-2">{{ number_format($stats['residents']['by_age']['youth']) }}</h3>
-                                    <div class="age-label">Youth<br>(<18)</div>
+                    <div class="age-groups-container">
+                        <div class="age-group-cards d-flex justify-content-between">
+                            <div class="age-group-card p-4 text-center">
+                                <div class="age-icon-wrapper mb-3 bg-primary-light">
+                                    <i class="fas fa-child fa-2x text-primary"></i>
                                 </div>
-                                <div class="age-group-card bg-light p-4 rounded-lg text-center flex-grow-1 mx-2">
-                                    <div class="age-icon mb-3">
-                                        <i class="fas fa-user fa-2x text-success"></i>
-                                    </div>
-                                    <h3 class="text-success mb-2">{{ number_format($stats['residents']['by_age']['adult']) }}</h3>
-                                    <div class="age-label">Adults<br>(18-59)</div>
+                                <h3 class="text-primary mb-1">{{ number_format($stats['residents']['by_age']['youth']) }}</h3>
+                                <div class="age-label text-dark">Youth (<18)</div>
+                            </div>
+                            <div class="age-group-card p-4 text-center">
+                                <div class="age-icon-wrapper mb-3 bg-success-light">
+                                    <i class="fas fa-user fa-2x text-success"></i>
                                 </div>
-                                <div class="age-group-card bg-light p-4 rounded-lg text-center flex-grow-1 mx-2">
-                                    <div class="age-icon mb-3">
-                                        <i class="fas fa-user-plus fa-2x text-info"></i>
-                                    </div>
-                                    <h3 class="text-info mb-2">{{ number_format($stats['residents']['by_age']['senior']) }}</h3>
-                                    <div class="age-label">Seniors<br>(60+)</div>
+                                <h3 class="text-success mb-1">{{ number_format($stats['residents']['by_age']['adult']) }}</h3>
+                                <div class="age-label text-dark">Adults (18-59)</div>
+                            </div>
+                            <div class="age-group-card p-4 text-center">
+                                <div class="age-icon-wrapper mb-3 bg-info-light">
+                                    <i class="fas fa-user-plus fa-2x text-info"></i>
                                 </div>
+                                <h3 class="text-info mb-1">{{ number_format($stats['residents']['by_age']['senior']) }}</h3>
+                                <div class="age-label text-dark">Seniors (60+)</div>
                             </div>
                         </div>
                     </div>
@@ -242,35 +240,56 @@
         </div>
     </div>
 
-    <!-- News Updates Card -->
+    <!-- News Updates Card - Enhanced UI -->
     <div class="col-md-12">
         <div class="card shadow-sm">
-            <div class="card-header bg-white">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center">
                 <h3 class="card-title mb-0">Recent News & Updates</h3>
+                <span class="badge badge-primary">{{ number_format($stats['news']['total']) }} Total Posts</span>
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-8">
-                        <h5 class="text-muted mb-3">Latest News ({{ number_format($stats['news']['total']) }} total posts)</h5>
                         <div class="news-list">
                             @foreach($stats['news']['recent'] as $news)
-                                <div class="news-item p-3 mb-2 rounded bg-light">
-                                    <h6 class="mb-1">{{ $news->title }}</h6>
-                                    <small class="text-muted">{{ $news->created_at->diffForHumans() }}</small>
+                                <div class="news-item p-3 mb-3 bg-light rounded-lg">
+                                    <div class="d-flex align-items-center">
+                                        <div class="news-icon mr-3">
+                                            <i class="fas fa-newspaper fa-lg text-primary"></i>
+                                        </div>
+                                        <div class="news-content">
+                                            <h6 class="mb-1 font-weight-bold">{{ $news->title }}</h6>
+                                            <small class="text-muted">
+                                                <i class="fas fa-clock mr-1"></i>
+                                                {{ $news->created_at->diffForHumans() }}
+                                            </small>
+                                        </div>
+                                    </div>
                                 </div>
                             @endforeach
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <h5 class="text-muted mb-3">News Engagement</h5>
-                        <div class="engagement-stats">
-                            <div class="p-3 rounded bg-light mb-3">
-                                <h4 class="mb-1">{{ number_format($stats['news']['engagement']['week']) }}</h4>
-                                <small class="text-muted">New posts this week</small>
+                        <div class="engagement-stat-card mb-3 bg-primary-light rounded-lg p-4">
+                            <div class="d-flex align-items-center">
+                                <div class="stat-icon mr-3">
+                                    <i class="fas fa-calendar-week fa-2x text-primary"></i>
+                                </div>
+                                <div>
+                                    <h4 class="mb-0 text-primary">{{ number_format($stats['news']['engagement']['week']) }}</h4>
+                                    <small class="text-muted">This Week</small>
+                                </div>
                             </div>
-                            <div class="p-3 rounded bg-light">
-                                <h4 class="mb-1">{{ number_format($stats['news']['engagement']['month']) }}</h4>
-                                <small class="text-muted">New posts this month</small>
+                        </div>
+                        <div class="engagement-stat-card bg-success-light rounded-lg p-4">
+                            <div class="d-flex align-items-center">
+                                <div class="stat-icon mr-3">
+                                    <i class="fas fa-calendar-alt fa-2x text-success"></i>
+                                </div>
+                                <div>
+                                    <h4 class="mb-0 text-success">{{ number_format($stats['news']['engagement']['month']) }}</h4>
+                                    <small class="text-muted">This Month</small>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -512,6 +531,79 @@
 
 .card {
     box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
+}
+
+/* Enhanced Age Groups Styling */
+.age-groups-container {
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 1rem;
+}
+
+.age-group-card {
+    background: white;
+    border-radius: 1rem;
+    min-width: 180px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+.age-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.bg-primary-light { background: rgba(78, 115, 223, 0.1); }
+.bg-success-light { background: rgba(28, 200, 138, 0.1); }
+.bg-info-light { background: rgba(54, 185, 204, 0.1); }
+
+/* Enhanced Progress Bars */
+.progress-bar.bg-gradient-primary {
+    background: linear-gradient(45deg, #4e73df 0%, #224abe 100%);
+    box-shadow: 0 2px 4px rgba(78, 115, 223, 0.3);
+}
+
+.progress-bar.bg-gradient-pink {
+    background: linear-gradient(45deg, #e83e8c 0%, #ba2167 100%);
+    box-shadow: 0 2px 4px rgba(232, 62, 140, 0.3);
+}
+
+.progress-bar-purple {
+    background: linear-gradient(45deg, #9b51e0 0%, #7435aa 100%);
+    box-shadow: 0 2px 4px rgba(155, 81, 224, 0.3);
+}
+
+/* Enhanced News Items */
+.news-item {
+    border-left: 4px solid #4e73df;
+    transition: all 0.2s ease;
+}
+
+.news-item:hover {
+    transform: translateX(5px);
+    background: white !important;
+}
+
+.engagement-stat-card {
+    transition: all 0.3s ease;
+}
+
+.engagement-stat-card:hover {
+    transform: translateY(-3px);
+}
+
+.badge-primary {
+    background-color: #4e73df;
+    color: white;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-radius: 2rem;
 }
 </style>
 
