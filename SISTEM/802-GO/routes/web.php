@@ -9,14 +9,6 @@ use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
-Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('/document-requests', [AdminDocumentRequestController::class, 'index'])->name('document-requests.index');
-    Route::get('/document-requests/{id}', [AdminDocumentRequestController::class, 'show'])->name('document-requests.show');
-    Route::get('/document-requests/{id}/edit', [AdminDocumentRequestController::class, 'edit'])->name('document-requests.edit');
-    Route::patch('/document-requests/{id}', [AdminDocumentRequestController::class, 'update'])->name('document-requests.update');
-    Route::delete('/document-requests/{id}', [AdminDocumentRequestController::class, 'destroy'])->name('document-requests.destroy');
-});
-
 // Force URL Configuration
 $url = config('app.url');
 URL::forceRootUrl($url);
@@ -66,43 +58,22 @@ Route::post('/submit-barangay-id', [UserDocumentRequestController::class, 'submi
 Route::post('/submit-business-permit', [UserDocumentRequestController::class, 'submitBusinessPermit'])->name('submit-business-permit');
 Route::post('/submit-cedula', [UserDocumentRequestController::class, 'submitCedula'])->name('submit-cedula');
 
-// Resident Database Management
-Route::prefix('admin/residents')->name('admin.residents.')->group(function () {
-    Route::get('/', [\App\Http\Controllers\Admin\ResidentController::class, 'index'])->name('index'); // List all residents
-    Route::get('/create', [\App\Http\Controllers\Admin\ResidentController::class, 'create'])->name('create'); // Show form to add a resident
-    Route::post('/', [\App\Http\Controllers\Admin\ResidentController::class, 'store'])->name('store'); // Store new resident
-    Route::get('/{user}', [\App\Http\Controllers\Admin\ResidentController::class, 'show'])->name('show'); // View a resident
-    Route::get('/{user}/edit', [\App\Http\Controllers\Admin\ResidentController::class, 'edit'])->name('edit'); // Show edit form
-    Route::put('/{user}', [\App\Http\Controllers\Admin\ResidentController::class, 'update'])->name('update'); // Update resident details
-    Route::patch('/{user}', [\App\Http\Controllers\Admin\ResidentController::class, 'update']); // Alternative update method
-    Route::delete('/{user}', [\App\Http\Controllers\Admin\ResidentController::class, 'destroy'])->name('destroy'); // Delete a resident
-});
-
-// News Management
-Route::prefix('admin/news')->name('admin.news.')->group(function () {
-    Route::get('/', [\App\Http\Controllers\Admin\NewsController::class, 'index'])->name('index');
-    Route::get('/create', [\App\Http\Controllers\Admin\NewsController::class, 'create'])->name('create');
-    Route::post('/', [\App\Http\Controllers\Admin\NewsController::class, 'store'])->name('store');
-    Route::get('/{news}', [\App\Http\Controllers\Admin\NewsController::class, 'show'])->name('show');
-    Route::get('/{news}/edit', [\App\Http\Controllers\Admin\NewsController::class, 'edit'])->name('edit');
-    Route::put('/{news}', [\App\Http\Controllers\Admin\NewsController::class, 'update'])->name('update');
-    Route::patch('/{news}', [\App\Http\Controllers\Admin\NewsController::class, 'update']);
-    Route::delete('/{news}', [\App\Http\Controllers\Admin\NewsController::class, 'destroy'])->name('destroy');
-});
-
-
 // Admin Authentication Routes (place these before other admin routes)
 Route::middleware('guest')->group(function () {
     Route::get('admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
     Route::post('admin/login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
 });
 
-// Admin Protected Routes
-Route::prefix('admin/news')->name('admin.news')->middleware(['auth', 'admin'])->group(function () {
-    Route::get('/news', [AdminController::class, 'index'])->name('news');
-    Route::get('/news', [AdminNewsController::class, 'index'])->name('admin.news.index');
+// Admin Protected Routes - Fix the middleware and routes structure
+Route::middleware(['web', 'auth'])->prefix('admin')->name('admin.')->group(function () {
+    // Reports Route
+    Route::get('/reports', [\App\Http\Controllers\Admin\ReportsController::class, 'index'])->name('reports.index');
+    
+    // Other admin routes...
+    Route::resource('residents', \App\Http\Controllers\Admin\ResidentController::class);
+    Route::resource('news', \App\Http\Controllers\Admin\NewsController::class);
+    Route::resource('document-requests', \App\Http\Controllers\Admin\DocumentRequestController::class);
 });
-
 
 // Profile Management (Authenticated Users Only)
 Route::middleware('auth')->group(function () {

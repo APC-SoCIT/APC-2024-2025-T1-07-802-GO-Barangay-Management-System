@@ -653,11 +653,11 @@
             align-items: center;
             justify-content: center;
             padding: 1rem;
-            border-bottom: none; /* Removed border */
+            border-bottom: 1px solid #e5e7eb;
             border-top-left-radius: 0.5rem;
             border-top-right-radius: 0.5rem;
             background-color: #1e40af;
-            z-index: 1; /* Ensure header stays above the background */
+            z-index: 1;
         }
 
         .modal-body {
@@ -699,12 +699,12 @@
         }
 
         .modal-title {
-            margin-bottom: 0;
+            margin: 0;
             line-height: 1.5;
-            font-size: 1.5rem; /* Increased from 1.25rem */
+            font-size: 1.25rem;
             font-weight: 600;
-            color: #ffffff; /* Added white text color */
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Added text shadow */
+            color: #ffffff;
+            text-shadow: none;
         }
 
         .modal-body {
@@ -1050,6 +1050,10 @@
             <a href="#" class="{{ request()->routeIs('admin.documents.*') ? 'active' : '' }}">
                 <i class="fas fa-file-alt"></i>
                 <span>Document Approval</span>
+            </a>
+            <a href="{{ route('admin.reports.index') }}" class="{{ request()->routeIs('admin.reports.*') ? 'active' : '' }}">
+                <i class="fas fa-chart-bar"></i>
+                <span>Analytics & Reports</span>
             </a>
         </div>
         
