@@ -23,6 +23,7 @@ class ReportsController extends Controller
                 'by_gender' => [
                     'male' => User::where('is_admin', false)->where('gender', 'Male')->count(),
                     'female' => User::where('is_admin', false)->where('gender', 'Female')->count(),
+                    'others' => User::where('is_admin', false)->where('gender', 'Others')->count(),
                 ],
                 'by_age' => [
                     'youth' => User::where('is_admin', false)->where('age', '<', 18)->count(),

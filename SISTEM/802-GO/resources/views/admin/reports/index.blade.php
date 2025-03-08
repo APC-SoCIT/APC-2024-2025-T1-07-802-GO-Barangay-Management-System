@@ -59,33 +59,56 @@
                 <!-- Gender Distribution -->
                 <div class="mb-5">
                     <h5 class="text-muted mb-3">Gender Distribution</h5>
+                    @php
+                        $total = $stats['residents']['total'] ?: 1;
+                        $maleCount = $stats['residents']['by_gender']['male'];
+                        $femaleCount = $stats['residents']['by_gender']['female'];
+                        $othersCount = $stats['residents']['by_gender']['others'];
+                        $malePercentage = ($maleCount / $total) * 100;
+                        $femalePercentage = ($femaleCount / $total) * 100;
+                        $othersPercentage = ($othersCount / $total) * 100;
+                    @endphp
+                    
+                    <!-- Male Stats -->
                     <div class="gender-stats mb-3">
-                        @php
-                            $total = $stats['residents']['total'] ?: 1; // Prevent division by zero
-                            $maleCount = $stats['residents']['by_gender']['male'];
-                            $femaleCount = $stats['residents']['by_gender']['female'];
-                            $malePercentage = ($maleCount / $total) * 100;
-                            $femalePercentage = ($femaleCount / $total) * 100;
-                        @endphp
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span>Male</span>
+                            <span><i class="fas fa-mars text-primary mr-2"></i> Male</span>
                             <span>{{ number_format($maleCount) }} ({{ round($malePercentage) }}%)</span>
                         </div>
                         <div class="progress rounded-pill" style="height: 25px;">
-                            <div class="progress-bar bg-gradient-primary" role="progressbar" 
-                                style="width: {{ $malePercentage }}%" aria-valuenow="{{ $malePercentage }}" 
+                            <div class="progress-bar" role="progressbar" 
+                                style="width: {{ $malePercentage }}%; background-color: #4e73df;" 
+                                aria-valuenow="{{ $malePercentage }}" 
                                 aria-valuemin="0" aria-valuemax="100">
                             </div>
                         </div>
                     </div>
-                    <div class="gender-stats">
+
+                    <!-- Female Stats -->
+                    <div class="gender-stats mb-3">
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span>Female</span>
+                            <span><i class="fas fa-venus text-pink mr-2"></i> Female</span>
                             <span>{{ number_format($femaleCount) }} ({{ round($femalePercentage) }}%)</span>
                         </div>
                         <div class="progress rounded-pill" style="height: 25px;">
-                            <div class="progress-bar bg-gradient-pink" role="progressbar" 
-                                style="width: {{ $femalePercentage }}%" aria-valuenow="{{ $femalePercentage }}" 
+                            <div class="progress-bar" role="progressbar" 
+                                style="width: {{ $femalePercentage }}%; background-color: #e83e8c;" 
+                                aria-valuenow="{{ $femalePercentage }}" 
+                                aria-valuemin="0" aria-valuemax="100">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Others Stats -->
+                    <div class="gender-stats">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span><i class="fas fa-transgender-alt text-purple mr-2"></i> Others</span>
+                            <span>{{ number_format($othersCount) }} ({{ round($othersPercentage) }}%)</span>
+                        </div>
+                        <div class="progress rounded-pill" style="height: 25px;">
+                            <div class="progress-bar" role="progressbar" 
+                                style="width: {{ $othersPercentage }}%; background-color: #9b51e0;" 
+                                aria-valuenow="{{ $othersPercentage }}" 
                                 aria-valuemin="0" aria-valuemax="100">
                             </div>
                         </div>
@@ -332,6 +355,27 @@
 }
 .rounded-lg {
     border-radius: 1rem !important;
+}
+.text-purple {
+    color: #9b51e0;
+}
+
+.mr-2 {
+    margin-right: 0.5rem;
+}
+
+.progress {
+    background-color: #f0f2f5;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
+}
+
+.progress-bar {
+    transition: width 1s ease;
+    position: relative;
+    overflow: visible;
+    font-weight: 500;
+    line-height: 25px;
+    font-size: 0.875rem;
 }
 </style>
 @endsection
