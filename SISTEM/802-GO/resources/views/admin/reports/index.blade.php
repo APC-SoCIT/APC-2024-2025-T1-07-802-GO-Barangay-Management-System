@@ -76,9 +76,9 @@
                             <span>{{ number_format($maleCount) }} ({{ round($malePercentage) }}%)</span>
                         </div>
                         <div class="progress rounded-pill" style="height: 25px; background-color: rgba(0,0,0,0.05);">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" 
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-gradient-primary" 
                                 role="progressbar" 
-                                style="width: {{ $malePercentage }}%"
+                                style="width: {{ $malePercentage }}%;"
                                 aria-valuenow="{{ $malePercentage }}" 
                                 aria-valuemin="0" 
                                 aria-valuemax="100">
@@ -94,9 +94,9 @@
                             <span>{{ number_format($femaleCount) }} ({{ round($femalePercentage) }}%)</span>
                         </div>
                         <div class="progress rounded-pill" style="height: 25px; background-color: rgba(0,0,0,0.05);">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-gradient-pink" 
                                 role="progressbar" 
-                                style="width: {{ $femalePercentage }}%; background-color: #e83e8c;"
+                                style="width: {{ $femalePercentage }}%;"
                                 aria-valuenow="{{ $femalePercentage }}" 
                                 aria-valuemin="0" 
                                 aria-valuemax="100">
@@ -111,12 +111,14 @@
                             <span><i class="fas fa-transgender-alt text-purple mr-2"></i> Others</span>
                             <span>{{ number_format($othersCount) }} ({{ round($othersPercentage) }}%)</span>
                         </div>
-                        <div class="progress rounded-pill" style="height: 25px;">
-                            <div class="progress-bar bg-purple" role="progressbar" 
-                                style="width: {{ max($othersPercentage, 0) }}%; background-color: #9b51e0;" 
+                        <div class="progress rounded-pill" style="height: 25px; background-color: rgba(0,0,0,0.05);">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                                role="progressbar" 
+                                style="width: {{ $othersPercentage }}%; background: linear-gradient(45deg, #9b51e0, #7435aa);"
                                 aria-valuenow="{{ $othersPercentage }}" 
-                                aria-valuemin="0" aria-valuemax="100">
-                                {{ round($othersPercentage) }}%
+                                aria-valuemin="0" 
+                                aria-valuemax="100">
+                                <span class="font-weight-bold">{{ round($othersPercentage) }}%</span>
                             </div>
                         </div>
                     </div>
@@ -125,32 +127,30 @@
                 <!-- Age Groups -->
                 <div>
                     <h5 class="text-muted mb-4">Age Groups</h5>
-                    <div class="row g-3">
-                        <div class="col-4">
-                            <div class="age-group-card bg-light p-3 rounded-lg text-center h-100">
-                                <div class="age-icon mb-2">
-                                    <i class="fas fa-child fa-2x text-primary"></i>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex justify-content-around">
+                                <div class="age-group-card bg-light p-4 rounded-lg text-center flex-grow-1 mx-2">
+                                    <div class="age-icon mb-3">
+                                        <i class="fas fa-child fa-2x text-primary"></i>
+                                    </div>
+                                    <h3 class="text-primary mb-2">{{ number_format($stats['residents']['by_age']['youth']) }}</h3>
+                                    <div class="age-label">Youth<br>(<18)</div>
                                 </div>
-                                <h3 class="text-primary mb-2">{{ number_format($stats['residents']['by_age']['youth']) }}</h3>
-                                <div class="age-label">Youth<br>(<18)</div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="age-group-card bg-light p-3 rounded-lg text-center h-100">
-                                <div class="age-icon mb-2">
-                                    <i class="fas fa-user fa-2x text-success"></i>
+                                <div class="age-group-card bg-light p-4 rounded-lg text-center flex-grow-1 mx-2">
+                                    <div class="age-icon mb-3">
+                                        <i class="fas fa-user fa-2x text-success"></i>
+                                    </div>
+                                    <h3 class="text-success mb-2">{{ number_format($stats['residents']['by_age']['adult']) }}</h3>
+                                    <div class="age-label">Adults<br>(18-59)</div>
                                 </div>
-                                <h3 class="text-success mb-2">{{ number_format($stats['residents']['by_age']['adult']) }}</h3>
-                                <div class="age-label">Adults<br>(18-59)</div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="age-group-card bg-light p-3 rounded-lg text-center h-100">
-                                <div class="age-icon mb-2">
-                                    <i class="fas fa-user-plus fa-2x text-info"></i>
+                                <div class="age-group-card bg-light p-4 rounded-lg text-center flex-grow-1 mx-2">
+                                    <div class="age-icon mb-3">
+                                        <i class="fas fa-user-plus fa-2x text-info"></i>
+                                    </div>
+                                    <h3 class="text-info mb-2">{{ number_format($stats['residents']['by_age']['senior']) }}</h3>
+                                    <div class="age-label">Seniors<br>(60+)</div>
                                 </div>
-                                <h3 class="text-info mb-2">{{ number_format($stats['residents']['by_age']['senior']) }}</h3>
-                                <div class="age-label">Seniors<br>(60+)</div>
                             </div>
                         </div>
                     </div>
@@ -238,30 +238,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Service Response Time Trend -->
-    <div class="col-md-6 mb-4">
-        <div class="card shadow-sm h-100">
-            <div class="card-header bg-white">
-                <h3 class="card-title mb-0">Response Time Trend</h3>
-            </div>
-            <div class="card-body">
-                <canvas id="responseTimeChart" height="300"></canvas>
-            </div>
-        </div>
-    </div>
-
-    <!-- Resident Registration Trend -->
-    <div class="col-md-12 mb-4">
-        <div class="card shadow-sm">
-            <div class="card-header bg-white">
-                <h3 class="card-title mb-0">Monthly Resident Registrations</h3>
-            </div>
-            <div class="card-body">
-                <canvas id="registrationTrendChart" height="200"></canvas>
             </div>
         </div>
     </div>
@@ -475,31 +451,13 @@
 }
 
 .progress-bar {
-    animation: progressAnimation 1.5s ease-in-out;
-}
-
-@keyframes progressAnimation {
-    from { width: 0; }
-}
-
-.age-group-card {
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-    border: none;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
-}
-
-.news-item {
-    border-left: 4px solid transparent;
-    transition: all 0.2s ease;
-}
-
-.news-item:hover {
-    border-left-color: #4e73df;
-    transform: translateX(5px);
-}
-
-.progress-bar-animated {
-    animation: progress-bar-stripes 1s linear infinite;
+    position: relative;
+    transition: width 1s ease;
+    font-weight: 500;
+    font-size: 0.875rem;
+    line-height: 25px;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
 
 .progress-bar-striped {
@@ -512,6 +470,33 @@
         transparent 75%, 
         transparent);
     background-size: 1rem 1rem;
+}
+
+.progress-bar-animated {
+    animation: progress-bar-stripes 1s linear infinite;
+}
+
+@keyframes progress-bar-stripes {
+    from { background-position: 1rem 0; }
+    to { background-position: 0 0; }
+}
+
+.age-group-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+    transition: all 0.3s ease;
+    min-width: 200px;
+}
+
+.news-item {
+    border-left: 4px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.news-item:hover {
+    border-left-color: #4e73df;
+    transform: translateX(5px);
 }
 
 .document-stat-box {
@@ -556,74 +541,6 @@ document.addEventListener('DOMContentLoaded', function() {
             plugins: {
                 legend: {
                     position: 'bottom'
-                }
-            }
-        }
-    });
-
-    // Response Time Trend Chart
-    const responseData = @json($stats['charts']['responseTimes'] ?? []);
-    
-    new Chart(document.getElementById('responseTimeChart'), {
-        type: 'line',
-        data: {
-            labels: MONTHS,
-            datasets: [{
-                label: 'Average Response Time (hours)',
-                data: MONTHS.map(month => responseData[month] || 0),
-                borderColor: COLORS[0],
-                backgroundColor: 'rgba(78, 115, 223, 0.1)',
-                tension: 0.3,
-                fill: true
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'bottom'
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Hours'
-                    }
-                }
-            }
-        }
-    });
-
-    // Registration Trend Chart
-    const registrationData = @json($stats['charts']['registrationTrend'] ?? []);
-    
-    new Chart(document.getElementById('registrationTrendChart'), {
-        type: 'bar',
-        data: {
-            labels: MONTHS,
-            datasets: [{
-                label: 'New Registrations',
-                data: MONTHS.map(month => registrationData[month] || 0),
-                backgroundColor: COLORS[1],
-                borderRadius: 5
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'bottom'
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Number of Registrations'
-                    }
                 }
             }
         }
