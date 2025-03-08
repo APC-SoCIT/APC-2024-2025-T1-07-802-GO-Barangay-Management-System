@@ -294,10 +294,7 @@
     <div class="col-md-12">
         <div class="card shadow-sm">
             <div class="card-header bg-white d-flex justify-content-between align-items-center px-4">
-                <div class="d-flex align-items-center">
-                    <h3 class="card-title mb-0">Recent News & Updates</h3>
-                    <span class="badge badge-primary ml-3">{{ number_format($stats['news']['total']) }} Total Posts</span>
-                </div>
+                <h3 class="card-title mb-0">Recent News & Updates</h3>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -335,6 +332,17 @@
                         </div>
                     </div>
                     <div class="col-md-4">
+                        <div class="engagement-stat-card mb-3 bg-info-light rounded-lg p-4">
+                            <div class="d-flex align-items-center">
+                                <div class="stat-icon mr-3">
+                                    <i class="fas fa-newspaper fa-2x text-info"></i>
+                                </div>
+                                <div>
+                                    <h4 class="mb-0 text-info">{{ number_format($stats['news']['total']) }}</h4>
+                                    <small class="text-muted">Total Posts</small>
+                                </div>
+                            </div>
+                        </div>
                         <div class="engagement-stat-card mb-3 bg-primary-light rounded-lg p-4">
                             <div class="d-flex align-items-center">
                                 <div class="stat-icon mr-3">
