@@ -327,7 +327,7 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="stats-box p-3 rounded bg-light">
-                            <h6 class="text-muted">Weekly Stats</h6>
+                            <h6 class="text-muted">Weekly Statistics</h6>
                             <div class="mt-3">
                                 <p class="mb-2">Requested: <span class="font-weight-bold">{{ number_format($stats['documents']['requested']['week']) }}</span></p>
                                 <p class="mb-2">Processed: <span class="font-weight-bold">{{ number_format($stats['documents']['processed']['week']) }}</span></p>
@@ -344,7 +344,7 @@
                     </div>
                     <div class="col-6">
                         <div class="stats-box p-3 rounded bg-light">
-                            <h6 class="text-muted">Monthly Stats</h6>
+                            <h6 class="text-muted">Monthly Statistics</h6>
                             <div class="mt-3">
                                 <p class="mb-2">Requested: <span class="font-weight-bold">{{ number_format($stats['documents']['requested']['month']) }}</span></p>
                                 <p class="mb-2">Processed: <span class="font-weight-bold">{{ number_format($stats['documents']['processed']['month']) }}</span></p>
