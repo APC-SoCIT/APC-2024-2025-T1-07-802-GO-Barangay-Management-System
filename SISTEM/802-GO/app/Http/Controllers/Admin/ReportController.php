@@ -127,13 +127,29 @@ class ReportController extends Controller
                     'female' => Resident::where('gender', 'female')->count(),
                     'others' => Resident::whereNotIn('gender', ['male', 'female'])->count()
                 ],
-                // ...rest of the existing code...
+                'by_age' => [
+                    'youth' => Resident::where('age', '<', 18)->count(),
+                    'adult' => Resident::whereBetween('age', [18, 59])->count(),
+                    'senior' => Resident::where('age', '>=', 60)->count()
+                ],
+                'by_religion' => Resident::select('religion', DB::raw('count(*) as total'))
+                    ->whereNotNull('religion')
+                    ->groupBy('religion')
+                    ->pluck('total', 'religion')
+                    ->toArray(),
+                'by_civil_status' => Resident::select('civil_status', DB::raw('count(*) as total'))
+                    ->whereNotNull('civil_status')
+                    ->groupBy('civil_status')
+                    ->pluck('total', 'civil_status')
+                    ->toArray()
             ];
         } catch (\Exception $e) {
             return [
                 'total' => 0,
                 'by_gender' => ['male' => 0, 'female' => 0, 'others' => 0],
-                // ...rest of the default values...
+                'by_age' => ['youth' => 0, 'adult' => 0, 'senior' => 0],
+                'by_religion' => [],
+                'by_civil_status' => []
             ];
         }
     }

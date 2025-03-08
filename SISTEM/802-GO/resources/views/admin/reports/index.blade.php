@@ -203,6 +203,100 @@
             </div>
         </div>
     </div>
+    
+    <!-- Religion Demographics Card -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-white py-3">
+                <h3 class="card-title mb-0">Religion Distribution</h3>
+            </div>
+            <div class="card-body">
+                @php
+                    $totalReligion = array_sum($stats['residents']['by_religion'] ?? []);
+                    $totalReligion = $totalReligion ?: 1;
+                @endphp
+                
+                <div class="religion-stats">
+                    @foreach($stats['residents']['by_religion'] ?? [] as $religion => $count)
+                        @php
+                            $percentage = ($count / $totalReligion) * 100;
+                            $colors = [
+                                'bg-gradient-primary',
+                                'bg-gradient-success',
+                                'bg-gradient-info',
+                                'bg-gradient-warning',
+                                'bg-gradient-pink'
+                            ];
+                            $colorIndex = $loop->index % count($colors);
+                        @endphp
+                        <div class="religion-stat mb-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>
+                                    <i class="fas fa-pray mr-2"></i> 
+                                    {{ $religion }}
+                                </span>
+                                <span>{{ number_format($count) }} ({{ round($percentage) }}%)</span>
+                            </div>
+                            <div class="progress rounded-pill" style="height: 25px; background-color: rgba(0,0,0,0.05);">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated {{ $colors[$colorIndex] }}" 
+                                     role="progressbar" 
+                                     style="width: {{ $percentage }}%">
+                                    <span class="font-weight-bold">{{ round($percentage) }}%</span>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Civil Status Demographics Card -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-white py-3">
+                <h3 class="card-title mb-0">Civil Status Distribution</h3>
+            </div>
+            <div class="card-body">
+                @php
+                    $totalCivil = array_sum($stats['residents']['by_civil_status'] ?? []);
+                    $totalCivil = $totalCivil ?: 1;
+                @endphp
+                
+                <div class="civil-status-stats">
+                    @foreach($stats['residents']['by_civil_status'] ?? [] as $status => $count)
+                        @php
+                            $percentage = ($count / $totalCivil) * 100;
+                            $colors = [
+                                'bg-gradient-primary',
+                                'bg-gradient-success',
+                                'bg-gradient-info',
+                                'bg-gradient-warning',
+                                'bg-gradient-pink'
+                            ];
+                            $colorIndex = $loop->index % count($colors);
+                        @endphp
+                        <div class="civil-status-stat mb-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>
+                                    <i class="fas fa-heart mr-2"></i> 
+                                    {{ $status }}
+                                </span>
+                                <span>{{ number_format($count) }} ({{ round($percentage) }}%)</span>
+                            </div>
+                            <div class="progress rounded-pill" style="height: 25px; background-color: rgba(0,0,0,0.05);">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated {{ $colors[$colorIndex] }}" 
+                                     role="progressbar" 
+                                     style="width: {{ $percentage }}%">
+                                    <span class="font-weight-bold">{{ round($percentage) }}%</span>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Document Statistics Card -->
     <div class="col-md-6 mb-4">
@@ -656,6 +750,30 @@
     font-size: 0.875rem;
     font-weight: 600;
     border-radius: 2rem;
+}
+
+/* Fix Age Groups Progress Bars */
+.age-group-stat .progress-bar.bg-gradient-success {
+    background: linear-gradient(45deg, #1cc88a 0%, #13855c 100%) !important;
+    box-shadow: 0 2px 4px rgba(28, 200, 138, 0.3);
+}
+
+.age-group-stat .progress-bar.bg-gradient-info {
+    background: linear-gradient(45deg, #36b9cc 0%, #258391 100%) !important;
+    box-shadow: 0 2px 4px rgba(54, 185, 204, 0.3);
+}
+
+/* Add styles for new sections */
+.religion-container,
+.civil-status-container {
+    border-radius: 1rem;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.religion-stat .progress-bar,
+.civil-status-stat .progress-bar {
+    color: white;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
 </style>
 
