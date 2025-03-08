@@ -653,11 +653,11 @@
             align-items: center;
             justify-content: center;
             padding: 1rem;
-            border-bottom: none; /* Removed border */
+            border-bottom: 1px solid #e5e7eb;
             border-top-left-radius: 0.5rem;
-        0   border-op-right-radius: 0.5rem;
-            backgrond-color: #1e40af;
-            z-index: 1; /* Ensure header stays above the background */
+            border-top-right-radius: 0.5rem;
+            background-color: #1e40af;
+            z-index: 1;
         }
 
         .modal-body {
@@ -699,12 +699,12 @@
         }
 
         .modal-title {
-            margin-bottom: 0;
+            margin: 0;
             line-height: 1.5;
-            font-size: 1.5rem; /* Increased from 1.25rem */
+            font-size: 1.25rem;
             font-weight: 600;
-            color: #ffffff; /* Added white text color */
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Added text shadow */
+            color: #ffffff;
+            text-shadow: none;
         }
 
         .modal-body {
