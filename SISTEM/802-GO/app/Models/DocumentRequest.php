@@ -46,11 +46,18 @@ class DocumentRequest extends Model
         'signature',
         'extra_data',
         'status',
+        'completed_at'
     ];
 
     // Cast JSON fields automatically
     protected $casts = [
         'date_of_birth' => 'date',
         'extra_data' => 'array', // Ensure extra_data is stored as an array
+    ];
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'completed_at'
     ];
 }
