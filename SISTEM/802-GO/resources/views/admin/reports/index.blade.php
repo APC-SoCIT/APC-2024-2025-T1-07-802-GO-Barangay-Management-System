@@ -124,31 +124,78 @@
                     </div>
                 </div>
 
-                <!-- Age Groups - Enhanced UI -->
+                <!-- Age Groups - Revised UI with Progress Bars -->
                 <div>
                     <h5 class="text-muted mb-4">Age Groups</h5>
-                    <div class="age-groups-container">
-                        <div class="age-group-cards d-flex justify-content-between">
-                            <div class="age-group-card p-4 text-center">
-                                <div class="age-icon-wrapper mb-3 bg-primary-light">
-                                    <i class="fas fa-child fa-2x text-primary"></i>
-                                </div>
-                                <h3 class="text-primary mb-1">{{ number_format($stats['residents']['by_age']['youth']) }}</h3>
-                                <div class="age-label text-dark">Youth (<18)</div>
+                    @php
+                        $totalResidents = array_sum($stats['residents']['by_age']);
+                        $totalResidents = $totalResidents ?: 1; // Prevent division by zero
+                        $youthPercentage = ($stats['residents']['by_age']['youth'] / $totalResidents) * 100;
+                        $adultPercentage = ($stats['residents']['by_age']['adult'] / $totalResidents) * 100;
+                        $seniorPercentage = ($stats['residents']['by_age']['senior'] / $totalResidents) * 100;
+                    @endphp
+                    
+                    <div class="age-groups-container p-4">
+                        <!-- Youth Stats -->
+                        <div class="age-group-stat mb-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>
+                                    <i class="fas fa-child text-primary mr-2"></i> 
+                                    Youth (<18)
+                                </span>
+                                <span>{{ number_format($stats['residents']['by_age']['youth']) }} ({{ round($youthPercentage) }}%)</span>
                             </div>
-                            <div class="age-group-card p-4 text-center">
-                                <div class="age-icon-wrapper mb-3 bg-success-light">
-                                    <i class="fas fa-user fa-2x text-success"></i>
+                            <div class="progress rounded-pill" style="height: 25px; background-color: rgba(0,0,0,0.05);">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-gradient-primary" 
+                                     role="progressbar" 
+                                     style="width: {{ $youthPercentage }}%"
+                                     aria-valuenow="{{ $youthPercentage }}" 
+                                     aria-valuemin="0" 
+                                     aria-valuemax="100">
+                                    <span class="font-weight-bold">{{ round($youthPercentage) }}%</span>
                                 </div>
-                                <h3 class="text-success mb-1">{{ number_format($stats['residents']['by_age']['adult']) }}</h3>
-                                <div class="age-label text-dark">Adults (18-59)</div>
                             </div>
-                            <div class="age-group-card p-4 text-center">
-                                <div class="age-icon-wrapper mb-3 bg-info-light">
-                                    <i class="fas fa-user-plus fa-2x text-info"></i>
+                        </div>
+
+                        <!-- Adults Stats -->
+                        <div class="age-group-stat mb-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>
+                                    <i class="fas fa-user text-success mr-2"></i> 
+                                    Adults (18-59)
+                                </span>
+                                <span>{{ number_format($stats['residents']['by_age']['adult']) }} ({{ round($adultPercentage) }}%)</span>
+                            </div>
+                            <div class="progress rounded-pill" style="height: 25px; background-color: rgba(0,0,0,0.05);">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-gradient-success" 
+                                     role="progressbar" 
+                                     style="width: {{ $adultPercentage }}%"
+                                     aria-valuenow="{{ $adultPercentage }}" 
+                                     aria-valuemin="0" 
+                                     aria-valuemax="100">
+                                    <span class="font-weight-bold">{{ round($adultPercentage) }}%</span>
                                 </div>
-                                <h3 class="text-info mb-1">{{ number_format($stats['residents']['by_age']['senior']) }}</h3>
-                                <div class="age-label text-dark">Seniors (60+)</div>
+                            </div>
+                        </div>
+
+                        <!-- Seniors Stats -->
+                        <div class="age-group-stat">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>
+                                    <i class="fas fa-user-plus text-info mr-2"></i> 
+                                    Seniors (60+)
+                                </span>
+                                <span>{{ number_format($stats['residents']['by_age']['senior']) }} ({{ round($seniorPercentage) }}%)</span>
+                            </div>
+                            <div class="progress rounded-pill" style="height: 25px; background-color: rgba(0,0,0,0.05);">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-gradient-info" 
+                                     role="progressbar" 
+                                     style="width: {{ $seniorPercentage }}%"
+                                     aria-valuenow="{{ $seniorPercentage }}" 
+                                     aria-valuemin="0" 
+                                     aria-valuemax="100">
+                                    <span class="font-weight-bold">{{ round($seniorPercentage) }}%</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -252,20 +299,25 @@
                     <div class="col-md-8">
                         <div class="news-list">
                             @foreach($stats['news']['recent'] as $news)
-                                <div class="news-item p-3 mb-3 bg-light rounded-lg">
-                                    <div class="d-flex align-items-center">
-                                        <div class="news-icon mr-3">
-                                            <i class="fas fa-newspaper fa-lg text-primary"></i>
-                                        </div>
-                                        <div class="news-content">
-                                            <h6 class="mb-1 font-weight-bold">{{ $news->title }}</h6>
-                                            <small class="text-muted">
-                                                <i class="fas fa-clock mr-1"></i>
-                                                {{ $news->created_at->diffForHumans() }}
-                                            </small>
+                                <a href="{{ route('admin.news.show', $news->id) }}" class="text-decoration-none">
+                                    <div class="news-item p-3 mb-3 bg-light rounded-lg">
+                                        <div class="d-flex align-items-center">
+                                            <div class="news-icon mr-3">
+                                                <i class="fas fa-newspaper fa-lg text-primary"></i>
+                                            </div>
+                                            <div class="news-content">
+                                                <h6 class="mb-1 font-weight-bold text-dark">{{ $news->title }}</h6>
+                                                <small class="text-muted">
+                                                    <i class="fas fa-clock mr-1"></i>
+                                                    {{ $news->created_at->diffForHumans() }}
+                                                </small>
+                                            </div>
+                                            <div class="ml-auto">
+                                                <i class="fas fa-chevron-right text-muted"></i>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                             @endforeach
                         </div>
                     </div>
