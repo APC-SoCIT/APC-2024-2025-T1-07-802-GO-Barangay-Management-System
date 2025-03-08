@@ -615,8 +615,8 @@
             position: relative;
             width: auto;
             margin: 1.75rem auto;
-            max-width: 400px;
-            padding: 0; /* Remove padding */
+            max-width: 400px; /* Changed from 500px to 400px */
+            padding: 0 1rem; /* Added padding for smaller screens */
         }
 
         .modal-content {
@@ -626,13 +626,10 @@
             width: 100%;
             pointer-events: auto;
             background-color: #ffffff;
-            border-radius: 8px; /* Explicit border radius */
+            border-radius: 0.5rem;
             outline: 0;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            min-height: 210px;
-            border: 0;
-            margin: 0; /* Remove margin */
-            overflow: hidden;
+            min-height: 210px; /* Reduced height */
         }
 
         .modal-content::before {
@@ -657,11 +654,10 @@
             justify-content: center;
             padding: 1rem;
             border-bottom: none; /* Removed border */
-            border-top-left-radius: 8px;
-            border-top-right-radius: 8px;
-            background-color: #1e40af;
+            border-top-left-radius: 0.5rem;
+        0   border-op-right-radius: 0.5rem;
+            backgrond-color: #1e40af;
             z-index: 1; /* Ensure header stays above the background */
-            margin: 0;
         }
 
         .modal-body {
@@ -1054,6 +1050,10 @@
             <a href="#" class="{{ request()->routeIs('admin.documents.*') ? 'active' : '' }}">
                 <i class="fas fa-file-alt"></i>
                 <span>Document Approval</span>
+            </a>
+            <a href="{{ route('admin.reports.index') }}" class="{{ request()->routeIs('admin.reports.*') ? 'active' : '' }}">
+                <i class="fas fa-chart-bar"></i>
+                <span>Analytics & Reports</span>
             </a>
         </div>
         
