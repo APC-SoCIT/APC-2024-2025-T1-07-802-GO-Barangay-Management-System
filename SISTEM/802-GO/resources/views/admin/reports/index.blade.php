@@ -10,90 +10,117 @@
     <!-- Quick Stats Cards -->
     <div class="col-md-3 mb-4">
         <div class="card stat-card bg-gradient-primary text-white">
-            <div class="card-body">
-                <div class="stat-icon"><i class="fas fa-users fa-2x"></i></div>
-                <h5 class="card-title mt-3">Total Residents</h5>
-                <h2 class="mb-2">{{ number_format($stats['residents']['total']) }}</h2>
-                <small>Active members of the barangay</small>
+            <div class="card-body p-4">
+                <div class="stat-icon mb-3"><i class="fas fa-users fa-2x"></i></div>
+                <h5 class="card-title">Total Residents</h5>
+                <h2 class="stat-value mb-2">{{ number_format($stats['residents']['total']) }}</h2>
+                <p class="mb-0"><small>Active members of the barangay</small></p>
             </div>
         </div>
     </div>
     <div class="col-md-3 mb-4">
         <div class="card stat-card bg-gradient-success text-white">
-            <div class="card-body">
-                <div class="stat-icon"><i class="fas fa-file-alt fa-2x"></i></div>
-                <h5 class="card-title mt-3">Documents Processed</h5>
-                <h2 class="mb-2">{{ number_format($stats['documents']['processed']['month']) }}</h2>
-                <small>In the last 30 days</small>
+            <div class="card-body p-4">
+                <div class="stat-icon mb-3"><i class="fas fa-file-alt fa-2x"></i></div>
+                <h5 class="card-title">Documents Processed</h5>
+                <h2 class="stat-value mb-2">{{ number_format($stats['documents']['processed']['month']) }}</h2>
+                <p class="mb-0"><small>In the last 30 days</small></p>
             </div>
         </div>
     </div>
     <div class="col-md-3 mb-4">
         <div class="card stat-card bg-gradient-info text-white">
-            <div class="card-body">
-                <div class="stat-icon"><i class="fas fa-user-clock fa-2x"></i></div>
-                <h5 class="card-title mt-3">Active Users</h5>
-                <h2 class="mb-2">{{ number_format($stats['residents']['recent_activity']['week']) }}</h2>
-                <small>In the last 7 days</small>
+            <div class="card-body p-4">
+                <div class="stat-icon mb-3"><i class="fas fa-user-clock fa-2x"></i></div>
+                <h5 class="card-title">Active Users</h5>
+                <h2 class="stat-value mb-2">{{ number_format($stats['residents']['recent_activity']['week']) }}</h2>
+                <p class="mb-0"><small>In the last 7 days</small></p>
             </div>
         </div>
     </div>
     <div class="col-md-3 mb-4">
         <div class="card stat-card bg-gradient-warning text-white">
-            <div class="card-body">
-                <div class="stat-icon"><i class="fas fa-clock fa-2x"></i></div>
-                <h5 class="card-title mt-3">Avg. Processing Time</h5>
-                <h2 class="mb-2">{{ round($stats['documents']['processing_time']['average'], 1) }}h</h2>
-                <small>For document requests</small>
+            <div class="card-body p-4">
+                <div class="stat-icon mb-3"><i class="fas fa-clock fa-2x"></i></div>
+                <h5 class="card-title">Avg. Processing Time</h5>
+                <h2 class="stat-value mb-2">{{ round($stats['documents']['processing_time']['average'], 1) }}h</h2>
+                <p class="mb-0"><small>For document requests</small></p>
             </div>
         </div>
     </div>
 
     <!-- Demographics Card -->
     <div class="col-md-6 mb-4">
-        <div class="card shadow-sm">
-            <div class="card-header bg-white">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-white py-3">
                 <h3 class="card-title mb-0">Resident Demographics</h3>
             </div>
             <div class="card-body">
                 <!-- Gender Distribution -->
-                <div class="mb-4">
+                <div class="mb-5">
                     <h5 class="text-muted mb-3">Gender Distribution</h5>
-                    <div class="progress rounded-pill mb-3" style="height: 25px;">
+                    <div class="gender-stats mb-3">
                         @php
-                            $total = $stats['residents']['total'] ?: 1;
-                            $malePercentage = ($stats['residents']['by_gender']['male'] / $total) * 100;
-                            $femalePercentage = ($stats['residents']['by_gender']['female'] / $total) * 100;
+                            $total = $stats['residents']['total'] ?: 1; // Prevent division by zero
+                            $maleCount = $stats['residents']['by_gender']['male'];
+                            $femaleCount = $stats['residents']['by_gender']['female'];
+                            $malePercentage = ($maleCount / $total) * 100;
+                            $femalePercentage = ($femaleCount / $total) * 100;
                         @endphp
-                        <div class="progress-bar bg-gradient-primary" style="width: {{ $malePercentage }}%">
-                            Male ({{ number_format($stats['residents']['by_gender']['male']) }})
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span>Male</span>
+                            <span>{{ number_format($maleCount) }} ({{ round($malePercentage) }}%)</span>
                         </div>
-                        <div class="progress-bar bg-gradient-pink" style="width: {{ $femalePercentage }}%">
-                            Female ({{ number_format($stats['residents']['by_gender']['female']) }})
+                        <div class="progress rounded-pill" style="height: 25px;">
+                            <div class="progress-bar bg-gradient-primary" role="progressbar" 
+                                style="width: {{ $malePercentage }}%" aria-valuenow="{{ $malePercentage }}" 
+                                aria-valuemin="0" aria-valuemax="100">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gender-stats">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span>Female</span>
+                            <span>{{ number_format($femaleCount) }} ({{ round($femalePercentage) }}%)</span>
+                        </div>
+                        <div class="progress rounded-pill" style="height: 25px;">
+                            <div class="progress-bar bg-gradient-pink" role="progressbar" 
+                                style="width: {{ $femalePercentage }}%" aria-valuenow="{{ $femalePercentage }}" 
+                                aria-valuemin="0" aria-valuemax="100">
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Age Groups -->
                 <div>
-                    <h5 class="text-muted mb-3">Age Groups</h5>
-                    <div class="row text-center">
+                    <h5 class="text-muted mb-4">Age Groups</h5>
+                    <div class="row g-3">
                         <div class="col-4">
-                            <div class="p-3 border rounded bg-light">
-                                <h3 class="text-primary">{{ number_format($stats['residents']['by_age']['youth']) }}</h3>
-                                <small class="text-muted">Youth (<18)</small>
+                            <div class="age-group-card bg-light p-3 rounded-lg text-center h-100">
+                                <div class="age-icon mb-2">
+                                    <i class="fas fa-child fa-2x text-primary"></i>
+                                </div>
+                                <h3 class="text-primary mb-2">{{ number_format($stats['residents']['by_age']['youth']) }}</h3>
+                                <div class="age-label">Youth<br>(<18)</div>
                             </div>
                         </div>
                         <div class="col-4">
-                            <div class="p-3 border rounded bg-light">
-                                <h3 class="text-success">{{ number_format($stats['residents']['by_age']['adult']) }}</h3>
-                                <small class="text-muted">Adults (18-59)</small>
+                            <div class="age-group-card bg-light p-3 rounded-lg text-center h-100">
+                                <div class="age-icon mb-2">
+                                    <i class="fas fa-user fa-2x text-success"></i>
+                                </div>
+                                <h3 class="text-success mb-2">{{ number_format($stats['residents']['by_age']['adult']) }}</h3>
+                                <div class="age-label">Adults<br>(18-59)</div>
                             </div>
                         </div>
                         <div class="col-4">
-                            <div class="p-3 border rounded bg-light">
-                                <h3 class="text-info">{{ number_format($stats['residents']['by_age']['senior']) }}</h3>
-                                <small class="text-muted">Seniors (60+)</small>
+                            <div class="age-group-card bg-light p-3 rounded-lg text-center h-100">
+                                <div class="age-icon mb-2">
+                                    <i class="fas fa-user-plus fa-2x text-info"></i>
+                                </div>
+                                <h3 class="text-info mb-2">{{ number_format($stats['residents']['by_age']['senior']) }}</h3>
+                                <div class="age-label">Seniors<br>(60+)</div>
                             </div>
                         </div>
                     </div>
@@ -205,46 +232,106 @@
 }
 .stat-card {
     border: none;
-    transition: transform 0.2s;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    height: 100%;
 }
+
+.stat-card .card-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.card-title {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
 .stat-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
 .stat-icon {
     opacity: 0.8;
+    background: rgba(255,255,255,0.1);
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
 }
 .progress {
-    overflow: visible;
+    overflow: hidden;
+    background-color: rgba(0,0,0,0.05);
+    height: 25px;
 }
 .progress-bar {
     transition: width 1s;
     position: relative;
-    overflow: visible;
     font-weight: 500;
-    line-height: 25px;
+    font-size: 0.875rem;
 }
-.stats-box {
-    transition: transform 0.2s;
+.age-group-card {
+    border: 1px solid rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
 }
-.stats-box:hover {
+.age-group-card:hover {
     transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
-.news-item {
-    transition: transform 0.2s;
+.age-label {
+    font-size: 0.875rem;
+    color: #6c757d;
+    line-height: 1.2;
 }
-.news-item:hover {
-    transform: translateX(5px);
-    background-color: #f8f9fa !important;
+.age-icon {
+    background: rgba(0,0,0,0.05);
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+.gender-stats {
+    margin-bottom: 1.5rem;
 }
 .card {
     border: none;
-    transition: all 0.2s;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    overflow: visible;
 }
 .card:hover {
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
 }
-.font-weight-bold {
-    font-weight: 600 !important;
+.card-header {
+    background: transparent;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+.display-4 {
+    font-size: 2.5rem;
+    font-weight: 600;
+}
+/* Add spacing between elements */
+.mb-5 {
+    margin-bottom: 3rem !important;
+}
+.g-3 {
+    gap: 1rem;
+}
+.rounded-lg {
+    border-radius: 1rem !important;
 }
 </style>
 @endsection
