@@ -120,6 +120,21 @@ class ReportController extends Controller
     {
         try {
             $total = Resident::count();
+
+            // Get actual religion counts directly from database
+            $religionCounts = Resident::select('religion', DB::raw('count(*) as total'))
+                ->whereNotNull('religion')
+                ->groupBy('religion')
+                ->pluck('total', 'religion')
+                ->toArray();
+
+            // Get actual civil status counts directly from database
+            $civilStatusCounts = Resident::select('civil_status', DB::raw('count(*) as total'))
+                ->whereNotNull('civil_status')
+                ->groupBy('civil_status')
+                ->pluck('total', 'civil_status')
+                ->toArray();
+
             return [
                 'total' => $total,
                 'by_gender' => [
@@ -132,16 +147,8 @@ class ReportController extends Controller
                     'adult' => Resident::whereBetween('age', [18, 59])->count(),
                     'senior' => Resident::where('age', '>=', 60)->count()
                 ],
-                'by_religion' => Resident::select('religion', DB::raw('count(*) as total'))
-                    ->whereNotNull('religion')
-                    ->groupBy('religion')
-                    ->pluck('total', 'religion')
-                    ->toArray(),
-                'by_civil_status' => Resident::select('civil_status', DB::raw('count(*) as total'))
-                    ->whereNotNull('civil_status')
-                    ->groupBy('civil_status')
-                    ->pluck('total', 'civil_status')
-                    ->toArray()
+                'by_religion' => $religionCounts,
+                'by_civil_status' => $civilStatusCounts
             ];
         } catch (\Exception $e) {
             return [

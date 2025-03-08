@@ -50,249 +50,232 @@
     </div>
 
     <!-- Demographics Card -->
-    <div class="col-md-6 mb-4">
-        <div class="card shadow-sm h-100">
+    <div class="col-md-12 mb-4">
+        <div class="card shadow-sm">
             <div class="card-header bg-white py-3">
                 <h3 class="card-title mb-0">Resident Demographics</h3>
             </div>
             <div class="card-body">
-                <!-- Gender Distribution -->
-                <div class="mb-5">
-                    <h5 class="text-muted mb-3">Gender Distribution</h5>
-                    @php
-                        $total = $stats['residents']['total'] ?: 1;
-                        $maleCount = $stats['residents']['by_gender']['male'];
-                        $femaleCount = $stats['residents']['by_gender']['female'];
-                        $othersCount = $stats['residents']['by_gender']['others'];
-                        $malePercentage = ($maleCount / $total) * 100;
-                        $femalePercentage = ($femaleCount / $total) * 100;
-                        $othersPercentage = ($othersCount / $total) * 100;
-                    @endphp
-                    
-                    <!-- Male Stats -->
-                    <div class="gender-stats mb-3">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span><i class="fas fa-mars text-primary mr-2"></i> Male</span>
-                            <span>{{ number_format($maleCount) }} ({{ round($malePercentage) }}%)</span>
-                        </div>
-                        <div class="progress rounded-pill" style="height: 25px; background-color: rgba(0,0,0,0.05);">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-gradient-primary" 
-                                role="progressbar" 
-                                style="width: {{ $malePercentage }}%;"
-                                aria-valuenow="{{ $malePercentage }}" 
-                                aria-valuemin="0" 
-                                aria-valuemax="100">
-                                <span class="font-weight-bold">{{ round($malePercentage) }}%</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Female Stats -->
-                    <div class="gender-stats mb-3">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span><i class="fas fa-venus text-pink mr-2"></i> Female</span>
-                            <span>{{ number_format($femaleCount) }} ({{ round($femalePercentage) }}%)</span>
-                        </div>
-                        <div class="progress rounded-pill" style="height: 25px; background-color: rgba(0,0,0,0.05);">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-gradient-pink" 
-                                role="progressbar" 
-                                style="width: {{ $femalePercentage }}%;"
-                                aria-valuenow="{{ $femalePercentage }}" 
-                                aria-valuemin="0" 
-                                aria-valuemax="100">
-                                <span class="font-weight-bold">{{ round($femalePercentage) }}%</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Others Stats -->
-                    <div class="gender-stats">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span><i class="fas fa-transgender-alt text-purple mr-2"></i> Others</span>
-                            <span>{{ number_format($othersCount) }} ({{ round($othersPercentage) }}%)</span>
-                        </div>
-                        <div class="progress rounded-pill" style="height: 25px; background-color: rgba(0,0,0,0.05);">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated" 
-                                role="progressbar" 
-                                style="width: {{ $othersPercentage }}%; background: linear-gradient(45deg, #9b51e0, #7435aa);"
-                                aria-valuenow="{{ $othersPercentage }}" 
-                                aria-valuemin="0" 
-                                aria-valuemax="100">
-                                <span class="font-weight-bold">{{ round($othersPercentage) }}%</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Age Groups - Revised UI with Progress Bars -->
-                <div>
-                    <h5 class="text-muted mb-4">Age Groups</h5>
-                    @php
-                        $totalResidents = array_sum($stats['residents']['by_age']);
-                        $totalResidents = $totalResidents ?: 1; // Prevent division by zero
-                        $youthPercentage = ($stats['residents']['by_age']['youth'] / $totalResidents) * 100;
-                        $adultPercentage = ($stats['residents']['by_age']['adult'] / $totalResidents) * 100;
-                        $seniorPercentage = ($stats['residents']['by_age']['senior'] / $totalResidents) * 100;
-                    @endphp
-                    
-                    <div class="age-groups-container p-4">
-                        <!-- Youth Stats -->
-                        <div class="age-group-stat mb-3">
+                <div class="row">
+                    <!-- Gender Distribution Column -->
+                    <div class="col-md-6 mb-4">
+                        <h5 class="text-muted mb-3">Gender Distribution</h5>
+                        @php
+                            $total = $stats['residents']['total'] ?: 1;
+                            $maleCount = $stats['residents']['by_gender']['male'];
+                            $femaleCount = $stats['residents']['by_gender']['female'];
+                            $othersCount = $stats['residents']['by_gender']['others'];
+                            $malePercentage = ($maleCount / $total) * 100;
+                            $femalePercentage = ($femaleCount / $total) * 100;
+                            $othersPercentage = ($othersCount / $total) * 100;
+                        @endphp
+                        
+                        <!-- Male Stats -->
+                        <div class="gender-stats mb-3">
                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span>
-                                    <i class="fas fa-child text-primary mr-2"></i> 
-                                    Youth (<18)
-                                </span>
-                                <span>{{ number_format($stats['residents']['by_age']['youth']) }} ({{ round($youthPercentage) }}%)</span>
+                                <span><i class="fas fa-mars text-primary mr-2"></i> Male</span>
+                                <span>{{ number_format($maleCount) }} ({{ round($malePercentage) }}%)</span>
                             </div>
                             <div class="progress rounded-pill" style="height: 25px; background-color: rgba(0,0,0,0.05);">
                                 <div class="progress-bar progress-bar-striped progress-bar-animated bg-gradient-primary" 
-                                     role="progressbar" 
-                                     style="width: {{ $youthPercentage }}%"
-                                     aria-valuenow="{{ $youthPercentage }}" 
-                                     aria-valuemin="0" 
-                                     aria-valuemax="100">
-                                    <span class="font-weight-bold">{{ round($youthPercentage) }}%</span>
+                                    role="progressbar" 
+                                    style="width: {{ $malePercentage }}%;"
+                                    aria-valuenow="{{ $malePercentage }}" 
+                                    aria-valuemin="0" 
+                                    aria-valuemax="100">
+                                    <span class="font-weight-bold">{{ round($malePercentage) }}%</span>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Adults Stats -->
-                        <div class="age-group-stat mb-3">
+                        <!-- Female Stats -->
+                        <div class="gender-stats mb-3">
                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span>
-                                    <i class="fas fa-user text-success mr-2"></i> 
-                                    Adults (18-59)
-                                </span>
-                                <span>{{ number_format($stats['residents']['by_age']['adult']) }} ({{ round($adultPercentage) }}%)</span>
+                                <span><i class="fas fa-venus text-pink mr-2"></i> Female</span>
+                                <span>{{ number_format($femaleCount) }} ({{ round($femalePercentage) }}%)</span>
                             </div>
                             <div class="progress rounded-pill" style="height: 25px; background-color: rgba(0,0,0,0.05);">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-gradient-success" 
-                                     role="progressbar" 
-                                     style="width: {{ $adultPercentage }}%"
-                                     aria-valuenow="{{ $adultPercentage }}" 
-                                     aria-valuemin="0" 
-                                     aria-valuemax="100">
-                                    <span class="font-weight-bold">{{ round($adultPercentage) }}%</span>
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-gradient-pink" 
+                                    role="progressbar" 
+                                    style="width: {{ $femalePercentage }}%;"
+                                    aria-valuenow="{{ $femalePercentage }}" 
+                                    aria-valuemin="0" 
+                                    aria-valuemax="100">
+                                    <span class="font-weight-bold">{{ round($femalePercentage) }}%</span>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Seniors Stats -->
-                        <div class="age-group-stat">
+                        <!-- Others Stats -->
+                        <div class="gender-stats">
                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span>
-                                    <i class="fas fa-user-plus text-info mr-2"></i> 
-                                    Seniors (60+)
-                                </span>
-                                <span>{{ number_format($stats['residents']['by_age']['senior']) }} ({{ round($seniorPercentage) }}%)</span>
+                                <span><i class="fas fa-transgender-alt text-purple mr-2"></i> Others</span>
+                                <span>{{ number_format($othersCount) }} ({{ round($othersPercentage) }}%)</span>
                             </div>
                             <div class="progress rounded-pill" style="height: 25px; background-color: rgba(0,0,0,0.05);">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-gradient-info" 
-                                     role="progressbar" 
-                                     style="width: {{ $seniorPercentage }}%"
-                                     aria-valuenow="{{ $seniorPercentage }}" 
-                                     aria-valuemin="0" 
-                                     aria-valuemax="100">
-                                    <span class="font-weight-bold">{{ round($seniorPercentage) }}%</span>
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                                    role="progressbar" 
+                                    style="width: {{ $othersPercentage }}%; background: linear-gradient(45deg, #9b51e0, #7435aa);"
+                                    aria-valuenow="{{ $othersPercentage }}" 
+                                    aria-valuemin="0" 
+                                    aria-valuemax="100">
+                                    <span class="font-weight-bold">{{ round($othersPercentage) }}%</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Religion Demographics Card -->
-    <div class="col-md-6 mb-4">
-        <div class="card shadow-sm h-100">
-            <div class="card-header bg-white py-3">
-                <h3 class="card-title mb-0">Religion Distribution</h3>
-            </div>
-            <div class="card-body">
-                @php
-                    $totalReligion = array_sum($stats['residents']['by_religion'] ?? []);
-                    $totalReligion = $totalReligion ?: 1;
-                @endphp
-                
-                <div class="religion-stats">
-                    @foreach($stats['residents']['by_religion'] ?? [] as $religion => $count)
-                        @php
-                            $percentage = ($count / $totalReligion) * 100;
-                            $colors = [
-                                'bg-gradient-primary',
-                                'bg-gradient-success',
-                                'bg-gradient-info',
-                                'bg-gradient-warning',
-                                'bg-gradient-pink'
-                            ];
-                            $colorIndex = $loop->index % count($colors);
-                        @endphp
-                        <div class="religion-stat mb-3">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span>
-                                    <i class="fas fa-pray mr-2"></i> 
-                                    {{ $religion }}
-                                </span>
-                                <span>{{ number_format($count) }} ({{ round($percentage) }}%)</span>
-                            </div>
-                            <div class="progress rounded-pill" style="height: 25px; background-color: rgba(0,0,0,0.05);">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated {{ $colors[$colorIndex] }}" 
-                                     role="progressbar" 
-                                     style="width: {{ $percentage }}%">
-                                    <span class="font-weight-bold">{{ round($percentage) }}%</span>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Civil Status Demographics Card -->
-    <div class="col-md-6 mb-4">
-        <div class="card shadow-sm h-100">
-            <div class="card-header bg-white py-3">
-                <h3 class="card-title mb-0">Civil Status Distribution</h3>
-            </div>
-            <div class="card-body">
-                @php
-                    $totalCivil = array_sum($stats['residents']['by_civil_status'] ?? []);
-                    $totalCivil = $totalCivil ?: 1;
-                @endphp
-                
-                <div class="civil-status-stats">
-                    @foreach($stats['residents']['by_civil_status'] ?? [] as $status => $count)
+                    <!-- Age Groups Column -->
+                    <div class="col-md-6 mb-4">
+                        <h5 class="text-muted mb-3">Age Groups</h5>
                         @php
-                            $percentage = ($count / $totalCivil) * 100;
-                            $colors = [
-                                'bg-gradient-primary',
-                                'bg-gradient-success',
-                                'bg-gradient-info',
-                                'bg-gradient-warning',
-                                'bg-gradient-pink'
-                            ];
-                            $colorIndex = $loop->index % count($colors);
+                            $totalResidents = array_sum($stats['residents']['by_age']);
+                            $totalResidents = $totalResidents ?: 1; // Prevent division by zero
+                            $youthPercentage = ($stats['residents']['by_age']['youth'] / $totalResidents) * 100;
+                            $adultPercentage = ($stats['residents']['by_age']['adult'] / $totalResidents) * 100;
+                            $seniorPercentage = ($stats['residents']['by_age']['senior'] / $totalResidents) * 100;
                         @endphp
-                        <div class="civil-status-stat mb-3">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span>
-                                    <i class="fas fa-heart mr-2"></i> 
-                                    {{ $status }}
-                                </span>
-                                <span>{{ number_format($count) }} ({{ round($percentage) }}%)</span>
+                        
+                        <div class="age-groups-container p-4">
+                            <!-- Youth Stats -->
+                            <div class="age-group-stat mb-3">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span>
+                                        <i class="fas fa-child text-primary mr-2"></i> 
+                                        Youth (<18)
+                                    </span>
+                                    <span>{{ number_format($stats['residents']['by_age']['youth']) }} ({{ round($youthPercentage) }}%)</span>
+                                </div>
+                                <div class="progress rounded-pill" style="height: 25px; background-color: rgba(0,0,0,0.05);">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-gradient-primary" 
+                                         role="progressbar" 
+                                         style="width: {{ $youthPercentage }}%"
+                                         aria-valuenow="{{ $youthPercentage }}" 
+                                         aria-valuemin="0" 
+                                         aria-valuemax="100">
+                                        <span class="font-weight-bold">{{ round($youthPercentage) }}%</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="progress rounded-pill" style="height: 25px; background-color: rgba(0,0,0,0.05);">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated {{ $colors[$colorIndex] }}" 
-                                     role="progressbar" 
-                                     style="width: {{ $percentage }}%">
-                                    <span class="font-weight-bold">{{ round($percentage) }}%</span>
+
+                            <!-- Adults Stats -->
+                            <div class="age-group-stat mb-3">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span>
+                                        <i class="fas fa-user text-success mr-2"></i> 
+                                        Adults (18-59)
+                                    </span>
+                                    <span>{{ number_format($stats['residents']['by_age']['adult']) }} ({{ round($adultPercentage) }}%)</span>
+                                </div>
+                                <div class="progress rounded-pill" style="height: 25px; background-color: rgba(0,0,0,0.05);">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-gradient-success" 
+                                         role="progressbar" 
+                                         style="width: {{ $adultPercentage }}%"
+                                         aria-valuenow="{{ $adultPercentage }}" 
+                                         aria-valuemin="0" 
+                                         aria-valuemax="100">
+                                        <span class="font-weight-bold">{{ round($adultPercentage) }}%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Seniors Stats -->
+                            <div class="age-group-stat">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span>
+                                        <i class="fas fa-user-plus text-info mr-2"></i> 
+                                        Seniors (60+)
+                                    </span>
+                                    <span>{{ number_format($stats['residents']['by_age']['senior']) }} ({{ round($seniorPercentage) }}%)</span>
+                                </div>
+                                <div class="progress rounded-pill" style="height: 25px; background-color: rgba(0,0,0,0.05);">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-gradient-info" 
+                                         role="progressbar" 
+                                         style="width: {{ $seniorPercentage }}%"
+                                         aria-valuenow="{{ $seniorPercentage }}" 
+                                         aria-valuemin="0" 
+                                         aria-valuemax="100">
+                                        <span class="font-weight-bold">{{ round($seniorPercentage) }}%</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                    </div>
+
+                    <!-- Religion Distribution Column -->
+                    <div class="col-md-6 mb-4">
+                        <h5 class="text-muted mb-3">Religion Distribution</h5>
+                        <div class="demographics-section">
+                            @php
+                                $religionCounts = $stats['residents']['by_religion'] ?? [];
+                                $totalReligion = array_sum($religionCounts);
+                                $colors = [
+                                    'bg-gradient-primary',
+                                    'bg-gradient-success',
+                                    'bg-gradient-info',
+                                    'bg-gradient-warning',
+                                    'bg-gradient-pink',
+                                    'bg-gradient-danger',
+                                    'bg-gradient-secondary'
+                                ];
+                            @endphp
+                            
+                            @forelse($religionCounts as $religion => $count)
+                                @php
+                                    $percentage = $totalReligion > 0 ? ($count / $totalReligion) * 100 : 0;
+                                    $colorIndex = $loop->index % count($colors);
+                                @endphp
+                                <div class="demographic-stat mb-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span><i class="fas fa-pray mr-2"></i> {{ $religion ?: 'Not Specified' }}</span>
+                                        <span>{{ number_format($count) }} ({{ round($percentage) }}%)</span>
+                                    </div>
+                                    <div class="progress rounded-pill" style="height: 20px; background-color: rgba(0,0,0,0.05);">
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated {{ $colors[$colorIndex] }}" 
+                                             role="progressbar" 
+                                             style="width: {{ $percentage }}%">
+                                            <span class="font-weight-bold">{{ round($percentage) }}%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="text-muted text-center p-3">No religion data available</div>
+                            @endforelse
+                        </div>
+                    </div>
+
+                    <!-- Civil Status Distribution Column -->
+                    <div class="col-md-6 mb-4">
+                        <h5 class="text-muted mb-3">Civil Status Distribution</h5>
+                        <div class="demographics-section">
+                            @php
+                                $civilStatusCounts = $stats['residents']['by_civil_status'] ?? [];
+                                $totalCivil = array_sum($civilStatusCounts);
+                            @endphp
+                            
+                            @forelse($civilStatusCounts as $status => $count)
+                                @php
+                                    $percentage = $totalCivil > 0 ? ($count / $totalCivil) * 100 : 0;
+                                    $colorIndex = $loop->index % count($colors);
+                                @endphp
+                                <div class="demographic-stat mb-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span><i class="fas fa-heart mr-2"></i> {{ $status ?: 'Not Specified' }}</span>
+                                        <span>{{ number_format($count) }} ({{ round($percentage) }}%)</span>
+                                    </div>
+                                    <div class="progress rounded-pill" style="height: 20px; background-color: rgba(0,0,0,0.05);">
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated {{ $colors[$colorIndex] }}" 
+                                             role="progressbar" 
+                                             style="width: {{ $percentage }}%">
+                                            <span class="font-weight-bold">{{ round($percentage) }}%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="text-muted text-center p-3">No civil status data available</div>
+                            @endforelse
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -774,6 +757,35 @@
 .civil-status-stat .progress-bar {
     color: white;
     text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+/* Demographics Section Styling */
+.demographics-section {
+    background: #f8f9fa;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.demographic-stat {
+    margin-bottom: 1rem;
+}
+
+.demographic-stat:last-child {
+    margin-bottom: 0;
+}
+
+.demographic-stat .progress-bar {
+    font-size: 0.8rem;
+    line-height: 20px;
+}
+
+.bg-gradient-danger {
+    background: linear-gradient(45deg, #e74a3b, #be2617);
+}
+
+.bg-gradient-secondary {
+    background: linear-gradient(45deg, #858796, #60616f);
 }
 </style>
 
