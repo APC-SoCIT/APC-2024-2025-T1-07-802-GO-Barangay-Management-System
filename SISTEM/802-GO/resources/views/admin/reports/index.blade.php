@@ -75,11 +75,14 @@
                             <span><i class="fas fa-mars text-primary mr-2"></i> Male</span>
                             <span>{{ number_format($maleCount) }} ({{ round($malePercentage) }}%)</span>
                         </div>
-                        <div class="progress rounded-pill" style="height: 25px;">
-                            <div class="progress-bar" role="progressbar" 
-                                style="width: {{ $malePercentage }}%; background-color: #4e73df;" 
+                        <div class="progress rounded-pill" style="height: 25px; background-color: rgba(0,0,0,0.05);">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" 
+                                role="progressbar" 
+                                style="width: {{ $malePercentage }}%"
                                 aria-valuenow="{{ $malePercentage }}" 
-                                aria-valuemin="0" aria-valuemax="100">
+                                aria-valuemin="0" 
+                                aria-valuemax="100">
+                                <span class="font-weight-bold">{{ round($malePercentage) }}%</span>
                             </div>
                         </div>
                     </div>
@@ -90,11 +93,14 @@
                             <span><i class="fas fa-venus text-pink mr-2"></i> Female</span>
                             <span>{{ number_format($femaleCount) }} ({{ round($femalePercentage) }}%)</span>
                         </div>
-                        <div class="progress rounded-pill" style="height: 25px;">
-                            <div class="progress-bar" role="progressbar" 
-                                style="width: {{ $femalePercentage }}%; background-color: #e83e8c;" 
+                        <div class="progress rounded-pill" style="height: 25px; background-color: rgba(0,0,0,0.05);">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                                role="progressbar" 
+                                style="width: {{ $femalePercentage }}%; background-color: #e83e8c;"
                                 aria-valuenow="{{ $femalePercentage }}" 
-                                aria-valuemin="0" aria-valuemax="100">
+                                aria-valuemin="0" 
+                                aria-valuemax="100">
+                                <span class="font-weight-bold">{{ round($femalePercentage) }}%</span>
                             </div>
                         </div>
                     </div>
@@ -106,10 +112,11 @@
                             <span>{{ number_format($othersCount) }} ({{ round($othersPercentage) }}%)</span>
                         </div>
                         <div class="progress rounded-pill" style="height: 25px;">
-                            <div class="progress-bar" role="progressbar" 
-                                style="width: {{ $othersPercentage }}%; background-color: #9b51e0;" 
+                            <div class="progress-bar bg-purple" role="progressbar" 
+                                style="width: {{ max($othersPercentage, 0) }}%; background-color: #9b51e0;" 
                                 aria-valuenow="{{ $othersPercentage }}" 
                                 aria-valuemin="0" aria-valuemax="100">
+                                {{ round($othersPercentage) }}%
                             </div>
                         </div>
                     </div>
@@ -154,15 +161,51 @@
 
     <!-- Document Statistics Card -->
     <div class="col-md-6 mb-4">
-        <div class="card shadow-sm">
+        <div class="card shadow-sm h-100">
             <div class="card-header bg-white">
-                <h3 class="card-title mb-0">Document Processing Statistics</h3>
+                <h3 class="card-title mb-0">Document Processing Overview</h3>
             </div>
             <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h5 class="text-muted mb-3">Document Type Distribution</h5>
+                        <div class="document-types">
+                            @php
+                                $types = [
+                                    'Barangay Clearance' => ['icon' => 'fa-file-alt', 'color' => '#4e73df'],
+                                    'Business Permit' => ['icon' => 'fa-store', 'color' => '#1cc88a'],
+                                    'Certificate of Residency' => ['icon' => 'fa-home', 'color' => '#36b9cc'],
+                                    'Indigency Certificate' => ['icon' => 'fa-hand-holding-heart', 'color' => '#f6c23e']
+                                ];
+                            @endphp
+
+                            @foreach($types as $type => $meta)
+                                <div class="document-stat-box p-3 mb-3 rounded bg-light">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <i class="fas {{ $meta['icon'] }} mr-2" style="color: {{ $meta['color'] }}"></i>
+                                            <span>{{ $type }}</span>
+                                        </div>
+                                        <div class="font-weight-bold">
+                                            {{ number_format($stats['charts']['documentTypes'][$type] ?? 0) }}
+                                            <small class="text-muted">requests</small>
+                                        </div>
+                                    </div>
+                                    <div class="progress mt-2" style="height: 8px;">
+                                        <div class="progress-bar" 
+                                             style="width: {{ ($stats['charts']['documentTypes'][$type] ?? 0) / max(1, array_sum($stats['charts']['documentTypes'] ?? [])) * 100 }}%; background-color: {{ $meta['color'] }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="row">
                     <div class="col-6">
-                        <div class="stats-box p-3 rounded bg-light mb-3">
-                            <h5 class="text-muted">Weekly Statistics</h5>
+                        <div class="stats-box p-3 rounded bg-light">
+                            <h6 class="text-muted">Weekly Stats</h6>
                             <div class="mt-3">
                                 <p class="mb-2">Requested: <span class="font-weight-bold">{{ number_format($stats['documents']['requested']['week']) }}</span></p>
                                 <p class="mb-2">Processed: <span class="font-weight-bold">{{ number_format($stats['documents']['processed']['week']) }}</span></p>
@@ -179,7 +222,7 @@
                     </div>
                     <div class="col-6">
                         <div class="stats-box p-3 rounded bg-light">
-                            <h5 class="text-muted">Monthly Statistics</h5>
+                            <h6 class="text-muted">Monthly Stats</h6>
                             <div class="mt-3">
                                 <p class="mb-2">Requested: <span class="font-weight-bold">{{ number_format($stats['documents']['requested']['month']) }}</span></p>
                                 <p class="mb-2">Processed: <span class="font-weight-bold">{{ number_format($stats['documents']['processed']['month']) }}</span></p>
@@ -199,21 +242,9 @@
         </div>
     </div>
 
-    <!-- Document Type Breakdown -->
-    <div class="col-md-6 mb-4">
-        <div class="card shadow-sm">
-            <div class="card-header bg-white">
-                <h3 class="card-title mb-0">Document Type Distribution</h3>
-            </div>
-            <div class="card-body">
-                <canvas id="documentChart" height="300"></canvas>
-            </div>
-        </div>
-    </div>
-
     <!-- Service Response Time Trend -->
     <div class="col-md-6 mb-4">
-        <div class="card shadow-sm">
+        <div class="card shadow-sm h-100">
             <div class="card-header bg-white">
                 <h3 class="card-title mb-0">Response Time Trend</h3>
             </div>
@@ -466,20 +497,58 @@
     border-left-color: #4e73df;
     transform: translateX(5px);
 }
+
+.progress-bar-animated {
+    animation: progress-bar-stripes 1s linear infinite;
+}
+
+.progress-bar-striped {
+    background-image: linear-gradient(45deg, 
+        rgba(255,255,255,.15) 25%, 
+        transparent 25%, 
+        transparent 50%, 
+        rgba(255,255,255,.15) 50%, 
+        rgba(255,255,255,.15) 75%, 
+        transparent 75%, 
+        transparent);
+    background-size: 1rem 1rem;
+}
+
+.document-stat-box {
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.document-stat-box:hover {
+    transform: translateX(5px);
+    background-color: #f8f9fa !important;
+    border-left: 4px solid #4e73df;
+}
+
+.card {
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
+}
 </style>
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Define constants
+    const DOCUMENT_TYPES = ['Barangay Clearance', 'Business Permit', 'Certificate of Residency', 'Indigency Certificate'];
+    const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+    const COLORS = ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e'];
+    
     // Document Type Distribution Chart
+    const documentData = @json($stats['charts']['documentTypes'] ?? []);
+    
     new Chart(document.getElementById('documentChart'), {
         type: 'doughnut',
         data: {
-            labels: ['Barangay Clearance', 'Business Permit', 'Residency Certificate', 'Others'],
+            labels: DOCUMENT_TYPES,
             datasets: [{
-                data: [40, 25, 20, 15],
-                backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e']
+                data: DOCUMENT_TYPES.map(type => documentData[type] || 0),
+                backgroundColor: COLORS
             }]
         },
         options: {
@@ -493,15 +562,19 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Response Time Trend Chart
+    const responseData = @json($stats['charts']['responseTimes'] ?? []);
+    
     new Chart(document.getElementById('responseTimeChart'), {
         type: 'line',
         data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            labels: MONTHS,
             datasets: [{
                 label: 'Average Response Time (hours)',
-                data: [4.2, 3.8, 3.5, 3.2, 2.9, 2.5],
-                borderColor: '#4e73df',
-                tension: 0.3
+                data: MONTHS.map(month => responseData[month] || 0),
+                borderColor: COLORS[0],
+                backgroundColor: 'rgba(78, 115, 223, 0.1)',
+                tension: 0.3,
+                fill: true
             }]
         },
         options: {
@@ -510,19 +583,31 @@ document.addEventListener('DOMContentLoaded', function() {
                 legend: {
                     position: 'bottom'
                 }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Hours'
+                    }
+                }
             }
         }
     });
 
     // Registration Trend Chart
+    const registrationData = @json($stats['charts']['registrationTrend'] ?? []);
+    
     new Chart(document.getElementById('registrationTrendChart'), {
         type: 'bar',
         data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            labels: MONTHS,
             datasets: [{
                 label: 'New Registrations',
-                data: [65, 78, 90, 85, 92, 88],
-                backgroundColor: '#1cc88a'
+                data: MONTHS.map(month => registrationData[month] || 0),
+                backgroundColor: COLORS[1],
+                borderRadius: 5
             }]
         },
         options: {
@@ -530,6 +615,15 @@ document.addEventListener('DOMContentLoaded', function() {
             plugins: {
                 legend: {
                     position: 'bottom'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Number of Registrations'
+                    }
                 }
             }
         }
