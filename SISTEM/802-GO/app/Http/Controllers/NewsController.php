@@ -17,6 +17,9 @@ class NewsController extends Controller
     // Display a single news article
     public function show(News $news)
     {
+        // Increment the view count
+        $news->incrementResidentViews();
+        
         return view('news.show', compact('news'));
     }
 }

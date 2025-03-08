@@ -13,6 +13,12 @@ class News extends Model
         'title',
         'content',
         'image',
-        'author', 
+        'author',
+        'resident_views'
     ];
+
+    public function incrementResidentViews()
+    {
+        $this->increment('resident_views');
+    }
 }

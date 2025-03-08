@@ -381,19 +381,27 @@
                                 <a href="{{ route('admin.news.show', $news->id) }}" class="news-link">
                                     <div class="news-item p-3 mb-3 bg-light rounded-lg">
                                         <div class="d-flex align-items-center justify-content-between">
-                                            <div class="d-flex align-items-center">
-                                                <div class="news-icon mr-3">
-                                                    <i class="fas fa-newspaper fa-lg text-primary"></i>
+                                            <div class="d-flex align-items-center flex-grow-1">
+                                                <div class="news-icon-wrapper">
+                                                    <i class="fas fa-newspaper text-primary"></i>
                                                 </div>
-                                                <div class="news-content">
+                                                <div class="news-content flex-grow-1">
                                                     <h6 class="mb-1 font-weight-bold text-dark">{{ $news->title }}</h6>
-                                                    <small class="text-muted">
-                                                        <i class="fas fa-clock mr-1"></i>
-                                                        {{ $news->created_at->diffForHumans() }}
-                                                    </small>
+                                                    <div class="news-meta">
+                                                        <small class="text-muted mr-3">
+                                                            <i class="fas fa-clock mr-2"></i>
+                                                            {{ $news->created_at->diffForHumans() }}
+                                                        </small>
+                                                        <small class="text-muted">
+                                                            <i class="fas fa-eye mr-2"></i>
+                                                            {{ number_format($news->resident_views ?? 0) }} resident views
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                                <div class="chevron-wrapper">
+                                                    <i class="fas fa-chevron-right text-primary"></i>
                                                 </div>
                                             </div>
-                                            <i class="fas fa-chevron-right text-primary"></i>
                                         </div>
                                     </div>
                                 </a>
@@ -713,28 +721,55 @@
 .news-item {
     border-left: 4px solid #4e73df;
     transition: all 0.2s ease;
+    background-color: #f8f9fa;
+    position: relative;
+    padding-right: 2rem;
 }
 
 .news-item:hover {
     transform: translateX(5px);
-    background: white !important;
+    background-color: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.engagement-stat-card {
-    transition: all 0.3s ease;
+.news-item .fa-chevron-right {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.2s ease;
 }
 
-.engagement-stat-card:hover {
-    transform: translateY(-3px);
+.news-item:hover .fa-chevron-right {
+    transform: translate(5px, -50%);
 }
 
-.badge-primary {
-    background-color: #4e73df;
-    color: white;
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    border-radius: 2rem;
+.news-content h6 {
+    color: #1e40af;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+}
+
+.news-icon {
+    background: rgba(78, 115, 223, 0.1);
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+}
+
+.news-meta {
+    display: flex;
+    align-items: center;
+    margin-top: 0.25rem;
+    font-size: 0.85rem;
+}
+
+.news-meta small {
+    display: flex;
+    align-items: center;
+}
+
+.news-meta i {
+    font-size: 0.9rem;
 }
 
 /* Fix Age Groups Progress Bars */
@@ -832,6 +867,75 @@
     background: rgba(78, 115, 223, 0.1);
     padding: 0.75rem;
     border-radius: 0.5rem;
+}
+
+.news-meta {
+    display: flex;
+    align-items: center;
+    margin-top: 0.25rem;
+    font-size: 0.85rem;
+}
+
+.news-meta small {
+    display: flex;
+    align-items: center;
+}
+
+.news-meta i {
+    font-size: 0.9rem;
+}
+
+/* Enhanced News Items Styling */
+.news-icon-wrapper {
+    background: rgba(78, 115, 223, 0.1);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-right: 1rem;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.news-icon-wrapper i {
+    font-size: 1.2rem;
+}
+
+.news-content {
+    min-width: 0;
+    padding-right: 1.5rem;
+}
+
+.news-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.news-meta small {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.news-meta i {
+    font-size: 0.9rem;
+}
+
+.chevron-wrapper {
+    margin-left: auto;
+    padding-left: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.chevron-wrapper i {
+    transition: transform 0.2s ease;
+}
+
+.news-item:hover .chevron-wrapper i {
+    transform: translateX(5px);
 }
 </style>
 
