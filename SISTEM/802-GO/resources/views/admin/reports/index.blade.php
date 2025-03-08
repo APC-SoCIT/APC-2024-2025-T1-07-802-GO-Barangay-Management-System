@@ -223,7 +223,9 @@
                                     'Barangay Clearance' => ['icon' => 'fa-file-alt', 'color' => '#4e73df'],
                                     'Business Permit' => ['icon' => 'fa-store', 'color' => '#1cc88a'],
                                     'Certificate of Residency' => ['icon' => 'fa-home', 'color' => '#36b9cc'],
-                                    'Indigency Certificate' => ['icon' => 'fa-hand-holding-heart', 'color' => '#f6c23e']
+                                    'Indigency Certificate' => ['icon' => 'fa-hand-holding-heart', 'color' => '#f6c23e'],
+                                    'Barangay Identification Card' => ['icon' => 'fa-id-card', 'color' => '#e74a3b'],
+                                    'Community Tax Certificate' => ['icon' => 'fa-receipt', 'color' => '#858796']
                                 ];
                             @endphp
 
