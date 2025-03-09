@@ -6,7 +6,9 @@
 
         <title>802-GO: Barangay 802 Management System</title>
         <link rel="icon" href="{{ asset('logo/802-GO-LOGO.png') }}" type="image/x-icon">
+        <!-- Add CSRF token meta tag -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <!-- Add document requests popup CSS link -->
         <link rel="stylesheet" href="{{ asset('css/document-requests-popup.css') }}">
 
         <!-- Fonts -->
@@ -408,6 +410,18 @@
             [x-cloak] { display: none !important; }
 
             /* Add these styles for the popup overlay */
+            .notification-dot {
+                position: absolute;
+                top: -5px;
+                right: -5px;
+                width: 10px;
+                height: 10px;
+                background-color: #FF2D20;
+                border-radius: 50%;
+                animation: pulse 2s infinite;
+            }
+
+            /* Popup styles */
             .popup-overlay {
                 display: none;
                 position: fixed;
@@ -417,93 +431,165 @@
                 height: 100%;
                 background-color: rgba(0, 0, 0, 0.5);
                 z-index: 1000;
+                display: flex;
                 justify-content: center;
                 align-items: center;
-                overflow-y: auto;
-                padding: 20px;
             }
 
             .popup-content {
+                position: relative;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
                 background-color: white;
-                border-radius: 8px;
-                padding: 24px;
-                width: 100%;
-                max-width: 600px;
+                padding: 2rem;
+                border-radius: 10px;
+                width: 90%;
+                max-width: 800px;
                 max-height: 80vh;
                 overflow-y: auto;
-                position: relative;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            }
-
-            .popup-close-btn {
-                background: none;
-                border: none;
-                font-size: 24px;
-                cursor: pointer;
-                color: #666;
             }
 
             .document-request-item {
                 border: 1px solid #e5e7eb;
                 border-radius: 8px;
-                padding: 16px;
-                margin-bottom: 12px;
+                padding: 1rem;
+                margin-bottom: 1rem;
+                background-color: white;
+                transition: all 0.3s ease;
+            }
+
+            .document-request-item:hover {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             }
 
             .status-badge {
                 display: inline-block;
-                padding: 4px 8px;
-                border-radius: 4px;
-                font-size: 12px;
+                padding: 0.25rem 0.75rem;
+                border-radius: 9999px;
+                font-size: 0.875rem;
                 font-weight: 500;
             }
 
-            .status-pending {
-                background-color: #FEF3C7;
-                color: #92400E;
+            .status-pending { background-color: #FEF3C7; color: #92400E; }
+            .status-approved { background-color: #D1FAE5; color: #065F46; }
+            .status-rejected { background-color: #FEE2E2; color: #991B1B; }
+
+            @keyframes pulse {
+                0% { transform: scale(1); opacity: 1; }
+                50% { transform: scale(1.2); opacity: 0.8; }
+                100% { transform: scale(1); opacity: 1; }
             }
 
-            .status-approved {
-                background-color: #D1FAE5;
-                color: #065F46;
+            /* Improve popup styles */
+            .popup-content {
+                position: relative;
+                background-color: white;
+                padding: 2rem;
+                border-radius: 10px;
+                width: 90%;
+                max-width: 800px;
+                max-height: 80vh;
+                overflow-y: auto;
+                margin: 2rem auto;
             }
 
-            .status-rejected {
-                background-color: #FEE2E2;
-                color: #B91C1C;
+            .popup-close-btn {
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+                background-color: #11468F;
+                color: white;
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: background-color 0.3s;
+                z-index: 1002;
             }
 
-            .status-processing {
-                background-color: #DBEAFE;
-                color: #1E40AF;
+            .popup-close-btn:hover {
+                background-color: #0d3a7d;
+            }
+
+            /* Updated status badge styles */
+            .status-badge {
+                display: inline-block;
+                padding: 0.25rem 0.75rem;
+                border-radius: 9999px;
+                font-size: 0.875rem;
+                font-weight: 500;
+                text-transform: uppercase;
+            }
+
+            /* Updated Popup styles for proper centering */
+            .popup-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 1000;
+            }
+
+            .popup-content {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: white;
+                padding: 2rem;
+                border-radius: 10px;
+                width: 90%;
+                max-width: 800px;
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+
+            /* Cancel button styles */
+            .cancel-btn {
+                width: 100%;
+                padding: 0.75rem;
+                background-color: #DC2626;
+                color: white;
+                border-radius: 0.375rem;
+                font-weight: 500;
+                text-align: center;
+                transition: all 0.2s;
+            }
+
+            .cancel-btn:hover {
+                background-color: #B91C1C;
             }
 
             .cancel-btn {
-                padding: 6px 12px;
-                border-radius: 4px;
-                font-size: 14px;
-                border: none;
+                width: 100%;
+                padding: 0.75rem;
+                border-radius: 0.375rem;
+                font-weight: 500;
+                text-align: center;
+                transition: all 0.2s;
             }
 
             .cancel-btn-active {
-                background-color: #EF4444;
+                background-color: #DC2626;
                 color: white;
                 cursor: pointer;
             }
 
-            .cancel-btn-disabled {
-                background-color: #E5E7EB;
-                color: #6B7280;
+            .cancel-btn-active:hover {
+                background-color: #B91C1C;
             }
 
-            .notification-dot {
-                position: absolute;
-                top: -2px;
-                right: -2px;
-                width: 8px;
-                height: 8px;
-                border-radius: 50%;
-                background-color: #EF4444;
+            .cancel-btn-disabled {
+                background-color: #E5E7EB;
+                color: #9CA3AF;
+                cursor: not-allowed;
             }
         </style>
     </head>
@@ -544,7 +630,7 @@
                     <nav class="right-section flex items-center space-x-4">
                         @auth
                             <div class="relative inline-flex items-center">
-                                <a href="#" onclick="window.showDocumentRequests(); return false;" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70">
+                                <a href="#" onclick="showDocumentRequests()" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70">
                                     Requested Documents
                                     @if(session('new_request') || session('status_updated'))
                                         <span class="notification-dot" id="notification-dot"></span>
@@ -724,6 +810,8 @@ document.addEventListener("DOMContentLoaded", function() {
             </div>
         </div>
         <script src="//code.tidio.co/h2325m3tkhvbkjk1prdnfsw0cihgt66j.js" async></script>
+        
+        <!-- Add the document requests popup overlay -->
         <div id="documentRequestsPopup" class="popup-overlay">
             <div class="popup-content">
                 <div class="flex justify-between items-center mb-6">
@@ -766,52 +854,5 @@ document.addEventListener("DOMContentLoaded", function() {
                 </div>
             </div>
         </div>
-
-        <script>
-            // Add the document request related functions
-            function showDocumentRequests() {
-                document.getElementById('documentRequestsPopup').style.display = 'block';
-                document.body.style.overflow = 'hidden';
-            }
-
-            function hideDocumentRequests() {
-                document.getElementById('documentRequestsPopup').style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-
-            function confirmCancel(referenceNumber) {
-                if (confirm('Are you sure you want to cancel this request? This action cannot be undone.')) {
-                    const token = document.querySelector('meta[name="csrf-token"]').content;
-                    
-                    fetch(`/document-requests/${referenceNumber}/cancel`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': token
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            const requestItem = document.querySelector(`[data-reference="${referenceNumber}"]`);
-                            if (requestItem) {
-                                requestItem.remove();
-                            }
-                            alert('Request cancelled successfully');
-                            
-                            if (document.querySelectorAll('.document-request-item').length === 0) {
-                                location.reload();
-                            }
-                        } else {
-                            alert('Failed to cancel request: ' + (data.message || 'Unknown error'));
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert('Failed to cancel request. Please try again later.');
-                    });
-                }
-            }
-        </script>
     </body>
 </html>
