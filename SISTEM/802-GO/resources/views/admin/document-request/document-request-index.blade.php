@@ -1,5 +1,8 @@
 @extends('admin.dashboard')
 
+<title>Admin: Request document</title>
+<link rel="icon" href="{{ asset('logo/802-GO-LOGO.png') }}" type="image/x-icon">
+
 @section('content')
 <div class="container mx-auto p-6">
     <!-- Page Header -->
