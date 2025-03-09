@@ -52,7 +52,8 @@ class DocumentRequest extends Model
     // Cast JSON fields automatically
     protected $casts = [
         'date_of_birth' => 'date',
-        'extra_data' => 'array', // Ensure extra_data is stored as an array
+        'extra_data' => 'array',
+        'contact_number' => 'string'
     ];
 
     protected $dates = [
