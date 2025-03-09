@@ -510,8 +510,6 @@ document.getElementById('annual_income').addEventListener('input', function (e) 
     e.target.value = "₱" + value;
 });
 </script>
-
-
     </form>
 </div>
 
