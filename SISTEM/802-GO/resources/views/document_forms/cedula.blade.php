@@ -449,16 +449,15 @@ document.addEventListener("DOMContentLoaded", function() {
         <input id="contact_number" name="contact_number" type="text" pattern="09[0-9]{9}" maxlength="11" required title="Enter a valid PH mobile number (e.g., 09123456789)" class="input-field required" required>
 
         <label class="form-label">Citizenship <span class="text-red-500">*</span></label>
-        <input id="citizenship" name="citizenship" type="text" class="input-field required" required>
-
-        <label class="form-label">Civil Status <span class="text-red-500">*</span></label>
-        <select id="civil_status" name="civil_status" class="input-field required" required>
-            <option value="">Select Civil Status</option>
-            <option value="Single">Single</option>
-            <option value="Married">Married</option>
-            <option value="Widowed">Widowed</option>
-            <option value="Separated">Separated</option>
+        <select id="citizenship_select" name="citizenship" class="input-field required" required onchange="toggleOtherCitizenship()">
+        <option value="">Select Citizenship</option>
+            <option value="Filipino">Filipino</option>
+            <option value="Naturalized Filipino">Naturalized Filipino</option>
+            <option value="Foreigner">Foreigner</option>
+            <option value="Other">Other (Specify)</option>
         </select>
+        <input id="other_citizenship" name="other_citizenship" type="text" class="input-field mt-2" placeholder="Specify Citizenship" style="display: none;">
+
 
         <label class="form-label">Occupation <span class="text-red-500">*</span></label>
         <input id="occupation" name="occupation" type="text" class="input-field required" required>
@@ -495,6 +494,20 @@ document.addEventListener("DOMContentLoaded", function() {
         <button type="submit">Submit</button>
 
 <script>
+
+function toggleOtherCitizenship() {
+    var citizenshipSelect = document.getElementById("citizenship_select");
+    var otherCitizenshipInput = document.getElementById("other_citizenship");
+
+    if (citizenshipSelect.value === "Other") {
+        otherCitizenshipInput.style.display = "block";
+        otherCitizenshipInput.required = true;
+    } else {
+        otherCitizenshipInput.style.display = "none";
+        otherCitizenshipInput.required = false;
+    }
+}
+
 document.getElementById('annual_income').addEventListener('input', function (e) {
     let value = e.target.value;
 
