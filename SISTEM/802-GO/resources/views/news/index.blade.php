@@ -319,11 +319,11 @@
                 margin: 10px 0 30px;
                 font-size: 1.2em;
             }
-            .container_1{
+            .container_1 {
     display: flex;
     flex-direction: column;
     max-width: 900px;
-    margin: 0 auto;
+    margin: 40px auto; /* Added space above and below */
     padding: 20px;
     border: 2px solid #ddd; /* Border added */
     border-radius: 15px; /* Rounded corners */
@@ -386,6 +386,74 @@
     width: 160px;
     height: auto;
     border-radius: 8px;
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.pagination a {
+    margin: 0 20px;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #11468F;
+    border: 1px solid #11468F;
+    border-radius: 4px;
+}
+
+.pagination a:hover {
+    background-color: #11468F;
+    color: white;
+}
+
+.pagination .active {
+    background-color: #11468F;
+    color: white;
+    border-color: #11468F;
+}
+.search-container {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.search-container input {
+    padding: 10px;
+    width: 600px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search-container button {
+    padding: 10px 20px;
+    background-color: #11468F;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.search-history {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.search-history h3 {
+    margin-bottom: 10px;
+}
+
+.search-history ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.search-history ul li {
+    padding: 5px 0;
+    border-bottom: 1px solid #ddd;
 }
 
             /* Media query for screens smaller than 768px */
@@ -489,6 +557,13 @@ document.addEventListener("DOMContentLoaded", function() {
     <p>Keep up to date with the latest news about Barangay 802</p>
 </div>
 
+<div class="search-container">
+    <form action="{{ route('news.index') }}" method="GET">
+        <input type="text" name="search" placeholder="Search news..." value="{{ request('search') }}">
+        <button type="submit">Search</button>
+    </form>
+</div>
+
 <div class="container_1">
     @foreach ($news as $item)
         <div class="news-item">
@@ -502,6 +577,10 @@ document.addEventListener("DOMContentLoaded", function() {
             @endif
         </div>
     @endforeach
+</div>
+
+<div class="pagination">
+    {{ $news->links() }}
 </div>
     
 <!-- Barangay Section -->

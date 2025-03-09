@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\DocumentRequestController as UserDocumentRequestController;
@@ -13,10 +14,8 @@ use Illuminate\Support\Facades\URL;
 $url = config('app.url');
 URL::forceRootUrl($url);
 
-// Home Page
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+// Home Page - Use WelcomeController to handle the request
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
 // Dashboard (Authenticated Users Only)
 Route::get('/dashboard', function () {
@@ -37,9 +36,11 @@ Route::get('/sample-news-3', function () {
     return view('news.sample-news-3');
 })->name('sample-news-3');
 
+
 // User News Routes
 Route::get('/index', [NewsController::class, 'index'])->name('news.index');
 Route::get('/news/{news}', [NewsController::class, 'show'])->name('news.show');
+
 
 // Document Request Pages
 Route::get('/document-request', [UserDocumentRequestController::class, 'index'])->name('document-request');
@@ -84,4 +85,3 @@ Route::middleware('auth')->group(function () {
 
 // Authentication Routes
 require __DIR__.'/auth.php';
-

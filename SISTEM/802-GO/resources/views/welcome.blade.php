@@ -340,61 +340,64 @@
         </style>
     </head>
 
-    <body class="font-sans antialiased dark:bg-black dark:text-white/50">
-        <div class="relative w-full">
-            <div class="menu-toggle left">
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
-            </div>
-            <div class="menu-toggle right">
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
-            </div>
-            <header class="header-grid">
-                <!-- Left-aligned Navigation Links -->
-                <nav class="left-section flex space-x-4">
-                    <a href="{{ route('welcome') }}" class="rounded-md px-3 py-2 text-white bg-[#FF2D20] ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20] active">
-                        Home
-                    </a>
-                    <a href="{{ route('news.index') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
-                        News
-                    </a>
-                    <a href="{{ route('document-request') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
-                        Document Request
-                    </a>
-                </nav>
+    </head>
 
-    <!-- Centered Logo -->
-    <div class="center-section">
-        <img src="{{ asset('logo/802-GO-LOGO.png') }}" alt="Logo" class="h-16 w-auto">
+<body class="font-sans antialiased dark:bg-black dark:text-white/50">
+    <div class="relative w-full">
+        <div class="menu-toggle left">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+        <div class="menu-toggle right">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+        <header class="header-grid">
+            <!-- Left-aligned Navigation Links -->
+            <nav class="left-section flex space-x-4">
+                <a href="{{ route('welcome') }}" class="rounded-md px-3 py-2 text-white bg-[#FF2D20] ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20] active">
+                    Home
+                </a>
+                <a href="{{ route('news.index') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
+                    News
+                </a>
+                <a href="{{ route('document-request') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
+                    Document Request
+                </a>
+            </nav>
+
+            <!-- Centered Logo -->
+            <div class="center-section">
+                <img src="{{ asset('logo/802-GO-LOGO.png') }}" alt="Logo" class="h-16 w-auto">
+            </div>
+
+            @if (Route::has('login'))
+                <!-- Right-aligned Authentication Links -->
+                <nav class="right-section flex space-x-8">
+                    @auth
+                        <a href="{{ route('profile.edit') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
+                            My Account
+                        </a>
+                    @else
+                        <a href="{{ route('admin.login') }}" class="rounded-md px-3 py-2 text-white bg-[#1a365d] ring-1 ring-transparent transition hover:bg-[#2d4a7c] focus:outline-none focus-visible:ring-[#FF2D20]">
+                            Admin Log in
+                        </a>
+                        <a href="{{ route('login') }}" class="rounded-md px-3 py-2 text-white bg-[#2563eb] ring-1 ring-transparent transition hover:bg-[#3b82f6] focus:outline-none focus-visible:ring-[#FF2D20]">
+                            Resident Log in
+                        </a>
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}" class="rounded-md px-3 py-2 text-white bg-[#059669] ring-1 ring-transparent transition hover:bg-[#10b981] focus:outline-none focus-visible:ring-[#FF2D20]">
+                                Register
+                            </a>
+                        @endif
+                    @endauth
+                </nav>
+            @endif
+        </header>
     </div>
 
-    @if (Route::has('login'))
-                    <!-- Right-aligned Authentication Links -->
-                    <nav class="right-section flex space-x-8"> <!-- Changed from space-x-4 to space-x-8 -->
-                        @auth
-                            <a href="{{ route('profile.edit') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
-                                My Account
-                            </a>
-                        @else
-                            <a href="{{ route('admin.login') }}" class="rounded-md px-3 py-2 text-white bg-[#1a365d] ring-1 ring-transparent transition hover:bg-[#2d4a7c] focus:outline-none focus-visible:ring-[#FF2D20]">
-                                Admin Log in
-                            </a>
-                            <a href="{{ route('login') }}" class="rounded-md px-3 py-2 text-white bg-[#2563eb] ring-1 ring-transparent transition hover:bg-[#3b82f6] focus:outline-none focus-visible:ring-[#FF2D20]">
-                                Resident Log in
-                            </a>
-                            @if (Route::has('register'))
-                                <a href="{{ route('register') }}" class="rounded-md px-3 py-2 text-white bg-[#059669] ring-1 ring-transparent transition hover:bg-[#10b981] focus:outline-none focus-visible:ring-[#FF2D20]">
-                                    Register
-                                </a>
-                            @endif
-                        @endauth
-                    </nav>
-                @endif
-</header>
-        </div>
 
 <script>
 // Toggle the sliding menu for mobile view
@@ -447,53 +450,29 @@ document.addEventListener("DOMContentLoaded", function() {
 </section>
 
 
-<!-- News Articles Section -->
-<section class="grid gap-6 lg:grid-cols-3 lg:gap-8 p-6">
-    <!-- News Article Card 1 -->
-    <a href="{{ route('sample-news-1') }}" class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]">
-        <div class="relative flex w-full items-stretch">
-            <img src="{{ asset('background/news-1.png') }}" alt="News Image 1" class="aspect-video w-full h-full object-cover rounded-[10px] drop-shadow-[0px_4px_34px_rgba(0,0,0,0.06)] dark:hidden">
-            <div class="absolute -bottom-16 -left-16 h-40 w-[calc(100%+8rem)] bg-gradient-to-b from-transparent via-white to-white dark:via-zinc-900 dark:to-zinc-900"></div>
-        </div>
-        <div class="relative">
-            <h2 class="text-xl font-semibold text-black dark:text-white">Community Health Outreach Brings Medical Assistance to Families</h2>
-            <p class="mt-2 text-sm/relaxed" style="margin-bottom: 8px;">Health workers provide free check-ups and medical assistance to families in underserved areas, focusing on young children and elderly residents...</p>
-        </div>
-        <div>
-        <button style="border: 2px solid #11468F; padding: 10px 20px; background-color: #11468F; color: white; border-radius: 5px;">Read More</button>
-        </div>
-    </a>
-
-    <!-- News Article Card 2 -->
-    <a href="{{ route('sample-news-2') }}" class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]">
-        <div class="relative flex w-full items-stretch">
-            <img src="{{ asset('background/news-2.png') }}" alt="News Image 2" class="aspect-video w-full h-full object-cover rounded-[10px] drop-shadow-[0px_4px_34px_rgba(0,0,0,0.06)] dark:hidden">
-            <div class="absolute -bottom-16 -left-16 h-40 w-[calc(100%+8rem)] bg-gradient-to-b from-transparent via-white to-white dark:via-zinc-900 dark:to-zinc-900"></div>
-        </div>
-        <div class="relative">
-            <h2 class="text-xl font-semibold text-black dark:text-white">Storytelling Session Inspires Young Minds in Local Outreach Program</h2>
-            <p class="mt-2 text-sm/relaxed" style="margin-bottom: 8px;">Volunteers engage children in an educational storytelling session, aiming to foster a love for reading and learning in a friendly outdoor setting...</p>
-        </div>
-        <div>
-        <button style="border: 2px solid #11468F; padding: 10px 20px; background-color: #11468F; color: white; border-radius: 5px;">Read More</button>
-        </div>
-    </a>
-
-    <!-- News Article Card 3 -->
-    <a href="{{ route('sample-news-3') }}" class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]">
-        <div class="relative flex w-full items-stretch">
-            <img src="{{ asset('background/news-3.png') }}" alt="News Image 3" class="aspect-video w-full h-full object-cover rounded-[10px] drop-shadow-[0px_4px_34px_rgba(0,0,0,0.06)] dark:hidden">
-            <div class="absolute -bottom-16 -left-16 h-40 w-[calc(100%+8rem)] bg-gradient-to-b from-transparent via-white to-white dark:via-zinc-900 dark:to-zinc-900"></div>
-        </div>
-        <div class="relative">
-            <h2 class="text-xl font-semibold text-black dark:text-white">Community Effort Enhances Road Safety with New Repairs </h2>
-            <p class="mt-2 text-sm/relaxed" style="margin-bottom: 8px;">Local workers join forces to repair and improve road infrastructure, enhancing safety for pedestrians and drivers in the community...</p>
-        </div>
-        <div>
-        <button style="border: 2px solid #11468F; padding: 10px 20px; background-color: #11468F; color: white; border-radius: 5px;">Read More</button>
-        </div>
-    </a>
-</section>
+        <!-- News Articles Section -->
+        <section class="grid gap-6 lg:grid-cols-3 lg:gap-8 p-6">
+            @if($newsArticles->isEmpty())
+                <p>No news articles available at the moment. Please check back later.</p>
+            @else
+                @foreach($newsArticles as $newsItem)
+                    <!-- News Article Card -->
+                    <a href="{{ route('news.show', $newsItem->id) }}" class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]">
+                        <div class="relative flex w-full items-stretch">
+                            <img src="{{ asset('storage/' . $newsItem->image) }}" alt="News Image" class="aspect-video w-full h-full object-cover rounded-[10px] drop-shadow-[0px_4px_34px_rgba(0,0,0,0.06)] dark:hidden">
+                            <div class="absolute -bottom-16 -left-16 h-40 w-[calc(100%+8rem)] bg-gradient-to-b from-transparent via-white to-white dark:via-zinc-900 dark:to-zinc-900"></div>
+                        </div>
+                        <div class="relative">
+                            <h2 class="text-xl font-semibold text-black dark:text-white">{{ $newsItem->title }}</h2>
+                            <p class="mt-2 text-sm/relaxed" style="margin-bottom: 8px;">{{ Str::limit($newsItem->content, 150, '...') }}</p>
+                        </div>
+                        <div>
+                            <button style="border: 2px solid #11468F; padding: 10px 20px; background-color: #11468F; color: white; border-radius: 5px;">Read More</button>
+                        </div>
+                    </a>
+                @endforeach
+            @endif
+        </section>
 
 
 <!-- About us Section -->
