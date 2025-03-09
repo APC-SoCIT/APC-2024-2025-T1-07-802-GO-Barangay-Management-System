@@ -318,6 +318,51 @@
     });
 </script>
 
+<script>
+    // Get elements
+    const registerButton = document.getElementById("registerButton");
+    const privacyModal = document.getElementById("privacyModal");
+    const cancelButton = document.getElementById("cancelButton");
+    const proceedButton = document.getElementById("proceedButton");
+    const registerForm = document.getElementById("registerForm");
+    const agreeCheckbox = document.getElementById("agreeCheckbox");
+
+    // Show modal when Register button is clicked
+    registerButton.addEventListener("click", function(event) {
+        event.preventDefault(); // Prevent form from submitting immediately
+        privacyModal.style.display = "flex"; 
+    });
+
+    // Close modal and reset on Cancel
+    cancelButton.addEventListener("click", function() {
+        privacyModal.style.display = "none";
+        agreeCheckbox.checked = false;
+        proceedButton.disabled = true;
+        proceedButton.style.backgroundColor = "#6b7280";
+    });
+
+    // Enable/disable Proceed button based on checkbox
+    agreeCheckbox.addEventListener("change", function() {
+        proceedButton.disabled = !this.checked;
+        proceedButton.style.backgroundColor = this.checked ? "#11468F" : "#6b7280";
+    });
+
+    // Submit form when Proceed is clicked
+    proceedButton.addEventListener("click", function() {
+        privacyModal.style.display = "none";
+        registerForm.submit();
+    });
+
+    // Close modal when clicking outside
+    window.addEventListener("click", function(event) {
+        if (event.target === privacyModal) {
+            privacyModal.style.display = "none";
+            agreeCheckbox.checked = false;
+            proceedButton.disabled = true;
+            proceedButton.style.backgroundColor = "#6b7280";
+        }
+    });
+</script>
 
 <script>
     // JavaScript to handle image preview
