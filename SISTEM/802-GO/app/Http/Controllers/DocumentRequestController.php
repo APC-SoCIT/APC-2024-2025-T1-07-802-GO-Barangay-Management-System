@@ -140,8 +140,6 @@ $data = [
     'extra_data' => json_encode($request->extra_data),
     'status' => 'pending',
 ];
-
-    
         // Handle file uploads (Save in storage/app/public/)
         foreach ([
             'recent_photo', 'valid_id', 'proof_of_residency', 'signature',
