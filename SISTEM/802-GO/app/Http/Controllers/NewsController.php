@@ -15,11 +15,12 @@ class NewsController extends Controller
     }
 
     // Display a single news article
-    public function show(News $news)
-    {
-        // Increment the view count
-        $news->incrementResidentViews();
-        
-        return view('news.show', compact('news'));
-    }
+    public function show($id)
+{
+    $news = News::findOrFail($id);
+    $previousNews = News::where('id', '<', $news->id)->orderBy('id', 'desc')->first();
+    $nextNews = News::where('id', '>', $news->id)->orderBy('id', 'asc')->first();
+
+    return view('news.show', compact('news', 'previousNews', 'nextNews'));
+}
 }

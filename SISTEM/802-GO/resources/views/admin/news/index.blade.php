@@ -74,13 +74,13 @@
     }
 
     .btn-warning {
-        background-color: #11468F; /* Matches the blue button in the image */
-        border-color: #11468F;
-        color: white;
+        background-color: #ffc107; /* Default warning color */
+        border-color: #ffc107;
+        color: black;
     }
 
     .btn-warning:hover {
-        background-color: #0D3A73;
+        background-color: #e0a800;
     }
 
     .btn-danger {
@@ -233,7 +233,7 @@
                         <th class="title">Title</th>
                         <th>Author</th>
                         <th>Published Date</th>
-                        <th>Status</th>
+                        <th>Status</th>                        
                         <th>Actions</th>
                     </tr>
                 </thead>

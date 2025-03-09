@@ -1047,7 +1047,7 @@
                 <i class="fas fa-newspaper"></i>
                 <span>Manage News</span>
             </a>
-            <a href="#" class="{{ request()->routeIs('admin.documents.*') ? 'active' : '' }}">
+            <a href="{{ route('admin.document-requests.index') }}" class="{{ request()->routeIs('admin.documents.*') ? 'active' : '' }}">
                 <i class="fas fa-file-alt"></i>
                 <span>Document Approval</span>
             </a>
