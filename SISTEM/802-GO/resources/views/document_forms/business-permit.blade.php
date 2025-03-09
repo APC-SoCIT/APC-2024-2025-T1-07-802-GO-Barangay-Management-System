@@ -486,7 +486,6 @@ document.addEventListener("DOMContentLoaded", function() {
             <button type="submit">Submit</button>
         </form>
     </div>
-    
     <script>
     // Ensure the "Other Purpose" input field appears when "Other" is selected
     function toggleOtherPurpose() {
