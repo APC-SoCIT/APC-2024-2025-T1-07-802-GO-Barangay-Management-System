@@ -1,5 +1,18 @@
 @extends('admin.dashboard')
 
+<title>Admin: Create Resident </title>
+
+
+<style>
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+</style>
+
 @section('content')
 <div class="container">
   @if(session('success'))
@@ -12,15 +25,13 @@
       </div>
   @endif
   <!-- Page Header -->
-  <div class="d-flex flex-column flex-md-row justify-content-between mb-4">
-      <div>
-          <h1 class="page-title">Resident Management</h1>
-          <p class="text-secondary">Manage all barangay residents in one place</p>
-      </div>
-      <a href="{{ route('admin.residents.create') }}" class="btn btn-primary mt-3 mt-md-0">
-          <i class="fas fa-plus mr-2"></i> Add New Resident
-      </a>
-  </div>
+  <div class="header-container mb-4">
+  <h1 class="fw-bold" style="font-size: 3rem; font-weight: bold;">Resident Management</h1>
+
+        <a href="{{ route('admin.residents.create') }}" class="btn btn-lg btn-primary px-4 py-2">
+            <i class="fas fa-plus"></i> Add New Resident
+        </a>
+    </div>
 
   <!-- Search and Filter -->
   <div class="card mb-4">
@@ -31,11 +42,11 @@
                       <div class="search-input-group">
                           <i class="fas fa-search search-icon"></i>
                           <input type="text" name="search" class="form-control search-input" placeholder="Search by name, address..." value="{{ request('search') }}">
-                      </div>
-                  </div>
-                  <button type="submit" class="btn btn-primary">
+                          <button type="submit" class="btn btn-primary">
                       Search
                   </button>
+                      </div>
+                  </div>
               </div>
           </form>
       </div>
@@ -69,14 +80,14 @@
                           </td>
                           <td>
                               <div class="action-buttons">
-                                  <a href="{{ route('admin.residents.show', $resident->id) }}" class="action-btn action-btn-view" title="View">
-                                      <i class="fas fa-eye"></i>
+                                  <a href="{{ route('admin.residents.show', $resident->id) }}" class="px-4 py-2 bg-blue-600 text-white rounded-lg">
+                                      <i class="fas fa-eye mr-1"></i> View
                                   </a>
-                                  <a href="{{ route('admin.residents.edit', $resident->id) }}" class="action-btn action-btn-edit" title="Edit">
-                                      <i class="fas fa-edit"></i>
+                                  <a href="{{ route('admin.residents.edit', $resident->id) }}" class="px-4 py-2 bg-yellow-500 text-white rounded-lg">
+                                      <i class="fas fa-edit mr-1"></i> Edit
                                   </a>
-                                  <button type="button" onclick="confirmDelete({{ $resident->id }})" class="action-btn action-btn-delete" title="Delete">
-                                      <i class="fas fa-trash"></i>
+                                  <button type="button" onclick="confirmDelete({{ $resident->id }})" class="px-4 py-2 bg-red-600 text-white rounded-lg">
+                                      <i class="fas fa-trash mr-1"></i> Delete
                                   </button>
                               </div>
                           </td>

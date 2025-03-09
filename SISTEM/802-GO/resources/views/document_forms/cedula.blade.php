@@ -446,7 +446,7 @@ document.addEventListener("DOMContentLoaded", function() {
         <input id="city" name="city" type="text" value="Manila" class="input-field bg-gray-200" readonly>
 
         <label class="form-label">Contact Number <span class="text-red-500">*</span></label>
-        <input id="contact_number" name="contact_number" type="text" class="input-field required" required>
+        <input id="contact_number" name="contact_number" type="text" pattern="09[0-9]{9}" maxlength="11" required title="Enter a valid PH mobile number (e.g., 09123456789)" class="input-field required" required>
 
         <label class="form-label">Citizenship <span class="text-red-500">*</span></label>
         <input id="citizenship" name="citizenship" type="text" class="input-field required" required>
@@ -464,7 +464,10 @@ document.addEventListener("DOMContentLoaded", function() {
         <input id="occupation" name="occupation" type="text" class="input-field required" required>
 
         <label class="form-label">Annual Income <span class="text-red-500">*</span></label>
-        <input id="annual_income" name="annual_income" type="number" class="input-field required" required>
+        <div class="input-group">
+        <input id="annual_income" name="annual_income" type="text" class="input-field required" required placeholder="₱0.00">
+        </div>
+
 
         <label class="form-label">Purpose of Cedula <span class="text-red-500">*</span></label>
         <select id="purpose_of_cedula" name="purpose_of_cedula" class="input-field required" required onchange="toggleOtherPurpose()">
@@ -490,9 +493,25 @@ document.addEventListener("DOMContentLoaded", function() {
         </div>
 
         <button type="submit">Submit</button>
+
+<script>
+document.getElementById('annual_income').addEventListener('input', function (e) {
+    let value = e.target.value;
+
+    // Ensure the value always starts with ₱
+    if (!value.startsWith("₱")) {
+        value = "₱" + value.replace(/₱/g, ""); // Remove extra ₱ if retyped
+    }
+
+    // Remove any invalid characters except numbers, commas, and periods
+    value = value.replace(/[^0-9,\.]/g, '');
+
+    // Ensure peso sign remains at the start
+    e.target.value = "₱" + value;
+});
+</script>
     </form>
 </div>
-</body>
 
 <!-- Barangay Section -->
 <section class="barangay-section bg-[#11468F] text-white py-8 lg:py-12 px-4 lg:px-6">
