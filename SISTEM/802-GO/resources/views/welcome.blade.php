@@ -869,32 +869,69 @@ document.addEventListener("DOMContentLoaded", function() {
 
             function confirmCancel(referenceNumber) {
                 if (confirm('Are you sure you want to cancel this request? This action cannot be undone.')) {
+                    const token = document.querySelector('meta[name="csrf-token"]').content;
+                    
+                    // Show loading state
+                    const cancelBtn = document.querySelector(`[data-reference="${referenceNumber}"] .cancel-btn`);
+                    if (cancelBtn) {
+                        cancelBtn.textContent = 'Cancelling...';
+                        cancelBtn.disabled = true;
+                    }
+                    
                     fetch(`/document-requests/${referenceNumber}/cancel`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                            'X-CSRF-TOKEN': token
                         }
                     })
-                    .then(response => response.json())
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
                     .then(data => {
                         if (data.success) {
+                            // Remove the request item from the list with animation
                             const requestItem = document.querySelector(`[data-reference="${referenceNumber}"]`);
                             if (requestItem) {
-                                requestItem.remove();
-                            }
-                            alert('Request cancelled successfully');
-                            // Reload the page if there are no more requests
-                            if (document.querySelectorAll('.document-request-item').length === 0) {
-                                location.reload();
+                                requestItem.style.opacity = '0';
+                                requestItem.style.transform = 'translateY(-10px)';
+                                requestItem.style.transition = 'all 0.3s ease';
+                                
+                                setTimeout(() => {
+                                    requestItem.remove();
+                                    
+                                    // Show success message
+                                    alert('Request cancelled successfully');
+                                    
+                                    // If no more requests, show empty message or reload
+                                    if (document.querySelectorAll('.document-request-item').length === 0) {
+                                        const requestsList = document.getElementById('documentRequestsList');
+                                        requestsList.innerHTML = '<div class="text-center text-gray-500 py-4">No document requests found.</div>';
+                                    }
+                                }, 300);
                             }
                         } else {
                             alert('Failed to cancel request: ' + (data.message || 'Unknown error'));
+                            
+                            // Reset button state
+                            if (cancelBtn) {
+                                cancelBtn.textContent = 'Cancel Request';
+                                cancelBtn.disabled = false;
+                            }
                         }
                     })
                     .catch(error => {
                         console.error('Error:', error);
                         alert('Failed to cancel request. Please try again later.');
+                        
+                        // Reset button state
+                        if (cancelBtn) {
+                            cancelBtn.textContent = 'Cancel Request';
+                            cancelBtn.disabled = false;
+                        }
                     });
                 }
             }
@@ -920,7 +957,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 </span>
             </div>
             <div class="mt-4">
-                @if($request->status === 'Pending')
+                @if(strtolower($request->status) === 'pending' || strtolower($request->status) === 'rejected')
                     <button onclick="confirmCancel('{{ $request->reference_number }}')" 
                             class="cancel-btn cancel-btn-active">
                         Cancel Request
