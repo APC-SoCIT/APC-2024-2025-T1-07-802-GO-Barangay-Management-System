@@ -442,7 +442,7 @@ document.addEventListener("DOMContentLoaded", function() {
             <input id="business_nature" name="business_nature" type="text" class="input-field required" required>
 
             <label class="form-label">Contact Number <span class="text-red-500">*</span></label>
-            <input id="contact_number" name="contact_number" type="text" class="input-field required" required>
+            <input id="contact_number" name="contact_number" type="text" pattern="09[0-9]{9}" maxlength="11" required title="Enter a valid PH mobile number (e.g., 09123456789)" class="input-field required" required>
 
             <label class="form-label">Tax Identification Number (TIN) <span class="text-red-500">*</span></label>
             <input id="tin" name="tin" type="text" class="input-field required" required>
