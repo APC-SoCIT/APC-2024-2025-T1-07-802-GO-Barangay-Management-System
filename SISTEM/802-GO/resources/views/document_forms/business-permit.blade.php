@@ -439,10 +439,20 @@ document.addEventListener("DOMContentLoaded", function() {
             <input id="city" name="city" type="text" value="Manila" class="input-field bg-gray-200" readonly>
 
             <label class="form-label">Nature of Business <span class="text-red-500">*</span></label>
-            <input id="business_nature" name="business_nature" type="text" class="input-field required" required>
+<select id="business_nature" name="business_nature" class="input-field required" required onchange="toggleOtherBusinessNature()">
+    <option value="">Select Nature of Business</option>
+    <option value="Retail">Retail</option>
+    <option value="Food and Beverage">Food and Beverage</option>
+    <option value="Manufacturing">Manufacturing</option>
+    <option value="Services">Services</option>
+    <option value="Technology">Technology</option>
+    <option value="Construction">Construction</option>
+    <option value="Other">Other (Specify)</option>
+</select>
+<input id="other_business_nature" name="other_business_nature" type="text" class="input-field mt-2" placeholder="Specify Other Business Nature" style="display: none;">
 
             <label class="form-label">Contact Number <span class="text-red-500">*</span></label>
-            <input id="contact_number" name="contact_number" type="text" class="input-field required" required>
+            <input id="contact_number" name="contact_number" type="text" pattern="09[0-9]{9}" maxlength="11" required title="Enter a valid PH mobile number (e.g., 09123456789)" class="input-field required" required>
 
             <label class="form-label">Tax Identification Number (TIN) <span class="text-red-500">*</span></label>
             <input id="tin" name="tin" type="text" class="input-field required" required>
@@ -486,21 +496,56 @@ document.addEventListener("DOMContentLoaded", function() {
             <button type="submit">Submit</button>
         </form>
     </div>
-
     <script>
-        function toggleOtherPurpose() {
-            var purposeSelect = document.getElementById("purpose");
-            var otherPurposeInput = document.getElementById("other_purpose");
+    function toggleOtherBusinessNature() {
+        var natureSelect = document.getElementById("business_nature");
+        var otherNatureInput = document.getElementById("other_business_nature");
 
-            if (purposeSelect.value === "Other") {
-                otherPurposeInput.style.display = "block";
-                otherPurposeInput.required = true;
-            } else {
-                otherPurposeInput.style.display = "none";
-                otherPurposeInput.required = false;
-            }
+        if (natureSelect.value === "Other") {
+            otherNatureInput.style.display = "block";
+            otherNatureInput.required = true;
+        } else {
+            otherNatureInput.style.display = "none";
+            otherNatureInput.required = false;
         }
-    </script>
+    }
+    // Ensure the "Other Purpose" input field appears when "Other" is selected
+    function toggleOtherPurpose() {
+        var purposeSelect = document.getElementById("purpose_of_request"); // Fixed ID reference
+        var otherPurposeInput = document.getElementById("other_purpose");
+
+        if (purposeSelect.value === "Other") {
+            otherPurposeInput.style.display = "block";
+            otherPurposeInput.required = true;
+        } else {
+            otherPurposeInput.style.display = "none";
+            otherPurposeInput.required = false;
+        }
+    }
+
+    // Ensure the script runs only when the DOM is fully loaded
+    document.addEventListener("DOMContentLoaded", function () {
+        var tinInput = document.getElementById("tin");
+
+        if (tinInput) {
+            tinInput.addEventListener("input", function (e) {
+                let value = e.target.value;
+
+                // Remove non-numeric characters
+                value = value.replace(/\D/g, '');
+
+                // Apply TIN format (000-000-000 or 000-000-000-000)
+                if (value.length > 9) {
+                    value = value.slice(0, 12).replace(/^(\d{3})(\d{3})(\d{3})(\d{0,3})$/, '$1-$2-$3-$4').replace(/-$/, '');
+                } else {
+                    value = value.slice(0, 9).replace(/^(\d{3})(\d{3})(\d{3})$/, '$1-$2-$3');
+                }
+
+                e.target.value = value; // Update the input field with formatted TIN
+            });
+        }
+    });
+</script>
 </body>
 
 <!-- Barangay Section -->

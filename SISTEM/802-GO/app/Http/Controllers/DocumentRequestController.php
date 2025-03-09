@@ -93,7 +93,7 @@ class DocumentRequestController extends Controller
         $validated = $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'contact_number' => 'required|string|max:15',
+            'contact_number' => ['required', 'regex:/^09[0-9]{9}$/'],
             'document_type' => 'required|string',
             'block_street' => 'required|string|max:255',
             'extra_data' => 'nullable|array',
