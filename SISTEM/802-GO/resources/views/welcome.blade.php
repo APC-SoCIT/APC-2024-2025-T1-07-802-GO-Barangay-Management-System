@@ -427,7 +427,7 @@ document.addEventListener("DOMContentLoaded", function() {
         <div class="service">
             <h3>News Page</h3>
             <p>A page where users can find the latest updates, announcements, and news related to the barangay.</p>
-            <a href="{{ route('news-page') }}">Click to View News</a>
+            <a href="{{ route('news.index') }}">Click to View News</a>
         </div>
 
         <div class="service">
