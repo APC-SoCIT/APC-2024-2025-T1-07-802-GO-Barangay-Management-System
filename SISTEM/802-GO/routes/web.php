@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\DocumentRequestController as UserDocumentRequestController;
@@ -43,9 +44,11 @@ Route::get('/sample-news-3', function () {
     return view('news.sample-news-3');
 })->name('sample-news-3');
 
+
 // User News Routes
 Route::get('/index', [NewsController::class, 'index'])->name('news.index');
 Route::get('/news/{news}', [NewsController::class, 'show'])->name('news.show');
+
 
 // Document Request Pages
 Route::get('/document-request', [UserDocumentRequestController::class, 'index'])->name('document-request');
@@ -88,8 +91,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Authentication Routes
-require __DIR__.'/auth.php';
+Route::patch('/admin/document-requests/{id}/status', [AdminDocumentRequestController::class, 'updateStatus'])
+    ->name('admin.update-status');
 
 // Fix the routes for document requests
 Route::middleware(['auth'])->group(function () {

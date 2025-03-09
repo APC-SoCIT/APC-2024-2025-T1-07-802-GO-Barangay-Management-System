@@ -12,11 +12,13 @@ class DocumentRequestController extends Controller
     {
         $query = DocumentRequest::query();
 
-        // Search filter
-        if ($request->has('search')) {
-            $query->where('first_name', 'like', '%' . $request->search . '%')
-                  ->orWhere('last_name', 'like', '%' . $request->search . '%')
-                  ->orWhere('reference_number', 'like', '%' . $request->search . '%');
+        // Search filter for reference number, first name, last name, and document type
+        if ($request->filled('search')) {
+            $searchTerm = $request->search;
+            $query->where('reference_number', 'like', "%{$searchTerm}%")
+                  ->orWhere('first_name', 'like', "%{$searchTerm}%")
+                  ->orWhere('last_name', 'like', "%{$searchTerm}%")
+                  ->orWhere('document_type', 'like', "%{$searchTerm}%");
         }
 
         $documentRequests = $query->orderBy('created_at', 'desc')->paginate(10);
@@ -38,6 +40,10 @@ class DocumentRequestController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'status' => 'required|in:pending,approved,rejected,released',
+        ]);
+
         $documentRequest = DocumentRequest::findOrFail($id);
         $documentRequest->update(['status' => $request->status]);
 
