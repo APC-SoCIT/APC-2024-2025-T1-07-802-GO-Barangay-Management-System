@@ -88,5 +88,14 @@ class User extends Authenticatable
     {
         return "{$this->block_street}, {$this->barangay}, {$this->district}, {$this->city}";
     }
-}
 
+    /**
+     * Get the document requests of the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function documentRequests()
+    {
+        return $this->hasMany(DocumentRequest::class);
+    }
+}

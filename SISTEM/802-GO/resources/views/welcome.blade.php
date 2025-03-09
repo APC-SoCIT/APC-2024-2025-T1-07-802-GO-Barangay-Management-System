@@ -3,9 +3,13 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Add CSRF Token -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>802-GO: Barangay 802 Management System</title>
         <link rel="icon" href="{{ asset('logo/802-GO-LOGO.png') }}" type="image/x-icon">
+        <!-- Add document requests popup CSS -->
+        <link rel="stylesheet" href="{{ asset('css/document-requests-popup.css') }}">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -337,67 +341,257 @@
             }   
             
             [x-cloak] { display: none !important; }
+
+            /* Notification dot styles */
+            .notification-dot {
+                position: absolute;
+                top: -5px;
+                right: -5px;
+                width: 10px;
+                height: 10px;
+                background-color: #FF2D20;
+                border-radius: 50%;
+                animation: pulse 2s infinite;
+            }
+
+            /* Popup styles */
+            .popup-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 1000;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .popup-content {
+                position: relative;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: white;
+                padding: 2rem;
+                border-radius: 10px;
+                width: 90%;
+                max-width: 800px;
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+
+            .document-request-item {
+                border: 1px solid #e5e7eb;
+                border-radius: 8px;
+                padding: 1rem;
+                margin-bottom: 1rem;
+                background-color: white;
+                transition: all 0.3s ease;
+            }
+
+            .document-request-item:hover {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .status-badge {
+                display: inline-block;
+                padding: 0.25rem 0.75rem;
+                border-radius: 9999px;
+                font-size: 0.875rem;
+                font-weight: 500;
+            }
+
+            .status-pending { background-color: #FEF3C7; color: #92400E; }
+            .status-approved { background-color: #D1FAE5; color: #065F46; }
+            .status-rejected { background-color: #FEE2E2; color: #991B1B; }
+
+            @keyframes pulse {
+                0% { transform: scale(1); opacity: 1; }
+                50% { transform: scale(1.2); opacity: 0.8; }
+                100% { transform: scale(1); opacity: 1; }
+            }
+
+            /* Improve popup styles */
+            .popup-content {
+                position: relative;
+                background-color: white;
+                padding: 2rem;
+                border-radius: 10px;
+                width: 90%;
+                max-width: 800px;
+                max-height: 80vh;
+                overflow-y: auto;
+                margin: 2rem auto;
+            }
+
+            .popup-close-btn {
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+                background-color: #11468F;
+                color: white;
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: background-color 0.3s;
+                z-index: 1002;
+            }
+
+            .popup-close-btn:hover {
+                background-color: #0d3a7d;
+            }
+
+            /* Updated status badge styles */
+            .status-badge {
+                display: inline-block;
+                padding: 0.25rem 0.75rem;
+                border-radius: 9999px;
+                font-size: 0.875rem;
+                font-weight: 500;
+                text-transform: uppercase;
+            }
+
+            /* Updated Popup styles for proper centering */
+            .popup-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 1000;
+            }
+
+            .popup-content {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: white;
+                padding: 2rem;
+                border-radius: 10px;
+                width: 90%;
+                max-width: 800px;
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+
+            /* Cancel button styles */
+            .cancel-btn {
+                width: 100%;
+                padding: 0.75rem;
+                background-color: #DC2626;
+                color: white;
+                border-radius: 0.375rem;
+                font-weight: 500;
+                text-align: center;
+                transition: all 0.2s;
+            }
+
+            .cancel-btn:hover {
+                background-color: #B91C1C;
+            }
+
+            .cancel-btn {
+                width: 100%;
+                padding: 0.75rem;
+                border-radius: 0.375rem;
+                font-weight: 500;
+                text-align: center;
+                transition: all 0.2s;
+            }
+
+            .cancel-btn-active {
+                background-color: #DC2626;
+                color: white;
+                cursor: pointer;
+            }
+
+            .cancel-btn-active:hover {
+                background-color: #B91C1C;
+            }
+
+            .cancel-btn-disabled {
+                background-color: #E5E7EB;
+                color: #9CA3AF;
+                cursor: not-allowed;
+            }
         </style>
     </head>
 
-    </head>
-
-<body class="font-sans antialiased dark:bg-black dark:text-white/50">
-    <div class="relative w-full">
-        <div class="menu-toggle left">
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-        </div>
-        <div class="menu-toggle right">
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-        </div>
-        <header class="header-grid">
-            <!-- Left-aligned Navigation Links -->
-            <nav class="left-section flex space-x-4">
-                <a href="{{ route('welcome') }}" class="rounded-md px-3 py-2 text-white bg-[#FF2D20] ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20] active">
-                    Home
-                </a>
-                <a href="{{ route('news.index') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
-                    News
-                </a>
-                <a href="{{ route('document-request') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
-                    Document Request
-                </a>
-            </nav>
-
-            <!-- Centered Logo -->
-            <div class="center-section">
-                <img src="{{ asset('logo/802-GO-LOGO.png') }}" alt="Logo" class="h-16 w-auto">
+    <body class="font-sans antialiased dark:bg-black dark:text-white/50">
+        <div class="relative w-full">
+            <div class="menu-toggle left">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
             </div>
-
-            @if (Route::has('login'))
-                <!-- Right-aligned Authentication Links -->
-                <nav class="right-section flex space-x-8">
-                    @auth
-                        <a href="{{ route('profile.edit') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
-                            My Account
-                        </a>
-                    @else
-                        <a href="{{ route('admin.login') }}" class="rounded-md px-3 py-2 text-white bg-[#1a365d] ring-1 ring-transparent transition hover:bg-[#2d4a7c] focus:outline-none focus-visible:ring-[#FF2D20]">
-                            Admin Log in
-                        </a>
-                        <a href="{{ route('login') }}" class="rounded-md px-3 py-2 text-white bg-[#2563eb] ring-1 ring-transparent transition hover:bg-[#3b82f6] focus:outline-none focus-visible:ring-[#FF2D20]">
-                            Resident Log in
-                        </a>
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="rounded-md px-3 py-2 text-white bg-[#059669] ring-1 ring-transparent transition hover:bg-[#10b981] focus:outline-none focus-visible:ring-[#FF2D20]">
-                                Register
-                            </a>
-                        @endif
-                    @endauth
+            <div class="menu-toggle right">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <header class="header-grid">
+                <!-- Left-aligned Navigation Links -->
+                <nav class="left-section flex space-x-4">
+                    <a href="{{ route('welcome') }}" class="rounded-md px-3 py-2 text-white bg-[#FF2D20] ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20] active">
+                        Home
+                    </a>
+                    <a href="{{ route('news.index') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
+                        News
+                    </a>
+                    <a href="{{ route('document-request') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
+                        Document Request
+                    </a>
                 </nav>
-            @endif
-        </header>
+
+    <!-- Centered Logo -->
+    <div class="center-section">
+        <img src="{{ asset('logo/802-GO-LOGO.png') }}" alt="Logo" class="h-16 w-auto">
     </div>
 
+    @if (Route::has('login'))
+                    <!-- Right-aligned Authentication Links -->
+                    @auth
+    <nav class="right-section flex items-center space-x-4">
+        <div class="relative inline-flex items-center">
+            <a href="#" onclick="showDocumentRequests()" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70">
+                Requested Documents
+                @if(session('new_request') || session('status_updated'))
+                    <span class="notification-dot" id="notification-dot"></span>
+                @endif
+            </a>
+        </div>
+        <a href="{{ route('profile.edit') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70">
+            My Account
+        </a>
+    </nav>
+@else
+    <nav class="right-section flex space-x-8"> <!-- Changed from space-x-4 to space-x-8 -->
+        <a href="{{ route('admin.login') }}" class="rounded-md px-3 py-2 text-white bg-[#1a365d] ring-1 ring-transparent transition hover:bg-[#2d4a7c] focus:outline-none focus-visible:ring-[#FF2D20]">
+            Admin Log in
+        </a>
+        <a href="{{ route('login') }}" class="rounded-md px-3 py-2 text-white bg-[#2563eb] ring-1 ring-transparent transition hover:bg-[#3b82f6] focus:outline-none focus-visible:ring-[#FF2D20]">
+            Resident Log in
+        </a>
+        @if (Route::has('register'))
+            <a href="{{ route('register') }}" class="rounded-md px-3 py-2 text-white bg-[#059669] ring-1 ring-transparent transition hover:bg-[#10b981] focus:outline-none focus-visible:ring-[#FF2D20]">
+                Register
+            </a>
+        @endif
+    </nav>
+@endauth
+@endif
+</header>
+        </div>
 
 <script>
 // Toggle the sliding menu for mobile view
@@ -422,12 +616,12 @@ document.addEventListener("DOMContentLoaded", function() {
         <h1>802-GO: Barangay Management System</h1>
         <p>District 5, Sta. Ana Manila City, Metro Manila, Philippines</p>
     </div>
- 
+
     <div class="container">
         <div class="service">
             <h3>News Page</h3>
             <p>A page where users can find the latest updates, announcements, and news related to the barangay.</p>
-            <a href="{{ route('news.index') }}">Click to View News</a>
+            <a href="{{ route('news-page') }}">Click to View News</a>
         </div>
 
         <div class="service">
@@ -450,29 +644,53 @@ document.addEventListener("DOMContentLoaded", function() {
 </section>
 
 
-        <!-- News Articles Section -->
-        <section class="grid gap-6 lg:grid-cols-3 lg:gap-8 p-6">
-            @if($newsArticles->isEmpty())
-                <p>No news articles available at the moment. Please check back later.</p>
-            @else
-                @foreach($newsArticles as $newsItem)
-                    <!-- News Article Card -->
-                    <a href="{{ route('news.show', $newsItem->id) }}" class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]">
-                        <div class="relative flex w-full items-stretch">
-                            <img src="{{ asset('storage/' . $newsItem->image) }}" alt="News Image" class="aspect-video w-full h-full object-cover rounded-[10px] drop-shadow-[0px_4px_34px_rgba(0,0,0,0.06)] dark:hidden">
-                            <div class="absolute -bottom-16 -left-16 h-40 w-[calc(100%+8rem)] bg-gradient-to-b from-transparent via-white to-white dark:via-zinc-900 dark:to-zinc-900"></div>
-                        </div>
-                        <div class="relative">
-                            <h2 class="text-xl font-semibold text-black dark:text-white">{{ $newsItem->title }}</h2>
-                            <p class="mt-2 text-sm/relaxed" style="margin-bottom: 8px;">{{ Str::limit($newsItem->content, 150, '...') }}</p>
-                        </div>
-                        <div>
-                            <button style="border: 2px solid #11468F; padding: 10px 20px; background-color: #11468F; color: white; border-radius: 5px;">Read More</button>
-                        </div>
-                    </a>
-                @endforeach
-            @endif
-        </section>
+<!-- News Articles Section -->
+<section class="grid gap-6 lg:grid-cols-3 lg:gap-8 p-6">
+    <!-- News Article Card 1 -->
+    <a href="{{ route('sample-news-1') }}" class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]">
+        <div class="relative flex w-full items-stretch">
+            <img src="{{ asset('background/news-1.png') }}" alt="News Image 1" class="aspect-video w-full h-full object-cover rounded-[10px] drop-shadow-[0px_4px_34px_rgba(0,0,0,0.06)] dark:hidden">
+            <div class="absolute -bottom-16 -left-16 h-40 w-[calc(100%+8rem)] bg-gradient-to-b from-transparent via-white to-white dark:via-zinc-900 dark:to-zinc-900"></div>
+        </div>
+        <div class="relative">
+            <h2 class="text-xl font-semibold text-black dark:text-white">Community Health Outreach Brings Medical Assistance to Families</h2>
+            <p class="mt-2 text-sm/relaxed" style="margin-bottom: 8px;">Health workers provide free check-ups and medical assistance to families in underserved areas, focusing on young children and elderly residents...</p>
+        </div>
+        <div>
+        <button style="border: 2px solid #11468F; padding: 10px 20px; background-color: #11468F; color: white; border-radius: 5px;">Read More</button>
+        </div>
+    </a>
+
+    <!-- News Article Card 2 -->
+    <a href="{{ route('sample-news-2') }}" class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]">
+        <div class="relative flex w-full items-stretch">
+            <img src="{{ asset('background/news-2.png') }}" alt="News Image 2" class="aspect-video w-full h-full object-cover rounded-[10px] drop-shadow-[0px_4px_34px_rgba(0,0,0,0.06)] dark:hidden">
+            <div class="absolute -bottom-16 -left-16 h-40 w-[calc(100%+8rem)] bg-gradient-to-b from-transparent via-white to-white dark:via-zinc-900 dark:to-zinc-900"></div>
+        </div>
+        <div class="relative">
+            <h2 class="text-xl font-semibold text-black dark:text-white">Storytelling Session Inspires Young Minds in Local Outreach Program</h2>
+            <p class="mt-2 text-sm/relaxed" style="margin-bottom: 8px;">Volunteers engage children in an educational storytelling session, aiming to foster a love for reading and learning in a friendly outdoor setting...</p>
+        </div>
+        <div>
+        <button style="border: 2px solid #11468F; padding: 10px 20px; background-color: #11468F; color: white; border-radius: 5px;">Read More</button>
+        </div>
+    </a>
+
+    <!-- News Article Card 3 -->
+    <a href="{{ route('sample-news-3') }}" class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]">
+        <div class="relative flex w-full items-stretch">
+            <img src="{{ asset('background/news-3.png') }}" alt="News Image 3" class="aspect-video w-full h-full object-cover rounded-[10px] drop-shadow-[0px_4px_34px_rgba(0,0,0,0.06)] dark:hidden">
+            <div class="absolute -bottom-16 -left-16 h-40 w-[calc(100%+8rem)] bg-gradient-to-b from-transparent via-white to-white dark:via-zinc-900 dark:to-zinc-900"></div>
+        </div>
+        <div class="relative">
+            <h2 class="text-xl font-semibold text-black dark:text-white">Community Effort Enhances Road Safety with New Repairs </h2>
+            <p class="mt-2 text-sm/relaxed" style="margin-bottom: 8px;">Local workers join forces to repair and improve road infrastructure, enhancing safety for pedestrians and drivers in the community...</p>
+        </div>
+        <div>
+        <button style="border: 2px solid #11468F; padding: 10px 20px; background-color: #11468F; color: white; border-radius: 5px;">Read More</button>
+        </div>
+    </a>
+</section>
 
 
 <!-- About us Section -->
@@ -588,5 +806,177 @@ document.addEventListener("DOMContentLoaded", function() {
         </div>
         <script src="//code.tidio.co/h2325m3tkhvbkjk1prdnfsw0cihgt66j.js" async></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.13.8/cdn.min.js" defer></script>
+        <script>
+            function showDocumentRequests() {
+                document.getElementById('documentRequestsPopup').style.display = 'block';
+                document.body.style.overflow = 'hidden';
+                // Hide notification dot after viewing
+                updateNotificationStatus(false);
+                // Update session variable via AJAX
+                fetch('/mark-notifications-as-read', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    }
+                });
+            }
+
+            function hideDocumentRequests() {
+                document.getElementById('documentRequestsPopup').style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+
+            // Sample function to update notification status
+            function updateNotificationStatus(hasUpdates) {
+                const notificationDot = document.getElementById('notification-dot');
+                if (notificationDot) {
+                    notificationDot.style.display = hasUpdates ? 'block' : 'none';
+                }
+            }
+
+            // Call this function when there are updates
+            updateNotificationStatus(true);
+
+            // Function to handle document request cancellation
+            function cancelRequest(referenceNumber) {
+                if (confirm('Are you sure you want to cancel this request?')) {
+                    // Make an AJAX call to your backend to cancel the request
+                    fetch(`/document-requests/${referenceNumber}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Remove the request item from the list
+                            const requestItem = document.querySelector(`[data-reference="${referenceNumber}"]`);
+                            if (requestItem) {
+                                requestItem.remove();
+                            }
+                            alert('Request cancelled successfully');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Failed to cancel request');
+                    });
+                }
+            }
+
+            function confirmCancel(referenceNumber) {
+                if (confirm('Are you sure you want to cancel this request? This action cannot be undone.')) {
+                    const token = document.querySelector('meta[name="csrf-token"]').content;
+                    
+                    // Show loading state
+                    const cancelBtn = document.querySelector(`[data-reference="${referenceNumber}"] .cancel-btn`);
+                    if (cancelBtn) {
+                        cancelBtn.textContent = 'Cancelling...';
+                        cancelBtn.disabled = true;
+                    }
+                    
+                    fetch(`/document-requests/${referenceNumber}/cancel`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': token
+                        }
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            // Remove the request item from the list with animation
+                            const requestItem = document.querySelector(`[data-reference="${referenceNumber}"]`);
+                            if (requestItem) {
+                                requestItem.style.opacity = '0';
+                                requestItem.style.transform = 'translateY(-10px)';
+                                requestItem.style.transition = 'all 0.3s ease';
+                                
+                                setTimeout(() => {
+                                    requestItem.remove();
+                                    
+                                    // Show success message
+                                    alert('Request cancelled successfully');
+                                    
+                                    // If no more requests, show empty message or reload
+                                    if (document.querySelectorAll('.document-request-item').length === 0) {
+                                        const requestsList = document.getElementById('documentRequestsList');
+                                        requestsList.innerHTML = '<div class="text-center text-gray-500 py-4">No document requests found.</div>';
+                                    }
+                                }, 300);
+                            }
+                        } else {
+                            alert('Failed to cancel request: ' + (data.message || 'Unknown error'));
+                            
+                            // Reset button state
+                            if (cancelBtn) {
+                                cancelBtn.textContent = 'Cancel Request';
+                                cancelBtn.disabled = false;
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Failed to cancel request. Please try again later.');
+                        
+                        // Reset button state
+                        if (cancelBtn) {
+                            cancelBtn.textContent = 'Cancel Request';
+                            cancelBtn.disabled = false;
+                        }
+                    });
+                }
+            }
+        </script>
+        <div id="documentRequestsPopup" class="popup-overlay">
+            <div class="popup-content">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Your Document Requests</h2>
+                    <button class="popup-close-btn" onclick="hideDocumentRequests()">&times;</button>
+                </div>
+                <div id="documentRequestsList">
+    @if($documentRequests->count() > 0)
+        @foreach($documentRequests as $request)
+        <div class="document-request-item" data-reference="{{ $request->reference_number }}">
+            <div class="flex justify-between items-start">
+                <div>
+                    <h3 class="font-semibold text-lg text-gray-900">{{ $request->document_type }}</h3>
+                    <p class="text-sm text-gray-600">Reference Number: {{ $request->reference_number }}</p>
+                    <p class="text-sm text-gray-600">Requested on: {{ $request->created_at->format('F d, Y') }}</p>
+                </div>
+                <span class="status-badge status-{{ strtolower($request->status) }}">
+                    {{ $request->status }}
+                </span>
+            </div>
+            <div class="mt-4">
+                @if(strtolower($request->status) === 'pending' || strtolower($request->status) === 'rejected')
+                    <button onclick="confirmCancel('{{ $request->reference_number }}')" 
+                            class="cancel-btn cancel-btn-active">
+                        Cancel Request
+                    </button>
+                @else
+                    <button class="cancel-btn cancel-btn-disabled" disabled>
+                        Cancel Request
+                    </button>
+                @endif
+            </div>
+        </div>
+        @endforeach
+    @else
+        <div class="text-center text-gray-500 py-4">
+            No document requests found.
+        </div>
+    @endif
+</div>
+            </div>
+        </div>
     </body>
 </html>

@@ -1082,7 +1082,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" onclick="closeLogoutModal()">Cancel</button>
-                    <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                    <form method="POST" action="/logout" class="d-inline">
                         @csrf
                         <button type="submit" class="btn btn-danger">Logout</button>
                     </form>
