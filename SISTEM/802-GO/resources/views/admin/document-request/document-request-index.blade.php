@@ -1,19 +1,227 @@
 @extends('admin.dashboard')
 
-<title>Admin: Request document</title>
+<title>Admin: Document Requests Management</title>
 <link rel="icon" href="{{ asset('logo/802-GO-LOGO.png') }}" type="image/x-icon">
 
+<style>
+    /* Container Styling */
+    .container {
+        max-width: 100%;
+        padding: 20px;
+    }
+
+    /* Card Styling */
+    .card {
+        border-radius: 10px;
+        border: 1px solid #ddd;
+        overflow: hidden;
+    }
+
+    .card-body {
+        padding: 0 !important;
+    }
+
+    /* Table Styling */
+    .table {
+        width: 100%;
+        margin: 0; /* Remove default margin */
+        border-collapse: collapse; /* Ensure borders are properly aligned */
+    }
+
+    .table th, .table td {
+        padding: 12px;
+        vertical-align: middle;
+        text-align: center;
+        white-space: nowrap; /* Prevents text wrapping */
+    }
+
+    .table th.title, .table td.title {
+        white-space: normal; /* Allows text wrapping */
+        max-width: 200px; /* Set a max-width for the title column */
+    }
+
+    .table thead {
+        background-color: #f8f9fa;
+        font-weight: bold;
+    }
+
+    .table tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    /* Search Box */
+    .search-box input {
+        width: 250px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        padding: 8px 12px;
+    }
+
+    /* Button Styling */
+    .btn {
+        border-radius: 5px;
+        font-weight: 500;
+        color: white;
+    }
+
+    .btn-primary {
+        background-color: #11468F; /* Matches the blue button in the image */
+        border-color: #11468F;
+    }
+
+    .btn-primary:hover {
+        background-color: #0D3A73;
+    }
+
+    .btn-warning {
+        background-color: #ffc107; /* Default warning color */
+        border-color: #ffc107;
+        color: black;
+    }
+
+    .btn-warning:hover {
+        background-color: #e0a800;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+        color: white;
+    }
+
+    .btn-danger:hover {
+        background-color: #bd2130;
+    }
+
+    /* Badges */
+    .badge {
+        padding: 5px 10px;
+        font-size: 0.85rem;
+    }
+
+    h1 {
+        font-size: 3rem; /* Increased font size */
+        font-weight: bold;
+    }
+
+    /* Make the Add News Button Bigger */
+    .btn-lg {
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+
+    /* Buttons Styling */
+    .btn-md {
+        font-size: 1rem;
+        padding: 10px 20px;
+    }
+
+    /* Align Add News Button to the Right */
+    .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    /* Search Container */
+    .search-container {
+        display: flex;
+        align-items: center;
+        position: relative;
+        width: 50%;
+    }
+
+    .search-input {
+        width: 100%;
+        padding: 10px 15px;
+        border: 1px solid #ccc;
+        border-radius: 8px 0 0 8px; /* Rounded corners for the left side */
+        font-size: 16px;
+        outline: none;
+    }
+
+    .search-input:focus {
+        border-color: #007bff;
+    }
+
+    .search-button {
+        background: none;
+        border: 1px solid #ccc;
+        border-left: none;
+        border-radius: 0 8px 8px 0; /* Rounded corners for the right side */
+        padding: 10px;
+        cursor: pointer;
+        color: gray;
+        outline: none;
+    }
+
+    .search-button:hover {
+        color: black;
+        border-color: #007bff;
+    }
+
+    /* Stacked Buttons in Action Column */
+    .btn-group-vertical {
+        display: flex;
+        flex-direction: column;
+        gap: 10px; /* Add spacing between buttons */
+    }
+
+    .btn-group-vertical .btn {
+        width: 100%;
+    }
+
+    /* Modal Styles */
+    .modal {
+        display: none; /* Ensure the modal is hidden on page load */
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background: white; /* ✅ Set modal background to white */
+        padding: 20px;
+        border-radius: 8px; /* ✅ Rounded corners */
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* ✅ Subtle shadow */
+        width: 90%;
+        max-width: 400px; /* ✅ Restrict max width */
+        text-align: center;
+    }
+
+    /* Modal Buttons */
+    .modal-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 15px;
+    }
+</style>
+
 @section('content')
-<div class="container mx-auto p-6">
+<div class="container">
     <!-- Page Header -->
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold">Document Requests</h1>
+    <div class="header-container mb-4">
+        <h1 class="fw-bold text-3xl font-bold">Document Requests Management</h1>
     </div>
 
     <!-- Search Box -->
-    <div class="mb-4 flex justify-between">
-        <input type="text" name="search" class="border border-gray-300 rounded-lg px-4 py-2 w-1/3" placeholder="Search by reference number..." value="{{ request('search') }}">
-        <button class="bg-blue-600 text-white px-4 py-2 rounded-lg">Search</button>
+    <div class="mb-4 p-4 bg-[#11468F] rounded-lg">
+        <form action="{{ route('admin.document-requests.index') }}" method="GET" class="flex gap-2 items-center">
+            <input type="text" name="search" 
+                   class="border border-gray-300 rounded-lg px-4 py-2 w-full h-12" 
+                   placeholder="Search by Reference No., Name, or Document Type..." 
+                   value="{{ request('search') }}">
+            <button type="submit" class="bg-white text-[#11468F] font-bold px-6 h-12 rounded-lg shadow-md flex items-center justify-center">
+                <i class="fas fa-search mr-2"></i> Search
+            </button>
+        </form>
     </div>
 
     <!-- Table -->
@@ -42,6 +250,7 @@
                                 <option value="pending" {{ $request->status == 'pending' ? 'selected' : '' }}>Pending</option>
                                 <option value="approved" {{ $request->status == 'approved' ? 'selected' : '' }}>Approved</option>
                                 <option value="rejected" {{ $request->status == 'rejected' ? 'selected' : '' }}>Rejected</option>
+                                <option value="released" {{ $request->status == 'released' ? 'selected' : '' }}>Released</option>
                             </select>
                             <button type="submit" class="px-2 py-1 bg-green-500 text-white rounded text-sm">Update</button>
                         </form>
@@ -72,3 +281,4 @@
     </div>
 </div>
 @endsection
+
