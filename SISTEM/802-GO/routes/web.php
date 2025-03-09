@@ -91,17 +91,20 @@ Route::middleware('auth')->group(function () {
 // Authentication Routes
 require __DIR__.'/auth.php';
 
+// Fix the routes for document requests
 Route::middleware(['auth'])->group(function () {
-    Route::get('/document-requests', [DocumentRequestController::class, 'getUserRequests'])->name('document-requests.index');
-    Route::put('/document-requests/{id}', [DocumentRequestController::class, 'update'])->name('document-requests.update');
-    Route::delete('/document-requests/{id}', [DocumentRequestController::class, 'cancel'])->name('document-requests.cancel');
+    Route::get('/document-requests', [UserDocumentRequestController::class, 'getUserRequests'])->name('document-requests.index');
+    Route::put('/document-requests/{id}', [UserDocumentRequestController::class, 'update'])->name('document-requests.update');
+    Route::delete('/document-requests/{id}', [UserDocumentRequestController::class, 'cancel'])->name('document-requests.cancel');
     
-    // Add these new routes
-    Route::post('/mark-notifications-as-read', [DocumentRequestController::class, 'markNotificationsAsRead'])
-        ->name('document-requests.mark-read');
+    // Fix the route for marking notifications as read
+    Route::post('/mark-notifications-as-read', [UserDocumentRequestController::class, 'markNotificationsAsRead'])
+        ->name('notifications.mark-read');
     
-    // Update the cancel route to use POST method
-    Route::post('/document-requests/{reference}/cancel', [DocumentRequestController::class, 'cancel'])
+    Route::post('/document-requests/{referenceNumber}/cancel', [UserDocumentRequestController::class, 'cancel'])
         ->name('document-requests.cancel');
+        
+    Route::get('/document-requests/{referenceNumber}/status', [UserDocumentRequestController::class, 'checkStatus'])
+        ->name('document-requests.status');
 });
 

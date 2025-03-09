@@ -3,9 +3,13 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Add CSRF Token -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>802-GO: Barangay 802 Management System</title>
         <link rel="icon" href="{{ asset('logo/802-GO-LOGO.png') }}" type="image/x-icon">
+        <!-- Add document requests popup CSS -->
+        <link rel="stylesheet" href="{{ asset('css/document-requests-popup.css') }}">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">

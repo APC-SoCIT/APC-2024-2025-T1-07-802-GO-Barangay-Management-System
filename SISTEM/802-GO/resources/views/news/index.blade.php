@@ -6,11 +6,12 @@
 
         <title>802-GO: Barangay 802 Management System</title>
         <link rel="icon" href="{{ asset('logo/802-GO-LOGO.png') }}" type="image/x-icon">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <link rel="stylesheet" href="{{ asset('css/document-requests-popup.css') }}">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+        <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
         <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
         <!-- Styles -->
         <style>
@@ -405,6 +406,105 @@
             }   
             
             [x-cloak] { display: none !important; }
+
+            /* Add these styles for the popup overlay */
+            .popup-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 1000;
+                justify-content: center;
+                align-items: center;
+                overflow-y: auto;
+                padding: 20px;
+            }
+
+            .popup-content {
+                background-color: white;
+                border-radius: 8px;
+                padding: 24px;
+                width: 100%;
+                max-width: 600px;
+                max-height: 80vh;
+                overflow-y: auto;
+                position: relative;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .popup-close-btn {
+                background: none;
+                border: none;
+                font-size: 24px;
+                cursor: pointer;
+                color: #666;
+            }
+
+            .document-request-item {
+                border: 1px solid #e5e7eb;
+                border-radius: 8px;
+                padding: 16px;
+                margin-bottom: 12px;
+            }
+
+            .status-badge {
+                display: inline-block;
+                padding: 4px 8px;
+                border-radius: 4px;
+                font-size: 12px;
+                font-weight: 500;
+            }
+
+            .status-pending {
+                background-color: #FEF3C7;
+                color: #92400E;
+            }
+
+            .status-approved {
+                background-color: #D1FAE5;
+                color: #065F46;
+            }
+
+            .status-rejected {
+                background-color: #FEE2E2;
+                color: #B91C1C;
+            }
+
+            .status-processing {
+                background-color: #DBEAFE;
+                color: #1E40AF;
+            }
+
+            .cancel-btn {
+                padding: 6px 12px;
+                border-radius: 4px;
+                font-size: 14px;
+                border: none;
+            }
+
+            .cancel-btn-active {
+                background-color: #EF4444;
+                color: white;
+                cursor: pointer;
+            }
+
+            .cancel-btn-disabled {
+                background-color: #E5E7EB;
+                color: #6B7280;
+            }
+
+            .notification-dot {
+                position: absolute;
+                top: -2px;
+                right: -2px;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background-color: #EF4444;
+            }
         </style>
     </head>
 
@@ -423,10 +523,10 @@
             <header class="header-grid">
                 <!-- Left-aligned Navigation Links -->
                 <nav class="left-section flex space-x-4">
-                    <a href="{{ route('welcome') }}" class="rounded-md px-3 py-2 text-white bg-[#FF2D20] ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20] active">
+                    <a href="{{ route('welcome') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
                         Home
                     </a>
-                    <a href="{{ route('news.index') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
+                    <a href="{{ route('news.index') }}" class="rounded-md px-3 py-2 text-white bg-[#FF2D20] ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20] active">
                         News
                     </a>
                     <a href="{{ route('document-request') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
@@ -441,20 +541,28 @@
 
     @if (Route::has('login'))
                     <!-- Right-aligned Authentication Links -->
-                    <nav class="right-section flex space-x-8"> <!-- Changed from space-x-4 to space-x-8 -->
+                    <nav class="right-section flex items-center space-x-4">
                         @auth
-                            <a href="{{ route('profile.edit') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
+                            <div class="relative inline-flex items-center">
+                                <a href="#" onclick="window.showDocumentRequests(); return false;" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70">
+                                    Requested Documents
+                                    @if(session('new_request') || session('status_updated'))
+                                        <span class="notification-dot" id="notification-dot"></span>
+                                    @endif
+                                </a>
+                            </div>
+                            <a href="{{ route('profile.edit') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70">
                                 My Account
                             </a>
                         @else
-                            <a href="{{ route('admin.login') }}" class="rounded-md px-3 py-2 text-white bg-[#1a365d] ring-1 ring-transparent transition hover:bg-[#2d4a7c] focus:outline-none focus-visible:ring-[#FF2D20]">
+                            <a href="{{ route('admin.login') }}" class="rounded-md px-3 py-2 text-white bg-[#1a365d] ring-1 ring-transparent transition hover:bg-[#2d4a7c]">
                                 Admin Log in
                             </a>
-                            <a href="{{ route('login') }}" class="rounded-md px-3 py-2 text-white bg-[#2563eb] ring-1 ring-transparent transition hover:bg-[#3b82f6] focus:outline-none focus-visible:ring-[#FF2D20]">
+                            <a href="{{ route('login') }}" class="rounded-md px-3 py-2 text-white bg-[#2563eb] ring-1 ring-transparent transition hover:bg-[#3b82f6]">
                                 Resident Log in
                             </a>
                             @if (Route::has('register'))
-                                <a href="{{ route('register') }}" class="rounded-md px-3 py-2 text-white bg-[#059669] ring-1 ring-transparent transition hover:bg-[#10b981] focus:outline-none focus-visible:ring-[#FF2D20]">
+                                <a href="{{ route('register') }}" class="rounded-md px-3 py-2 text-white bg-[#059669] ring-1 ring-transparent transition hover:bg-[#10b981]">
                                     Register
                                 </a>
                             @endif
@@ -465,8 +573,8 @@
         </div>
 
 <script>
-// Toggle the sliding menu for mobile view
 document.addEventListener("DOMContentLoaded", function() {
+    // Toggle the sliding menu for mobile view
     const headerGrid = document.querySelector(".header-grid");
     const leftMenuToggle = document.querySelector(".menu-toggle.left");
     const rightMenuToggle = document.querySelector(".menu-toggle.right");
@@ -480,6 +588,73 @@ document.addEventListener("DOMContentLoaded", function() {
         rightMenuToggle.classList.toggle("active");
         headerGrid.classList.toggle("active-right");
     });
+    
+    // Set up document requests popup functions
+    window.showDocumentRequests = function() {
+        const popup = document.getElementById('documentRequestsPopup');
+        if (popup) {
+            popup.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            
+            // Hide notification dot after viewing
+            const notificationDot = document.getElementById('notification-dot');
+            if (notificationDot) {
+                notificationDot.style.display = 'none';
+            }
+            
+            // Update session variable via AJAX
+            const token = document.querySelector('meta[name="csrf-token"]').content;
+            fetch('/mark-notifications-as-read', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': token
+                }
+            });
+        }
+    };
+    
+    window.hideDocumentRequests = function() {
+        const popup = document.getElementById('documentRequestsPopup');
+        if (popup) {
+            popup.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    };
+    
+    window.confirmCancel = function(referenceNumber) {
+        if (confirm('Are you sure you want to cancel this request? This action cannot be undone.')) {
+            const token = document.querySelector('meta[name="csrf-token"]').content;
+            
+            fetch(`/document-requests/${referenceNumber}/cancel`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': token
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const requestItem = document.querySelector(`[data-reference="${referenceNumber}"]`);
+                    if (requestItem) {
+                        requestItem.remove();
+                    }
+                    alert('Request cancelled successfully');
+                    
+                    if (document.querySelectorAll('.document-request-item').length === 0) {
+                        location.reload();
+                    }
+                } else {
+                    alert('Failed to cancel request: ' + (data.message || 'Unknown error'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to cancel request. Please try again later.');
+            });
+        }
+    };
 });
 </script>
 <body>
@@ -549,5 +724,94 @@ document.addEventListener("DOMContentLoaded", function() {
             </div>
         </div>
         <script src="//code.tidio.co/h2325m3tkhvbkjk1prdnfsw0cihgt66j.js" async></script>
+        <div id="documentRequestsPopup" class="popup-overlay">
+            <div class="popup-content">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Your Document Requests</h2>
+                    <button class="popup-close-btn" onclick="hideDocumentRequests()">&times;</button>
+                </div>
+                <div id="documentRequestsList">
+                    @if(isset($documentRequests) && $documentRequests->count() > 0)
+                        @foreach($documentRequests as $request)
+                        <div class="document-request-item" data-reference="{{ $request->reference_number }}">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h3 class="font-semibold text-lg text-gray-900">{{ $request->document_type }}</h3>
+                                    <p class="text-sm text-gray-600">Reference Number: {{ $request->reference_number }}</p>
+                                    <p class="text-sm text-gray-600">Requested on: {{ $request->created_at->format('F d, Y') }}</p>
+                                </div>
+                                <span class="status-badge status-{{ strtolower($request->status) }}">
+                                    {{ $request->status }}
+                                </span>
+                            </div>
+                            <div class="mt-4">
+                                @if($request->status === 'Pending')
+                                    <button onclick="confirmCancel('{{ $request->reference_number }}')" 
+                                            class="cancel-btn cancel-btn-active">
+                                        Cancel Request
+                                    </button>
+                                @else
+                                    <button class="cancel-btn cancel-btn-disabled" disabled>
+                                        Cancel Request
+                                    </button>
+                                @endif
+                            </div>
+                        </div>
+                        @endforeach
+                    @else
+                        <div class="text-center text-gray-500 py-4">
+                            No document requests found.
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Add the document request related functions
+            function showDocumentRequests() {
+                document.getElementById('documentRequestsPopup').style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
+
+            function hideDocumentRequests() {
+                document.getElementById('documentRequestsPopup').style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+
+            function confirmCancel(referenceNumber) {
+                if (confirm('Are you sure you want to cancel this request? This action cannot be undone.')) {
+                    const token = document.querySelector('meta[name="csrf-token"]').content;
+                    
+                    fetch(`/document-requests/${referenceNumber}/cancel`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': token
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            const requestItem = document.querySelector(`[data-reference="${referenceNumber}"]`);
+                            if (requestItem) {
+                                requestItem.remove();
+                            }
+                            alert('Request cancelled successfully');
+                            
+                            if (document.querySelectorAll('.document-request-item').length === 0) {
+                                location.reload();
+                            }
+                        } else {
+                            alert('Failed to cancel request: ' + (data.message || 'Unknown error'));
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Failed to cancel request. Please try again later.');
+                    });
+                }
+            }
+        </script>
     </body>
 </html>
