@@ -495,6 +495,31 @@
             .cancel-btn:hover {
                 background-color: #B91C1C;
             }
+
+            .cancel-btn {
+                width: 100%;
+                padding: 0.75rem;
+                border-radius: 0.375rem;
+                font-weight: 500;
+                text-align: center;
+                transition: all 0.2s;
+            }
+
+            .cancel-btn-active {
+                background-color: #DC2626;
+                color: white;
+                cursor: pointer;
+            }
+
+            .cancel-btn-active:hover {
+                background-color: #B91C1C;
+            }
+
+            .cancel-btn-disabled {
+                background-color: #E5E7EB;
+                color: #9CA3AF;
+                cursor: not-allowed;
+            }
         </style>
     </head>
 
@@ -892,7 +917,12 @@ document.addEventListener("DOMContentLoaded", function() {
             </div>
             <div class="mt-4">
                 @if($request->status === 'Pending')
-                    <button onclick="confirmCancel('{{ $request->reference_number }}')" class="cancel-btn">
+                    <button onclick="confirmCancel('{{ $request->reference_number }}')" 
+                            class="cancel-btn cancel-btn-active">
+                        Cancel Request
+                    </button>
+                @else
+                    <button class="cancel-btn cancel-btn-disabled" disabled>
                         Cancel Request
                     </button>
                 @endif
