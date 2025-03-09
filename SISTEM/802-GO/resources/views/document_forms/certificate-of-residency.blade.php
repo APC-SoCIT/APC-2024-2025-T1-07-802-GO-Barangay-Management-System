@@ -445,10 +445,12 @@ document.addEventListener("DOMContentLoaded", function() {
         <input id="city" name="city" type="text" value="Manila" class="input-field bg-gray-200" readonly>
 
         <label class="form-label">Length of Stay in Barangay <span class="text-red-500">*</span></label>
-        <input id="length_of_stay" type="text" name="length_of_stay" class="input-field required" required>
+        <input id="length_of_stay" type="text" name="length_of_stay" class="input-field required" required placeholder="e.g., 2 years, 8 months">
+        <small class="text-gray-500 mb-4 block">Enter in years and months (e.g., "2 years, 8 months"). Must be at least 6 months.</small>
 
-        <label class="form-label">Contact Number <span class="text-red-500">*</span></label>
-        <input id="contact_number" name="contact_number" type="text" pattern="09[0-9]{9}" maxlength="11" required title="Enter a valid PH mobile number (e.g., 09123456789)" class="input-field required" required>
+<!-- Pushed Contact Number Below -->
+<label class="form-label">Contact Number <span class="text-red-500">*</span></label>
+<input id="contact_number" name="contact_number" type="text" pattern="09[0-9]{9}" maxlength="11" required title="Enter a valid PH mobile number (e.g., 09123456789)" class="input-field required" required>
 
         <label class="form-label">Purpose of Request <span class="text-red-500">*</span></label>
         <select id="purpose_of_request" name="purpose_of_request" class="input-field required" required onchange="toggleOtherPurpose()">
@@ -479,6 +481,34 @@ document.addEventListener("DOMContentLoaded", function() {
         </div>
 
         <button type="submit">Submit</button>
+
+<script>
+document.getElementById('length_of_stay').addEventListener('input', function (e) {
+    let value = e.target.value;
+
+    // Allow only numbers, "years", "months", commas, and spaces
+    value = value.replace(/[^0-9yearsmonths, ]/g, '');
+
+    // Validate minimum 6 months stay
+    let match = value.match(/(\d+)\s*years?\s*,?\s*(\d*)\s*months?/);
+    
+    if (match) {
+        let years = parseInt(match[1] || 0, 10);
+        let months = parseInt(match[2] || 0, 10);
+
+        if (years === 0 && months < 6) {
+            e.target.setCustomValidity("You must have stayed in the barangay for at least 6 months.");
+        } else {
+            e.target.setCustomValidity("");
+        }
+    } else {
+        e.target.setCustomValidity("Enter in the format: 'X years, Y months'");
+    }
+
+    e.target.reportValidity();
+});
+</script>
+
     </form>
 </div>
     
