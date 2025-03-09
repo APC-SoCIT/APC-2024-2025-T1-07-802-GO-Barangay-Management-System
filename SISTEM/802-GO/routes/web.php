@@ -15,7 +15,13 @@ URL::forceRootUrl($url);
 
 // Home Page
 Route::get('/', function () {
-    return view('welcome');
+    $documentRequests = auth()->check() 
+        ? auth()->user()->documentRequests()
+            ->latest()
+            ->select('id', 'reference_number', 'document_type', 'status', 'created_at')
+            ->get() 
+        : collect([]);
+    return view('welcome', compact('documentRequests'));
 })->name('welcome');
 
 // Dashboard (Authenticated Users Only)
@@ -84,4 +90,18 @@ Route::middleware('auth')->group(function () {
 
 // Authentication Routes
 require __DIR__.'/auth.php';
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/document-requests', [DocumentRequestController::class, 'getUserRequests'])->name('document-requests.index');
+    Route::put('/document-requests/{id}', [DocumentRequestController::class, 'update'])->name('document-requests.update');
+    Route::delete('/document-requests/{id}', [DocumentRequestController::class, 'cancel'])->name('document-requests.cancel');
+    
+    // Add these new routes
+    Route::post('/mark-notifications-as-read', [DocumentRequestController::class, 'markNotificationsAsRead'])
+        ->name('document-requests.mark-read');
+    
+    // Update the cancel route to use POST method
+    Route::post('/document-requests/{reference}/cancel', [DocumentRequestController::class, 'cancel'])
+        ->name('document-requests.cancel');
+});
 
