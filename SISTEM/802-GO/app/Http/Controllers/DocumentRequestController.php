@@ -14,14 +14,7 @@ class DocumentRequestController extends Controller
      */
     public function index()
     {
-        $documentRequests = auth()->check() 
-            ? auth()->user()->documentRequests()
-                ->latest()
-                ->select('id', 'reference_number', 'document_type', 'status', 'created_at')
-                ->get() 
-            : collect([]);
-        
-        return view('document-request', compact('documentRequests'));
+        return view('document-request');
     }
 
     /**
@@ -170,51 +163,4 @@ $data = [
     
         return redirect()->route('document-request')->with('success', 'Your request has been submitted! Your reference number is ' . $referenceNumber);
     }
-
-    public function cancel($referenceNumber)
-    {
-        try {
-            $request = DocumentRequest::where('reference_number', $referenceNumber)
-                                    ->where('status', 'Pending')
-                                    ->first();
-
-            if (!$request) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Request not found or already processed'
-                ], 404);
-            }
-
-            $request->delete();
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Request cancelled successfully'
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Error cancelling request'
-            ], 500);
-        }
-    }
-
-    public function checkStatus($referenceNumber)
-    {
-        $request = DocumentRequest::where('reference_number', $referenceNumber)->first();
-        if (!$request) {
-            return response()->json(['error' => 'Request not found'], 404);
-        }
-        return response()->json(['status' => $request->status]);
-    }
-
-    /**
-     * Mark notifications as read.
-     */
-    public function markNotificationsAsRead()
-    {
-        session()->forget(['new_request', 'status_updated']);
-        return response()->json(['success' => true]);
-    }
-}
-
+}    
