@@ -83,5 +83,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::patch('/admin/document-requests/{id}/status', [AdminDocumentRequestController::class, 'updateStatus'])
+    ->name('admin.update-status');
+
+
 // Authentication Routes
 require __DIR__.'/auth.php';
