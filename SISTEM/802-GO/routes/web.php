@@ -14,16 +14,8 @@ use Illuminate\Support\Facades\URL;
 $url = config('app.url');
 URL::forceRootUrl($url);
 
-// Home Page
-Route::get('/', function () {
-    $documentRequests = auth()->check() 
-        ? auth()->user()->documentRequests()
-            ->latest()
-            ->select('id', 'reference_number', 'document_type', 'status', 'created_at')
-            ->get() 
-        : collect([]);
-    return view('welcome', compact('documentRequests'));
-})->name('welcome');
+// Home Page - Use WelcomeController to handle the request
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
 // Dashboard (Authenticated Users Only)
 Route::get('/dashboard', function () {
@@ -94,20 +86,6 @@ Route::middleware('auth')->group(function () {
 Route::patch('/admin/document-requests/{id}/status', [AdminDocumentRequestController::class, 'updateStatus'])
     ->name('admin.update-status');
 
-// Fix the routes for document requests
-Route::middleware(['auth'])->group(function () {
-    Route::get('/document-requests', [UserDocumentRequestController::class, 'getUserRequests'])->name('document-requests.index');
-    Route::put('/document-requests/{id}', [UserDocumentRequestController::class, 'update'])->name('document-requests.update');
-    Route::delete('/document-requests/{id}', [UserDocumentRequestController::class, 'cancel'])->name('document-requests.cancel');
-    
-    // Fix the route for marking notifications as read
-    Route::post('/mark-notifications-as-read', [UserDocumentRequestController::class, 'markNotificationsAsRead'])
-        ->name('notifications.mark-read');
-    
-    Route::post('/document-requests/{referenceNumber}/cancel', [UserDocumentRequestController::class, 'cancel'])
-        ->name('document-requests.cancel');
-        
-    Route::get('/document-requests/{referenceNumber}/status', [UserDocumentRequestController::class, 'checkStatus'])
-        ->name('document-requests.status');
-});
 
+// Authentication Routes
+require __DIR__.'/auth.php';
