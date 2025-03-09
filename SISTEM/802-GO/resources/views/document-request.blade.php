@@ -6,6 +6,10 @@
 
         <title>802-GO: Document Request</title>
         <link rel="icon" href="{{ asset('logo/802-GO-LOGO.png') }}" type="image/x-icon">
+        <!-- Add CSRF token meta tag -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <!-- Add document requests popup CSS link -->
+        <link rel="stylesheet" href="{{ asset('css/document-requests-popup.css') }}">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -20,7 +24,7 @@
                 box-sizing: border-box;
             }
             
-            /* ! tailwindcss v3.4.1 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Figtree, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]{display:none}*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: }.absolute{position:absolute}.relative{position:relative}.-left-20{left:-5rem}.top-0{top:0px}.-bottom-16{bottom:-4rem}.-left-16{left:-4rem}.-mx-3{margin-left:-0.75rem;margin-right:-0.75rem}.mt-4{margin-top:1rem}.mt-6{margin-top:1.5rem}.flex{display:flex}.grid{display:grid}.hidden{display:none}.aspect-video{aspect-ratio:16 / 9}.size-12{width:3rem;height:3rem}.size-5{width:1.25rem;height:1.25rem}.size-6{width:1.5rem;height:1.5rem}.h-12{height:3rem}.h-40{height:10rem}.h-full{height:100%}.min-h-screen{min-height:100vh}.w-full{width:100%}.w-\[calc\(100\%\+8rem\)\]{width:calc(100% + 8rem)}.w-auto{width:auto}.max-w-\[877px\]{max-width:877px}.max-w-2xl{max-width:42rem}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-start{align-items:flex-start}.items-center{align-items:center}.items-stretch{align-items:stretch}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.gap-2{gap:0.5rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.self-center{align-self:center}.overflow-hidden{overflow:hidden}.rounded-\[10px\]{border-radius:10px}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-md{border-radius:0.375rem}.rounded-sm{border-radius:0.125rem}.bg-\[\#FF2D20\]\/10{background-color:rgb(255 45 32 / 0.1)}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity))}.bg-gradient-to-b{background-image:linear-gradient(to bottom, var(--tw-gradient-stops))}.from-transparent{--tw-gradient-from:transparent var(--tw-gradient-from-position);--tw-gradient-to:rgb(0 0 0 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-white{--tw-gradient-to:rgb(255 255 255 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #fff var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-white{--tw-gradient-to:#fff var(--tw-gradient-to-position)}.stroke-\[\#FF2D20\]{stroke:#FF2D20}.object-cover{object-fit:cover}.object-top{object-position:top}.p-6{padding:1.5rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.py-16{padding-top:4rem;padding-bottom:4rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.pt-3{padding-top:0.75rem}.text-center{text-align:center}.font-sans{font-family:Figtree, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-sm\/relaxed{font-size:0.875rem;line-height:1.625}.text-xl{font-size:1.25rem;line-height:1.75rem}.font-semibold{font-weight:600}.text-black{--tw-text-opacity:1;color:rgb(0 0 0 / var(--tw-text-opacity))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity))}.underline{-webkit-text-decoration-line:underline;text-decoration-line:underline}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.shadow-\[0px_14px_34px_0px_rgba\(0\2c 0\2c 0\2c 0\.08\)\]{--tw-shadow:0px 14px 34px 0px rgba(0,0,0,0.08);--tw-shadow-colored:0px 14px 34px 0px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.ring-1{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.ring-transparent{--tw-ring-color:transparent}.ring-white\/\[0\.05\]{--tw-ring-color:rgb(255 255 255 / 0.05)}.drop-shadow-\[0px_4px_34px_rgba\(0\2c 0\2c 0\2c 0\.06\)\]{--tw-drop-shadow:drop-shadow(0px 4px 34px rgba(0,0,0,0.06));filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.drop-shadow-\[0px_4px_34px_rgba\(0\2c 0\2c 0\2c 0\.25\)\]{--tw-drop-shadow:drop-shadow(0px 4px 34px rgba(0,0,0,0.25));filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-300{transition-duration:300ms}.selection\:bg-\[\#FF2D20\] *::selection{--tw-bg-opacity:1;background-color:rgb(255 45 32 / var(--tw-bg-opacity))}.selection\:text-white *::selection{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity))}.selection\:bg-\[\#FF2D20\]::selection{--tw-bg-opacity:1;background-color:rgb(255 45 32 / var(--tw-bg-opacity))}.selection\:text-white::selection{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity))}.hover\:text-black:hover{--tw-text-opacity:1;color:rgb(0 0 0 / var(--tw-text-opacity))}.hover\:text-black\/70:hover{color:rgb(0 0 0 / 0.7)}.hover\:ring-black\/20:hover{--tw-ring-color:rgb(0 0 0 / 0.2)}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus-visible\:ring-1:focus-visible{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus-visible\:ring-\[\#FF2D20\]:focus-visible{--tw-ring-opacity:1;--tw-ring-color:rgb(255 45 32 / var(--tw-ring-opacity))}@media (min-width: 640px){.sm\:size-16{width:4rem;height:4rem}.sm\:size-6{width:1.5rem;height:1.5rem}.sm\:pt-5{padding-top:1.25rem}}@media (min-width: 768px){.md\:row-span-3{grid-row:span 3 / span 3}}@media (min-width: 1024px){.lg\:col-start-2{grid-column-start:2}.lg\:h-16{height:4rem}.lg\:max-w-7xl{max-width:80rem}.lg\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.lg\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.lg\:flex-col{flex-direction:column}.lg\:items-end{align-items:flex-end}.lg\:justify-center{justify-content:center}.lg\:gap-8{gap:2rem}.lg\:p-10{padding:2.5rem}.lg\:pb-10{padding-bottom:2.5rem}.lg\:pt-0{padding-top:0px}.lg\:text-\[\#FF2D20\]{--tw-text-opacity:1;color:rgb(255 45 32 / var(--tw-text-opacity))}}@media (prefers-color-scheme: dark){.dark\:block{display:block}.dark\:hidden{display:none}.dark\:bg-black{--tw-bg-opacity:1;background-color:rgb(0 0 0 / var(--tw-bg-opacity))}.dark\:bg-zinc-900{--tw-bg-opacity:1;background-color:rgb(24 24 27 / var(--tw-bg-opacity))}.dark\:via-zinc-900{--tw-gradient-to:rgb(24 24 27 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #18181b var(--tw-gradient-via-position), var(--tw-gradient-to)}.dark\:to-zinc-900{--tw-gradient-to:#18181b var(--tw-gradient-to-position)}.dark\:text-white\/50{color:rgb(255 255 255 / 0.5)}.dark\:text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity))}.dark\:text-white\/70{color:rgb(255 255 255 / 0.7)}.dark\:ring-zinc-800{--tw-ring-opacity:1;--tw-ring-color:rgb(39 39 42 / var(--tw-ring-opacity))}.dark\:hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity))}.dark\:hover\:text-white\/70:hover{color:rgb(255 255 255 / 0.7)}.dark\:hover\:text-white\/80:hover{color:rgb(255 255 255 / 0.8)}.dark\:hover\:ring-zinc-700:hover{--tw-ring-opacity:1;--tw-ring-color:rgb(63 63 70 / var(--tw-ring-opacity))}.dark\:focus-visible\:ring-\[\#FF2D20\]:focus-visible{--tw-ring-opacity:1;--tw-ring-color:rgb(255 45 32 / var(--tw-ring-opacity))}.dark\:focus-visible\:ring-white:focus-visible{--tw-ring-opacity:1;--tw-ring-color:rgb(255 255 255 / var(--tw-ring-opacity))}}
+            /* ! tailwindcss v3.4.1 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Figtree, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]{display:none}*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: }.absolute{position:absolute}.relative{position:relative}.-left-20{left:-5rem}.top-0{top:0px}.-bottom-16{bottom:-4rem}.-left-16{left:-4rem}.-mx-3{margin-left:-0.75rem;margin-right:-0.75rem}.mt-4{margin-top:1rem}.mt-6{margin-top:1.5rem}.flex{display:flex}.grid{display:grid}.hidden{display:none}.aspect-video{aspect-ratio:16 / 9}.size-12{width:3rem;height:3rem}.size-5{width:1.25rem;height:1.25rem}.size-6{width:1.5rem;height:1.5rem}.h-12{height:3rem}.h-40{height:10rem}.h-full{height:100%}.min-h-screen{min-height:100vh}.w-full{width:100%}.w-\[calc\(100\%\+8rem\)\]{width:calc(100% + 8rem)}.w-auto{width:auto}.max-w-\[877px\]{max-width:877px}.max-w-2xl{max-width:42rem}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-start{align-items:flex-start}.items-center{align-items:center}.items-stretch{align-items:stretch}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.gap-2{gap:0.5rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.self-center{align-self:center}.overflow-hidden{overflow:hidden}.rounded-\[10px\]{border-radius:10px}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-md{border-radius:0.375rem}.rounded-sm{border-radius:0.125rem}.bg-\[\#FF2D20\]\/10{background-color:rgb(255 45 32 / 0.1)}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity))}.bg-gradient-to-b{background-image:linear-gradient(to bottom, var(--tw-gradient-stops))}.from-transparent{--tw-gradient-from:transparent var(--tw-gradient-from-position);--tw-gradient-to:rgb(0 0 0 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-white{--tw-gradient-to:rgb(255 255 255 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #fff var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-white{--tw-gradient-to:#fff var(--tw-gradient-to-position)}.stroke-\[\#FF2D20\]{stroke:#FF2D20}.object-cover{object-fit:cover}.object-top{object-position:top}.p-6{padding:1.5rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.py-16{padding-top:4rem;padding-bottom:4rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.pt-3{padding-top:0.75rem}.text-center{text-align:center}.font-sans{font-family:Figtree, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-sm\/relaxed{font-size:0.875rem;line-height:1.625}.text-xl{font-size:1.25rem;line-height:1.75rem}.font-semibold{font-weight:600}.text-black{--tw-text-opacity:1;color:rgb(0 0 0 / var(--tw-text-opacity))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity))}.underline{-webkit-text-decoration-line:underline;text-decoration-line:underline}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.shadow-\[0px_14px_34px_0px_rgba\(0\2c 0\2c 0\2c 0\.08\)\]{--tw-shadow:0px 14px 34px 0px rgba(0,0,0,0.08);--tw-shadow-colored:0px 14px 34px 0px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.ring-1{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.ring-transparent{--tw-ring-color:transparent}.ring-white\/\[0\.05\]{--tw-ring-color:rgb(255 255 255 / 0.05)}.drop-shadow-\[0px_4px_34px_rgba\(0\2c 0\2c 0\2c 0\.06\)\]{--tw-drop-shadow:drop-shadow(0px 4px 34px rgba(0,0,0,0.06));filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.drop-shadow-\[0px_4px_34px_rgba\(0\2c 0\2c 0\2c 0\.25\)\]{--tw-drop-shadow:drop-shadow(0px 4px 34px rgba(0,0,0,0.25));filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-300{transition-duration:300ms}.selection\:bg-\[\#FF2D20\] *::selection{--tw-bg-opacity:1;background-color:rgb(255 45 32 / var(--tw-bg-opacity))}.selection\:text-white *::selection{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity))}.selection\:bg-\[\#FF2D20\]::selection{--tw-bg-opacity:1;background-color:rgb(255 45 32 / var(--tw-bg-opacity))}.selection\:text-white::selection{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity))}.hover\:text-black:hover{--tw-text-opacity:1;color:rgb(0 0 0 / var(--tw-text-opacity))}.hover\:text-black\/70:hover{color:rgb(0 0 0 / 0.7)}.hover\:ring-black\/20:hover{--tw-ring-color:rgb(0 0 0 / 0.2)}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus-visible\:ring-1:focus-visible{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus-visible\:ring-\[\#FF2D20\]:focus-visible{--tw-ring-opacity:1;--tw-ring-color:rgb(255 45 32 / var(--tw-ring-opacity))}@media (min-width: 640px){.sm\:size-16{width:4rem;height:4rem}.sm\:size-6{width:1.5rem;height:1.5rem}.sm\:pt-5{padding-top:1.25rem}}@media (min-width: 768px){.md\:row-span-3{grid-row:span 3 / span 3}}@media (min-width: 1024px){.lg\:col-start-2{grid-column-start:2}.lg\:h-16{height:4rem}.lg\:max-w-7xl{max-width:80rem}.lg\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.lg\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.lg\:flex-col{flex-direction:column}.lg\:items-end{align-items:flex-end}.lg\:justify-center{justify-content:center}.lg\:gap-8{gap:2rem}.lg\:p-10{padding:2.5rem}.lg\:pb-10{padding-bottom:2.5rem}.lg\:pt-0{padding-top:0px}.lg\:text-\[\#FF2D20\]{--tw-text-opacity:1;color:rgb(255 45 32 / var(--tw-text-opacity))}}@media (prefers-color-scheme: dark){.dark\:block{display:block}.dark\:hidden{display:none}.dark\:bg-black{--tw-bg-opacity:1;background-color:rgb(0 0 0 / var(--tw-bg-opacity))}.dark\:bg-zinc-900{--tw-bg-opacity:1;background-color:rgb(24 24 27 / var(--tw-bg-opacity))}.dark\:via-zinc-900{--tw-gradient-to:rgb(24 24 27 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #18181b var(--tw-gradient-via-position), var(--tw-gradient-to)}.dark\:to-zinc-900{--tw-gradient-to:#18181b var(--tw-gradient-to-position)}.dark\:text-white\/50{color:rgb(255 255 255 / 0.5)}.dark\:text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity))}.dark\:text-white\/70{color:rgb(255 255 255 / 0.7)}.dark\:ring-zinc-800{--tw-ring-opacity:1;--tw-ring-color:rgb(39 39 42 / var(--tw-ring-opacity))}.dark\:hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity))}.dark\:hover\:text-white\/70:hover{color:rgb(255 255 255 / 0.7)}.dark\:hover\:text-white\/80:hover{color:rgb(255 255 255 / 0.8)}.dark\:hover\:ring-zinc-700:hover{--tw-ring-opacity:1;--tw-ring-color:rgb(63 63 70 / var(--tw-ring-opacity))}.dark\:focus-visible\:ring-\[\#FF2D20\]:focus-visible{--tw-ring-opacity:1;--tw-ring-color:rgb(255 45 32 / var(--tw-ring-opacity))}.dark\:focus-visible\:ring-white:focus-visible{--tw-ring-opacity:1;--tw-ring-color:rgb(255 255 255 / var(--tw-ring-opacity))}}
 
         
             .header-grid {
@@ -296,10 +300,192 @@
         max-width: none;
     }
 }            
+            /* Add these styles for the popup overlay */
+            .notification-dot {
+                position: absolute;
+                top: -5px;
+                right: -5px;
+                width: 10px;
+                height: 10px;
+                background-color: #FF2D20;
+                border-radius: 50%;
+                animation: pulse 2s infinite;
+            }
+
+            /* Popup styles */
+            .popup-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 1000;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .popup-content {
+                position: relative;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: white;
+                padding: 2rem;
+                border-radius: 10px;
+                width: 90%;
+                max-width: 800px;
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+
+            .document-request-item {
+                border: 1px solid #e5e7eb;
+                border-radius: 8px;
+                padding: 1rem;
+                margin-bottom: 1rem;
+                background-color: white;
+                transition: all 0.3s ease;
+            }
+
+            .document-request-item:hover {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .status-badge {
+                display: inline-block;
+                padding: 0.25rem 0.75rem;
+                border-radius: 9999px;
+                font-size: 0.875rem;
+                font-weight: 500;
+            }
+
+            .status-pending { background-color: #FEF3C7; color: #92400E; }
+            .status-approved { background-color: #D1FAE5; color: #065F46; }
+            .status-rejected { background-color: #FEE2E2; color: #991B1B; }
+
+            @keyframes pulse {
+                0% { transform: scale(1); opacity: 1; }
+                50% { transform: scale(1.2); opacity: 0.8; }
+                100% { transform: scale(1); opacity: 1; }
+            }
+
+            /* Improve popup styles */
+            .popup-content {
+                position: relative;
+                background-color: white;
+                padding: 2rem;
+                border-radius: 10px;
+                width: 90%;
+                max-width: 800px;
+                max-height: 80vh;
+                overflow-y: auto;
+                margin: 2rem auto;
+            }
+
+            .popup-close-btn {
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+                background-color: #11468F;
+                color: white;
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: background-color 0.3s;
+                z-index: 1002;
+            }
+
+            .popup-close-btn:hover {
+                background-color: #0d3a7d;
+            }
+
+            /* Updated status badge styles */
+            .status-badge {
+                display: inline-block;
+                padding: 0.25rem 0.75rem;
+                border-radius: 9999px;
+                font-size: 0.875rem;
+                font-weight: 500;
+                text-transform: uppercase;
+            }
+
+            /* Updated Popup styles for proper centering */
+            .popup-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 1000;
+            }
+
+            .popup-content {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: white;
+                padding: 2rem;
+                border-radius: 10px;
+                width: 90%;
+                max-width: 800px;
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+
+            /* Cancel button styles */
+            .cancel-btn {
+                width: 100%;
+                padding: 0.75rem;
+                background-color: #DC2626;
+                color: white;
+                border-radius: 0.375rem;
+                font-weight: 500;
+                text-align: center;
+                transition: all 0.2s;
+            }
+
+            .cancel-btn:hover {
+                background-color: #B91C1C;
+            }
+
+            .cancel-btn {
+                width: 100%;
+                padding: 0.75rem;
+                border-radius: 0.375rem;
+                font-weight: 500;
+                text-align: center;
+                transition: all 0.2s;
+            }
+
+            .cancel-btn-active {
+                background-color: #DC2626;
+                color: white;
+                cursor: pointer;
+            }
+
+            .cancel-btn-active:hover {
+                background-color: #B91C1C;
+            }
+
+            .cancel-btn-disabled {
+                background-color: #E5E7EB;
+                color: #9CA3AF;
+                cursor: not-allowed;
+            }
         </style>
     </head>
-<body class="font-sans antialiased dark:bg-black dark:text-white/50">
-    <div class="relative w-full">
+    <body class="font-sans antialiased dark:bg-black dark:text-white/50">
+        <div class="relative w-full">
             <div class="menu-toggle left">
                 <div class="bar"></div>
                 <div class="bar"></div>
@@ -313,13 +499,13 @@
             <header class="header-grid">
                 <!-- Left-aligned Navigation Links -->
                 <nav class="left-section flex space-x-4">
-                    <a href="{{ route('welcome') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
+                    <a href="{{ route('welcome') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70">
                         Home
                     </a>
-                    <a href="{{ route('news.index') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
+                    <a href="{{ route('news.index') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70">
                         News
                     </a>
-                    <a href="{{ route('document-request') }}" class="rounded-md px-3 py-2 text-white bg-[#FF2D20] ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20] active">
+                    <a href="{{ route('document-request') }}" class="rounded-md px-3 py-2 text-white bg-[#FF2D20] ring-1 ring-transparent transition hover:text-white/70 active">
                         Document Request
                     </a>
                 </nav>
@@ -331,20 +517,28 @@
 
                 @if (Route::has('login'))
                     <!-- Right-aligned Authentication Links -->
-                    <nav class="right-section flex space-x-4">
+                    <nav class="right-section flex items-center space-x-4">
                         @auth
-                            <a href="{{ route('profile.edit') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20]">
+                            <div class="relative inline-flex items-center">
+                                <a href="#" onclick="showDocumentRequests()" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70">
+                                    Requested Documents
+                                    @if(session('new_request') || session('status_updated'))
+                                        <span class="notification-dot" id="notification-dot"></span>
+                                    @endif
+                                </a>
+                            </div>
+                            <a href="{{ route('profile.edit') }}" class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70">
                                 My Account
                             </a>
                         @else
-                            <a href="{{ route('admin.login') }}" class="rounded-md px-3 py-2 text-white bg-[#1a365d] ring-1 ring-transparent transition hover:bg-[#2d4a7c] focus:outline-none focus-visible:ring-[#FF2D20]">
+                            <a href="{{ route('admin.login') }}" class="rounded-md px-3 py-2 text-white bg-[#1a365d] ring-1 ring-transparent transition hover:bg-[#2d4a7c]">
                                 Admin Log in
                             </a>
-                            <a href="{{ route('login') }}" class="rounded-md px-3 py-2 text-white bg-[#2563eb] ring-1 ring-transparent transition hover:bg-[#3b82f6] focus:outline-none focus-visible:ring-[#FF2D20]">
+                            <a href="{{ route('login') }}" class="rounded-md px-3 py-2 text-white bg-[#2563eb] ring-1 ring-transparent transition hover:bg-[#3b82f6]">
                                 Resident Log in
                             </a>
                             @if (Route::has('register'))
-                                <a href="{{ route('register') }}" class="rounded-md px-3 py-2 text-white bg-[#059669] ring-1 ring-transparent transition hover:bg-[#10b981] focus:outline-none focus-visible:ring-[#FF2D20]">
+                                <a href="{{ route('register') }}" class="rounded-md px-3 py-2 text-white bg-[#059669] ring-1 ring-transparent transition hover:bg-[#10b981]">
                                     Register
                                 </a>
                             @endif
@@ -354,107 +548,269 @@
             </header>
         </div>
 
-<script>
-// Toggle the sliding menu for mobile view
-document.addEventListener("DOMContentLoaded", function() {
-    const headerGrid = document.querySelector(".header-grid");
-    const leftMenuToggle = document.querySelector(".menu-toggle.left");
-    const rightMenuToggle = document.querySelector(".menu-toggle.right");
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                // Toggle the sliding menu for mobile view
+                const headerGrid = document.querySelector(".header-grid");
+                const leftMenuToggle = document.querySelector(".menu-toggle.left");
+                const rightMenuToggle = document.querySelector(".menu-toggle.right");
 
-    leftMenuToggle.addEventListener("click", function() {
-        leftMenuToggle.classList.toggle("active");
-        headerGrid.classList.toggle("active-left");
-    });
+                leftMenuToggle.addEventListener("click", function() {
+                    leftMenuToggle.classList.toggle("active");
+                    headerGrid.classList.toggle("active-left");
+                });
 
-    rightMenuToggle.addEventListener("click", function() {
-        rightMenuToggle.classList.toggle("active");
-        headerGrid.classList.toggle("active-right");
-    });
-});
-</script>
+                rightMenuToggle.addEventListener("click", function() {
+                    rightMenuToggle.classList.toggle("active");
+                    headerGrid.classList.toggle("active-right");
+                });
+                
+                // Set up document requests popup functions
+                window.showDocumentRequests = function() {
+                    const popup = document.getElementById('documentRequestsPopup');
+                    if (popup) {
+                        popup.style.display = 'block';
+                        document.body.style.overflow = 'hidden';
+                        
+                        // Hide notification dot after viewing
+                        const notificationDot = document.getElementById('notification-dot');
+                        if (notificationDot) {
+                            notificationDot.style.display = 'none';
+                        }
+                        
+                        // Update session variable via AJAX
+                        const token = document.querySelector('meta[name="csrf-token"]').content;
+                        fetch('/mark-notifications-as-read', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': token
+                            }
+                        });
+                    }
+                };
+                
+                window.hideDocumentRequests = function() {
+                    const popup = document.getElementById('documentRequestsPopup');
+                    if (popup) {
+                        popup.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                };
+                
+                // Improved cancel request function with confirmation dialog
+                window.confirmCancel = function(referenceNumber) {
+                    if (confirm('Are you sure you want to cancel this request? This action cannot be undone.')) {
+                        const token = document.querySelector('meta[name="csrf-token"]').content;
+                        
+                        // Show loading state
+                        const cancelBtn = document.querySelector(`[data-reference="${referenceNumber}"] .cancel-btn`);
+                        if (cancelBtn) {
+                            cancelBtn.textContent = 'Cancelling...';
+                            cancelBtn.disabled = true;
+                        }
+                        
+                        fetch(`/document-requests/${referenceNumber}/cancel`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': token
+                            }
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.success) {
+                                // Remove the request item from the list with animation
+                                const requestItem = document.querySelector(`[data-reference="${referenceNumber}"]`);
+                                if (requestItem) {
+                                    requestItem.style.opacity = '0';
+                                    requestItem.style.transform = 'translateY(-10px)';
+                                    requestItem.style.transition = 'all 0.3s ease';
+                                    
+                                    setTimeout(() => {
+                                        requestItem.remove();
+                                        
+                                        // Show success message
+                                        alert('Request cancelled successfully');
+                                        
+                                        // If no more requests, show empty message or reload
+                                        if (document.querySelectorAll('.document-request-item').length === 0) {
+                                            const requestsList = document.getElementById('documentRequestsList');
+                                            requestsList.innerHTML = '<div class="text-center text-gray-500 py-4">No document requests found.</div>';
+                                        }
+                                    }, 300);
+                                }
+                            } else {
+                                alert('Failed to cancel request: ' + (data.message || 'Unknown error'));
+                                
+                                // Reset button state
+                                if (cancelBtn) {
+                                    cancelBtn.textContent = 'Cancel Request';
+                                    cancelBtn.disabled = false;
+                                }
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Failed to cancel request. Please try again later.');
+                            
+                            // Reset button state
+                            if (cancelBtn) {
+                                cancelBtn.textContent = 'Cancel Request';
+                                cancelBtn.disabled = false;
+                            }
+                        });
+                    }
+                };
+            });
+        </script>
 
-<!-- Document Request -->
-<div class="text-section">
-    <h1>Document Request</h1>
-    <p>Here are the documents you can easily request online:</p>
-</div>
-
-<div class="container">
-    @php
-        $documents = [
-            ['name' => 'Barangay Clearance', 'desc' => 'A general document certifying that you are a resident of the barangay.', 'route' => 'barangay-clearance'],
-            ['name' => 'Certificate of Residency', 'desc' => 'This document proves that you are currently residing in the barangay.', 'route' => 'certificate-of-residency'],
-            ['name' => 'Indigency Certificate', 'desc' => 'This document certifies that you are indigent or belong to a low-income household.', 'route' => 'indigency-certificate'],
-            ['name' => 'Barangay Identification Card', 'desc' => 'Some barangays issue their own identification cards to residents.', 'route' => 'barangay-id'],
-            ['name' => 'Business Permit', 'desc' => 'If you plan to operate a business within the barangay, you may need to secure the necessary permits from the barangay office.', 'route' => 'business-permit'],
-            ['name' => 'Community Tax Certificate (Cedula)', 'desc' => 'A Community Tax Certificate (Cedula) is required for various official transactions.', 'route' => 'cedula']
-        ];
-    @endphp
-
-    @foreach ($documents as $doc)
-        <div class="service">
-            <h3>{{ $doc['name'] }}</h3>
-            <p>{{ $doc['desc'] }}</p>
-            <a href="{{ auth()->check() ? route($doc['route']) : route('login') }}">Click to Apply</a>
+        <!-- Document Request -->
+        <div class="text-section">
+            <h1>Document Request</h1>
+            <p>Here are the documents you can easily request online:</p>
         </div>
-    @endforeach
-</div>
 
-<!-- Back to Top Button -->
-<button class="back-to-top" onclick="scrollToTop()">Back to Top</button>
-<script>
-// Scroll to Top Function
-function scrollToTop() {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    }
-</script>
+        <div class="container">
+            @php
+                $documents = [
+                    ['name' => 'Barangay Clearance', 'desc' => 'A general document certifying that you are a resident of the barangay.', 'route' => 'barangay-clearance'],
+                    ['name' => 'Certificate of Residency', 'desc' => 'This document proves that you are currently residing in the barangay.', 'route' => 'certificate-of-residency'],
+                    ['name' => 'Indigency Certificate', 'desc' => 'This document certifies that you are indigent or belong to a low-income household.', 'route' => 'indigency-certificate'],
+                    ['name' => 'Barangay Identification Card', 'desc' => 'Some barangays issue their own identification cards to residents.', 'route' => 'barangay-id'],
+                    ['name' => 'Business Permit', 'desc' => 'If you plan to operate a business within the barangay, you may need to secure the necessary permits from the barangay office.', 'route' => 'business-permit'],
+                    ['name' => 'Community Tax Certificate (Cedula)', 'desc' => 'A Community Tax Certificate (Cedula) is required for various official transactions.', 'route' => 'cedula']
+                ];
+            @endphp
 
-<!-- Barangay Section -->
-<section class="barangay-section bg-[#11468F] text-white py-8 lg:py-12 px-4 lg:px-6">
-    <div class="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
-        <!-- Left Column: Logo and Name with Centered Alignment -->
-        <div class="flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-4 text-center lg:text-left">
-            <img src="{{ asset('logo/802-GO-LOGO.png') }}" alt="Barangay Logo" class="h-16 w-16 lg:h-20 lg:w-20 object-contain">
-            <div>
-            <div class="text-3xl lg:text-4xl font-semibold" style="font-size: 1.5rem;">Barangay 802</div> 
-                <div class="text-xs lg:text-sm mt-1">District 5, Sta. Ana Manila City, Metro Manila, Philippines</div>
-            </div>
+            @foreach ($documents as $doc)
+                <div class="service">
+                    <h3>{{ $doc['name'] }}</h3>
+                    <p>{{ $doc['desc'] }}</p>
+                    <a href="{{ auth()->check() ? route($doc['route']) : route('login') }}">Click to Apply</a>
+                </div>
+            @endforeach
+
+
+
+
+
         </div>
 
-        <!-- Right Column: Contact Information -->
-        <div class="contact-info text-center lg:text-right">
-            <h2 class="text-base lg:text-lg font-semibold" style="font-size: 1.5rem;">CONTACT US:</h2>
-            <div class="contact-item mt-2">
-                <span class="contact-title font-semibold">24-Hour Command Center:</span>
-                <span class="contact-detail block text-sm lg:text-base">8-000-0000 / 0999 123 4567</span>
-            </div>
-            <div class="contact-item mt-2">
-                <span class="contact-title font-semibold">Office of the Barangay Captain:</span>
-                <span class="contact-detail block text-sm lg:text-base">8-000-0000</span>
-            </div>
-            <div class="contact-item mt-2">
-                <span class="contact-title font-semibold">Email:</span>
-                <span class="contact-detail block text-sm lg:text-base">email@gmail.com</span>
-            </div>
-            <div class="contact-item mt-2">
-                <span class="contact-title font-semibold">Address:</span>
-                <span class="contact-detail block text-sm lg:text-base">District 5, Sta. Ana Manila City, Metro Manila, Philippines</span>
-            </div>
-        </div>
-    </div>
-</section>
+        <!-- Back to Top Button -->
+        <button class="back-to-top" onclick="scrollToTop()">Back to Top</button>
+        <script>
+        // Scroll to Top Function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+        </script>
 
-<footer style="text-align: center; padding: 30px; background-color: #f8f9fa; border-top: 1px solid #e9ecef; height: 100px; opacity: 0.5;">
-    <p style="margin: 0; font-size: 12px;">Copyright &copy; {{ date('Y') }} Barangay 802, Manila City</p>
-    <p style="margin: 0; font-size: 12px;">Designed by SISTEM</p>
-</footer>
+        <!-- Barangay Section -->
+        <section class="barangay-section bg-[#11468F] text-white py-8 lg:py-12 px-4 lg:px-6">
+            <div class="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
+                <!-- Left Column: Logo and Name with Centered Alignment -->
+                <div class="flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-4 text-center lg:text-left">
+                    <img src="{{ asset('logo/802-GO-LOGO.png') }}" alt="Barangay Logo" class="h-16 w-16 lg:h-20 lg:w-20 object-contain">
+                    <div>
+                    <div class="text-3xl lg:text-4xl font-semibold" style="font-size: 1.5rem;">Barangay 802</div> 
+                        <div class="text-xs lg:text-sm mt-1">District 5, Sta. Ana Manila City, Metro Manila, Philippines</div>
+                    </div>
+                </div>
 
+                <!-- Right Column: Contact Information -->
+                <div class="contact-info text-center lg:text-right">
+                    <h2 class="text-base lg:text-lg font-semibold" style="font-size: 1.5rem;">CONTACT US:</h2>
+                    <div class="contact-item mt-2">
+                        <span class="contact-title font-semibold">24-Hour Command Center:</span>
+                        <span class="contact-detail block text-sm lg:text-base">8-000-0000 / 0999 123 4567</span>
+                    </div>
+                    <div class="contact-item mt-2">
+                        <span class="contact-title font-semibold">Office of the Barangay Captain:</span>
+                        <span class="contact-detail block text-sm lg:text-base">8-000-0000</span>
+                    </div>
+                    <div class="contact-item mt-2">
+                        <span class="contact-title font-semibold">Email:</span>
+                        <span class="contact-detail block text-sm lg:text-base">email@gmail.com</span>
+                    </div>
+                    <div class="contact-item mt-2">
+                        <span class="contact-title font-semibold">Address:</span>
+                        <span class="contact-detail block text-sm lg:text-base">District 5, Sta. Ana Manila City, Metro Manila, Philippines</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer style="text-align: center; padding: 30px; background-color: #f8f9fa; border-top: 1px solid #e9ecef; height: 100px; opacity: 0.5;">
+            <p style="margin: 0; font-size: 12px;">Copyright &copy; {{ date('Y') }} Barangay 802, Manila City</p>
+            <p style="margin: 0; font-size: 12px;">Designed by SISTEM</p>
+        </footer>
+
+
+
+
+
+
+
+
+
+
+        <script src="//code.tidio.co/h2325m3tkhvbkjk1prdnfsw0cihgt66j.js" async></script>
+
+
+
+
+        <!-- Add the document requests popup overlay -->
+        <div id="documentRequestsPopup" class="popup-overlay">
+            <div class="popup-content">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Your Document Requests</h2>
+                    <button class="popup-close-btn" onclick="hideDocumentRequests()">&times;</button>
+                </div>
+                <div id="documentRequestsList">
+                    @if(isset($documentRequests) && $documentRequests->count() > 0)
+                        @foreach($documentRequests as $request)
+                        <div class="document-request-item" data-reference="{{ $request->reference_number }}">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h3 class="font-semibold text-lg text-gray-900">{{ $request->document_type }}</h3>
+                                    <p class="text-sm text-gray-600">Reference Number: {{ $request->reference_number }}</p>
+                                    <p class="text-sm text-gray-600">Requested on: {{ $request->created_at->format('F d, Y') }}</p>
+                                </div>
+                                <span class="status-badge status-{{ strtolower($request->status) }}">
+                                    {{ $request->status }}
+                                </span>
+                            </div>
+                            <div class="mt-4">
+                                @if(strtolower($request->status) === 'pending' || strtolower($request->status) === 'rejected')
+                                    <button onclick="confirmCancel('{{ $request->reference_number }}')" 
+                                            class="cancel-btn cancel-btn-active">
+                                        Cancel Request
+                                    </button>
+                                @else
+                                    <button class="cancel-btn cancel-btn-disabled" disabled>
+                                        Cancel Request
+                                    </button>
+                                @endif
+                            </div>
+                        </div>
+                        @endforeach
+                    @else
+                        <div class="text-center text-gray-500 py-4">
+                            No document requests found.
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
-        <script src="//code.tidio.co/h2325m3tkhvbkjk1prdnfsw0cihgt66j.js" async></script>
+
     </body>
 </html>
