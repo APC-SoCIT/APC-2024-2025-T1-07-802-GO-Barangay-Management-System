@@ -125,7 +125,7 @@ $data = [
     'citizenship' => $request->citizenship,
     'civil_status' => $request->civil_status,
     'occupation' => $request->occupation,
-    'annual_income' => preg_replace('/[^0-9.]/', '', $request->annual_income), // Fixed
+    'annual_income' => is_numeric($request->annual_income) ? $request->annual_income : null,
     'contact_number' => $validated['contact_number'],
     'block_street' => $validated['block_street'],
     'barangay' => '802',
@@ -140,8 +140,6 @@ $data = [
     'extra_data' => json_encode($request->extra_data),
     'status' => 'pending',
 ];
-
-    
         // Handle file uploads (Save in storage/app/public/)
         foreach ([
             'recent_photo', 'valid_id', 'proof_of_residency', 'signature',
