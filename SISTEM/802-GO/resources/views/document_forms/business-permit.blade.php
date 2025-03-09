@@ -439,7 +439,17 @@ document.addEventListener("DOMContentLoaded", function() {
             <input id="city" name="city" type="text" value="Manila" class="input-field bg-gray-200" readonly>
 
             <label class="form-label">Nature of Business <span class="text-red-500">*</span></label>
-            <input id="business_nature" name="business_nature" type="text" class="input-field required" required>
+<select id="business_nature" name="business_nature" class="input-field required" required onchange="toggleOtherBusinessNature()">
+    <option value="">Select Nature of Business</option>
+    <option value="Retail">Retail</option>
+    <option value="Food and Beverage">Food and Beverage</option>
+    <option value="Manufacturing">Manufacturing</option>
+    <option value="Services">Services</option>
+    <option value="Technology">Technology</option>
+    <option value="Construction">Construction</option>
+    <option value="Other">Other (Specify)</option>
+</select>
+<input id="other_business_nature" name="other_business_nature" type="text" class="input-field mt-2" placeholder="Specify Other Business Nature" style="display: none;">
 
             <label class="form-label">Contact Number <span class="text-red-500">*</span></label>
             <input id="contact_number" name="contact_number" type="text" pattern="09[0-9]{9}" maxlength="11" required title="Enter a valid PH mobile number (e.g., 09123456789)" class="input-field required" required>
@@ -487,6 +497,18 @@ document.addEventListener("DOMContentLoaded", function() {
         </form>
     </div>
     <script>
+    function toggleOtherBusinessNature() {
+        var natureSelect = document.getElementById("business_nature");
+        var otherNatureInput = document.getElementById("other_business_nature");
+
+        if (natureSelect.value === "Other") {
+            otherNatureInput.style.display = "block";
+            otherNatureInput.required = true;
+        } else {
+            otherNatureInput.style.display = "none";
+            otherNatureInput.required = false;
+        }
+    }
     // Ensure the "Other Purpose" input field appears when "Other" is selected
     function toggleOtherPurpose() {
         var purposeSelect = document.getElementById("purpose_of_request"); // Fixed ID reference
