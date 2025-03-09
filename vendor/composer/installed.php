@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => 'dev-resident-database',
-        'version' => 'dev-resident-database',
-        'reference' => '1ba1341aec20f2b33b74f9dbe8c5e720d3e1be91',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '7baa66a38084f30df86df62f3da8dfd6c47b53a6',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => 'dev-resident-database',
-            'version' => 'dev-resident-database',
-            'reference' => '1ba1341aec20f2b33b74f9dbe8c5e720d3e1be91',
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '7baa66a38084f30df86df62f3da8dfd6c47b53a6',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

@@ -230,26 +230,39 @@
                 margin: 20px 0;
             }
             .text-section {
-                background-image: url("{{ asset('background/header_brgy.png') }}");
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;
-                width: 100%;
-                max-width: 1920px;
-                height: auto;
-                aspect-ratio: 1920 / 500;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                color: white;
-                text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-                font-weight: bold;
-                margin: 0 auto;
-                padding: 20px;
-                box-sizing: border-box;
-                text-align: center; /* Center text by default */
-            }
+    position: relative; /* Required for pseudo-element positioning */
+    width: 100%;
+    max-width: 1920px;
+    height: auto;
+    aspect-ratio: 1920 / 550;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    font-weight: bold;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center; /* Center text by default */
+    overflow: hidden; /* Ensure the pseudo-element doesn't overflow */
+}
+
+.text-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("{{ asset('storage/' . $news->image) }}");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: grayscale(100%); /* Convert image to grayscale */
+    z-index: -1; /* Place behind the content */
+}
             
             .service {
                 background: #11468F; /* Changed from white to blue */
@@ -311,15 +324,60 @@
                 margin: 10px 0 30px;
                 font-size: 1.2em;
             }
-            .container_1{
+            /* Container for the news content */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.container .max-w-2xl {
+    max-width: 42rem; /* Equivalent to max-w-2xl in Tailwind */
+    margin: 0 auto;
+    background-color: white;
+    padding: 24px; /* Equivalent to p-6 in Tailwind */
+    border-radius: 8px; /* Equivalent to rounded-lg in Tailwind */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Equivalent to shadow-md in Tailwind */
+}
+
+.container .max-w-2xl img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px; /* Equivalent to rounded-lg in Tailwind */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Equivalent to shadow-md in Tailwind */
+    margin-top: 16px; /* Equivalent to mt-4 in Tailwind */
+}
+
+.container .max-w-2xl p {
+    color: #333; /* Equivalent to text-gray-800 in Tailwind */
+    line-height: 1.6; /* Equivalent to leading-relaxed in Tailwind */
+    margin-top: 16px; /* Equivalent to mt-4 in Tailwind */
+    margin-bottom: 24px; /* Equivalent to mb-6 in Tailwind */
+    font-size: 1rem;
+}
+
+.container .max-w-2xl a {
+    color: #3b82f6; /* Equivalent to text-blue-600 in Tailwind */
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+.container .max-w-2xl a:hover {
+    color: #2563eb; /* Darker blue on hover */
+}
+
+/* Container for news items */
+.container_1 {
     display: flex;
     flex-direction: column;
     max-width: 900px;
     margin: 0 auto;
     padding: 20px;
-    border: 2px solid #ddd; /* Border added */
-    border-radius: 15px; /* Rounded corners */
-    background-color: #f9f9f9; /* Light background */
+    border: 2px solid #ddd;
+    border-radius: 15px;
+    background-color: #f9f9f9;
 }
 
 .news-item {
@@ -329,11 +387,11 @@
     border-bottom: 1px solid #ccc;
     padding: 20px;
     transition: background-color 0.3s ease, color 0.3s ease;
-    border-radius: 12px; /* Rounded news items */
+    border-radius: 12px;
 }
 
 .news-item:hover {
-    background-color: #11468F; /* Hover effect */
+    background-color: #11468F;
     color: white;
 }
 
@@ -351,7 +409,7 @@
 }
 
 .news-item:hover .news-content a {
-    color: #fff; /* Text turns white on hover */
+    color: #fff;
 }
 
 .news-meta {
@@ -361,7 +419,7 @@
 }
 
 .news-item:hover .news-meta {
-    color: #ddd; /* Lighter text on hover */
+    color: #ddd;
 }
 
 .news-author {
@@ -371,7 +429,7 @@
 }
 
 .news-item:hover .news-author {
-    color: #ddd; /* Lighter author text on hover */
+    color: #ddd;
 }
 
 .news-item img {
@@ -379,6 +437,7 @@
     height: auto;
     border-radius: 8px;
 }
+
 
             /* Media query for screens smaller than 768px */
             @media (max-width: 768px) {
@@ -471,30 +530,73 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
+    <div class="text-section">
+        <h1>{{ $news->title }}</h1>
+        <p>{{ $news->author }}</p>
+    </div>
+ 
+
 <body>
 
-    <div class="container">
-        <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
-            <h1 class="text-3xl font-bold text-gray-900">{{ $news->title }}</h1>
-            <p class="text-gray-600 mt-2">By: <span class="font-semibold">{{ $news->author }}</span></p>
-
-            @if ($news->image)
-                <div class="mt-4">
-                    <img src="{{ asset('storage/' . $news->image) }}" 
-                         alt="{{ $news->title }}" 
-                         class="w-full h-auto rounded-lg shadow-md">
-                </div>
-            @endif
-
-            <p class="text-gray-800 leading-relaxed mt-4">{{ $news->content }}</p>
-
-            <div class="mt-6">
-                <a href="{{ route('news.index') }}" class="text-blue-600 hover:underline">
-                    &larr; Back to News
-                </a>
-            </div>
+<div style="max-width: 48rem; margin: 40px auto; background-color: white; padding: 24px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+    @if ($news->image)
+        <div style="margin-top: 16px; text-align: center;">
+            <img src="{{ asset('storage/' . $news->image) }}" 
+                 alt="{{ $news->title }}" 
+                 style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
         </div>
+    @endif
+    
+    <p style="margin-top: 16px; font-size: 16px; color: #333; line-height: 1.6;">{!! nl2br(e($news->content)) !!}</p>
+    
+       
+    <!-- Back to News Link -->
+    <div style="margin-top: 24px; text-align: center;">
+        <a href="{{ route('news.index') }}" 
+           style="color: #3b82f6; text-decoration: underline; font-weight: bold; transition: color 0.3s ease;">
+            &larr; Back to News
+        </a>
     </div>
+</div>
+
+<div style="max-width: 64rem; margin: 40px auto; background-color: white; padding: 24px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+    <!-- Navigation Buttons -->
+    <div style="margin-top: 24px; display: flex; justify-content: space-between; align-items: center;">
+        @if ($nextNews)
+            <a href="{{ route('news.show', $nextNews->id) }}" 
+               style="display: flex; align-items: center; text-decoration: none; color: #1e40af; font-size: 14px;">
+                <span style="font-size: 20px; color: #64748b; margin-right: 8px;">&#x25C0;</span>
+                <div>
+                    <span style="font-size: 12px; color: #64748b;">NEXT</span><br>
+                    <span style="font-weight: bold;">{{ $nextNews->title }}</span>
+                </div>
+            </a>
+        @else
+            <div style="color: #a1a1aa; font-size: 14px;">
+                <span style="font-size: 20px; color: #a1a1aa; margin-right: 8px;">&#x25C0;</span>
+                <span style="font-size: 12px; color: #a1a1aa;">NEXT</span><br>
+                <span style="font-weight: bold;">No Next News</span>
+            </div>
+        @endif
+        
+        @if ($previousNews)
+            <a href="{{ route('news.show', $previousNews->id) }}" 
+               style="display: flex; align-items: center; text-decoration: none; color: #1e40af; font-size: 14px;">
+                <div style="text-align: right;">
+                    <span style="font-size: 12px; color: #64748b;">PREVIOUS</span><br>
+                    <span style="font-weight: bold;">{{ $previousNews->title }}</span>
+                </div>
+                <span style="font-size: 20px; color: #64748b; margin-left: 8px;">&#x25B6;</span>
+            </a>
+        @else
+            <div style="color: #a1a1aa; font-size: 14px;">
+                <span style="font-size: 12px; color: #a1a1aa;">PREVIOUS</span><br>
+                <span style="font-weight: bold;">No Previous News</span>
+                <span style="font-size: 20px; color: #a1a1aa; margin-left: 8px;">&#x25B6;</span>
+            </div>
+        @endif
+    </div>
+</div>
 
 
 <!-- Barangay Section -->
