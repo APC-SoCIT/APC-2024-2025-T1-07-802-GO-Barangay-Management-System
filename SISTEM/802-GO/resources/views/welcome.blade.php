@@ -620,13 +620,13 @@ document.addEventListener("DOMContentLoaded", function() {
     <div class="container">
         <div class="service">
             <h3>News Page</h3>
-            <p>A page where users can find the latest updates, announcements, and news related to the barangay.</p>
+            <p>Isang pahina kung saan makikita ng mga residente ang pinakabagong updates, anunsyo, at balita tungkol sa barangay.</p>
             <a href="{{ route('news-page') }}">Click to View News</a>
         </div>
 
         <div class="service">
             <h3>Document Request Page</h3>
-            <p>This page allows users to request various official documents such as clearances and certificates.</p>
+            <p>Sa pahinang ito, puwedeng humiling ng iba't ibang opisyal na dokumento tulad ng clearances at certificates.</p>
             <a href="{{ route('document-request') }}">Click to Apply for Documents</a>
         </div>
     </div>
@@ -701,13 +701,13 @@ document.addEventListener("DOMContentLoaded", function() {
     >
         <!-- About Us Content -->
         <div class="flex flex-col gap-6 justify-center text-center lg:text-left pt-10"> <!-- Added pt-10 for padding-top -->
-            <h2 style="font-size: 35px; font-weight: bold;" class="text-2xl font-semibold text-black dark:text-white mt-4">About Us</h2> <!-- Added mt-4 for margin-top -->
+            <h2 style="font-size: 35px; font-weight: bold;" class="text-2xl font-semibold text-black dark:text-white mt-4">Tungkol Sa Amin</h2> <!-- Added mt-4 for margin-top -->
             <p style="font-size: 16px;" class="text-sm/relaxed text-gray-700 dark:text-gray-300 mt-4"> <!-- Added mt-4 for margin-top -->
-                Barangay 802, District 5, Sta. Ana, Manila City, Metro Manila, Philippines, is a peaceful, progressive, and highly-urbanized community. It consists of cooperative and morally upright residents, ambitious and responsive business owners and corporate managers, and committed and visionary leaders. Barangay 802 works hand in hand with its constituents to sustain a clean, green, safe, and healthy environment, fostering both physical and economic growth.
+            Ang Barangay 802, District 5, Sta. Ana, Maynila, Metro Manila ay isang tahimik, maunlad, at lubos na urbanisadong komunidad. Binubuo ito ng mga mabubuting residente na may malasakit sa kapwa, masisipag at responsableng negosyante at tagapamahala, pati na rin ng mga dedikado at may malasakit na lider. Sama-sama, nagsusumikap ang Barangay 802 at ang mga mamamayan nito na mapanatili ang isang malinis, luntian, ligtas, at malusog na kapaligiran na nagpapalago ng pisikal at pang-ekonomiyang kaunlaran.
             </p>
             <a href="#"
                class="mt-4 inline-block px-6 py-3 bg-green-500 text-white font-semibold rounded-md transition hover:bg-green-600">
-                Read More
+                Basahin
             </a>
         </div>
 

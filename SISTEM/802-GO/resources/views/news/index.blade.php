@@ -853,8 +853,8 @@ document.addEventListener("DOMContentLoaded", function() {
 <body>
 
 <div class="text-section">
-    <h1>LATEST NEWS</h1>
-    <p>Keep up to date with the latest news about Barangay 802</p>
+    <h1>BALITANG BAYAN</h1>
+    <p>Manatiling updated sa pinakabagong balita tungkol sa Barangay 802.</p>
 </div>
 
 <div class="search-container">

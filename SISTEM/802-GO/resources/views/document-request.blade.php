@@ -680,11 +680,11 @@
             @php
                 $documents = [
                     ['name' => 'Barangay Clearance', 'desc' => 'A general document certifying that you are a resident of the barangay.', 'route' => 'barangay-clearance'],
-                    ['name' => 'Certificate of Residency', 'desc' => 'This document proves that you are currently residing in the barangay.', 'route' => 'certificate-of-residency'],
-                    ['name' => 'Indigency Certificate', 'desc' => 'This document certifies that you are indigent or belong to a low-income household.', 'route' => 'indigency-certificate'],
-                    ['name' => 'Barangay Identification Card', 'desc' => 'Some barangays issue their own identification cards to residents.', 'route' => 'barangay-id'],
-                    ['name' => 'Business Permit', 'desc' => 'If you plan to operate a business within the barangay, you may need to secure the necessary permits from the barangay office.', 'route' => 'business-permit'],
-                    ['name' => 'Community Tax Certificate (Cedula)', 'desc' => 'A Community Tax Certificate (Cedula) is required for various official transactions.', 'route' => 'cedula']
+                    ['name' => 'Certificate of Residency', 'desc' => 'Ang dokumentong ito ay nagpapatunay na kasalukuyan kang naninirahan sa barangay.', 'route' => 'certificate-of-residency'],
+                    ['name' => 'Indigency Certificate', 'desc' => 'Katunayan na ikaw ay indigent o kabilang sa isang mababang-kitang kabahayan.', 'route' => 'indigency-certificate'],
+                    ['name' => 'Barangay Identification Card', 'desc' => 'Isang identification card na iniisyu ng barangay para sa mga residente.', 'route' => 'barangay-id'],
+                    ['name' => 'Business Permit', 'desc' => 'Kinakailangang permit para makapagtayo at makapag-operate ng negosyo sa barangay.', 'route' => 'business-permit'],
+                    ['name' => 'Community Tax Certificate (Cedula)', 'desc' => 'Isang dokumentong kailangan sa iba’t ibang opisyal na transaksyon.', 'route' => 'cedula']
                 ];
             @endphp
 
