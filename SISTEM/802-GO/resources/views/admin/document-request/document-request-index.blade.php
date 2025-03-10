@@ -205,24 +205,30 @@
 </style>
 
 @section('content')
-<div class="container">
-    <!-- Page Header -->
-    <div class="header-container mb-4">
-        <h1 class="fw-bold text-3xl font-bold">Document Requests Management</h1>
+<div class="header-container mb-4">
+  <h1 class="fw-bold" style="font-size: 3rem; font-weight: bold;">Document Requests Management</h1>
     </div>
 
-    <!-- Search Box -->
-    <div class="mb-4 p-4 bg-[#11468F] rounded-lg">
-        <form action="{{ route('admin.document-requests.index') }}" method="GET" class="flex gap-2 items-center">
-            <input type="text" name="search" 
-                   class="border border-gray-300 rounded-lg px-4 py-2 w-full h-12" 
-                   placeholder="Search by Reference No., Name, or Document Type..." 
-                   value="{{ request('search') }}">
-            <button type="submit" class="bg-white text-[#11468F] font-bold px-6 h-12 rounded-lg shadow-md flex items-center justify-center">
-                <i class="fas fa-search mr-2"></i> Search
-            </button>
+<!-- Search and Filter -->
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="GET" action="{{ route('admin.document-requests.index') }}" class="search-form">
+            <div class="d-flex flex-column flex-md-row gap-4">
+                <div class="flex-grow-1">
+                    <div class="search-input-group">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" name="search" class="form-control search-input" 
+                               placeholder="Search by Reference No., Name, or Document Type..." 
+                               value="{{ request('search') }}">
+                        <button type="submit" class="btn btn-primary">
+                            Search
+                        </button>
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
+</div>
 
     <!-- Table -->
     <div class="bg-white shadow-md rounded-lg overflow-hidden">

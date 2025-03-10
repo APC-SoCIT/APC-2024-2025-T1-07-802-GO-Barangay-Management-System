@@ -214,14 +214,27 @@
         </a>
     </div>
 
-    <form method="GET" action="{{ route('admin.news.index') }}" class="mb-3 w-25">
-        <div class="search-container">
-            <input type="text" name="search" class="form-control search-input" placeholder="Search news..." value="{{ request('search') }}">
-            <button type="submit" class="search-button">
-                <i class="fas fa-search">Search</i>
-            </button>
-        </div>
-    </form>
+<!-- Search and Filter -->
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="GET" action="{{ route('admin.news.index') }}" class="search-form">
+            <div class="d-flex flex-column flex-md-row gap-4">
+                <div class="flex-grow-1">
+                    <div class="search-input-group">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" name="search" class="form-control search-input" 
+                               placeholder="Search news..." 
+                               value="{{ request('search') }}">
+                        <button type="submit" class="btn btn-primary">
+                            Search
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 
     <!-- Table -->
     <div class="card">
